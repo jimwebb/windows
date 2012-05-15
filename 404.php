@@ -1,3 +1,13 @@
+<?php
+// Look for a page with the slug/permalink "not-found"
+query_posts("pagename=not-found&posts_per_page=1&post_type=page");
+
+// If it was found, let's display it. 
+if (have_posts()) {
+	include_once(get_page_template());
+	return;
+}
+
 <?php get_header(); ?>
   <?php roots_content_before(); ?>
     <div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
