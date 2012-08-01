@@ -41,7 +41,7 @@ add_action('pre_get_posts', 'lookbook_pagesize', 1);
 
 
 // ------------------------------------------------------------------- 
-// ---------------------- Translate page headings into styles
+// - Utility Function: Translate page headings into styles for Windows
 // ------------------------------------------------------------------- 
 
 function translateWindowsItem($string) {
@@ -100,6 +100,7 @@ function register_my_menus() {
 }
 add_action( 'init', 'register_my_menus' );
 
+
 // ------------------------------------------------------------------- 
 // ---------------------- top parent -- get top-most parent ID
 // ------------------------------------------------------------------- 
@@ -126,7 +127,8 @@ function top_parent($id = null) {
 
 
 // ------------------------------------------------------------------- 
-// --------- top parent with thumbnail -- get top-most parent ID
+// --------- top parent with thumbnail
+// --------- get top-most parent that has a featured image
 // ------------------------------------------------------------------- 
 
 function top_parent_with_thumbnail($id = null) {
@@ -191,13 +193,16 @@ if (!is_admin()) {
 		wp_register_script('inflickity', get_template_directory_uri() . '/js/vendor/inflickity.js', array('jquery'), null, true);
 		wp_enqueue_script('inflickity');
 
+		wp_register_script('queue', get_template_directory_uri() . '/js/vendor/Queue.js', array('jquery'), null, true);
+		wp_enqueue_script('queue');
+
 		wp_register_script('requestanimationframe', get_template_directory_uri() . '/js/vendor/requestanimationframe.js', array('jquery'), null, true);
 		wp_enqueue_script('requestanimationframe');
 
 
 		// Add our CSS. Do it here instead of in the header.php file so WordPress or plugins can combine & minify CSS.
 		
-		wp_register_style('fancybox_css', get_bloginfo('template_directory') . '/js/vendor/fancybox/jquery.fancybox.css', array(), 1, "all");
+		// wp_register_style('fancybox_css', get_bloginfo('template_directory') . '/js/vendor/fancybox/jquery.fancybox.css', array(), 1, "all");
 		// wp_enqueue_style( 'fancybox_css' );
 	}
 }
@@ -206,7 +211,8 @@ add_action("init","our_scripts");
 
 
 // ------------------------------------------------------------------- 
-// ---------------------- Simplify Posts and Pages
+// ------- Custom Nav Walker (for home page menu)
+// ------- adds markup we need on that menu
 // ------------------------------------------------------------------- 
 
 class Windows_Nav_Walker extends Walker_Nav_Menu {
@@ -268,15 +274,11 @@ class Windows_Nav_Walker extends Walker_Nav_Menu {
 }
 
 
+// ------------------------------------------------------------------- 
+// ------- Custom Nav Walker (for interior navigation bar)
+// ------- adds markup we need on that menu
+// ------------------------------------------------------------------- 
 
-
-/**
- * Create HTML list of pages.
- *
- * @package WordPress
- * @since 2.1.0
- * @uses Walker
- */
 class Walker_Page_Classes extends Walker_Page {
 
 	/**

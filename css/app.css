@@ -106,12 +106,9 @@ h3 {
 }
 
 /* =============================================================================
-   Header Navigation
+   Main Navigation - Home Page
+   There's JS being injected into this menu, so check yer source if troubleshooting
    ========================================================================== */
-
-#banner {
-	/*display: none;*/
-}
 
 body.home #banner {
 	display: block;
@@ -198,26 +195,12 @@ body.home #nav-main li a span.image {
 	background-repeat: no-repeat;
 }
 
-#nav-main li a table.link {
-	display: inline-block;
-	vertical-align: middle;
-	height: 60px;
-	overflow: hidden;
-}
-
-
 #nav-main li a {
 	padding-bottom: 2px;
 	font-weight: lighter;
 	transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
 	-webkit-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
 	-moz-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
-}
-
-
-#nav-main li a .link td {
-	/*opacity: 0;*/
-	color: white;
 }
 
 body.home #nav-main li a:hover {
@@ -318,37 +301,6 @@ li#nav-events span.image.nav-events {
 }
 
 
-#main-nav-control {
-	width: 46px;
-	height: 46px;
-	left: 863px;
-	background-color: rgba(255,255,255,1);
-	display: block;
-	position: absolute;
-	background-image: url(/img/sprites.png);
-	background-position: -2px -74px;
-	background-size: 215px;
-	transition: background-color .15s linear, width .1s linear, height .1s linear;
-	-webkit-transition: background-color .15s linear, width .1s linear, height .1s linear;
-	-moz-transition: background-color .15s linear, width .1s linear, height .1s linear;
-}
-
-#main-nav-control:hover {
-	background-color: rgba(17,17,17,0.7);
-	background-position: -111px -74px;
-}
-
-#banner.active #main-nav-control {
-	width: 60px;
-	height: 60px;
-	right: -60px;
-	background-position: -62px -66px;
-}
-
-#banner.active #main-nav-control:hover {
-	background-position: -170px -66px;
-}
-
 
 /*
  =============================================================================
@@ -437,8 +389,9 @@ li#nav-events span.image.nav-events {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+
 #nav-interior li.current_page_item a,
-#nav-interior li.current_page_ancestor li.current_page_ancestor a{
+#nav-interior li.current_page_ancestor li.current_page_ancestor a {
 	border-bottom: 10px solid #ccc;
 	padding-bottom: 0;
 }
@@ -465,6 +418,8 @@ li#nav-events span.image.nav-events {
 	-moz-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
 }
 
+/* --- Section Colors --- */
+
 #nav-interior li.nav-corporate.current_page_ancestor a {
 	border-color: rgba(95, 176, 56, 1) !important;
 }
@@ -473,23 +428,21 @@ li#nav-events span.image.nav-events {
 	background-color: rgba(95, 176, 56, 1);
 }
 
+
 #nav-interior li.nav-weddings.current_page_ancestor a {
 	border-color: rgba(54, 130, 154, 1) !important;
-
 }
 
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > a {
 	background-color: rgba(54, 130, 154, 1);
-
 }
+
 
 #nav-interior li.nav-events.current_page_ancestor a {
 	border-color: rgba(186, 31, 63, 1) !important;
-
 }
 #nav-interior > ul > li.nav-events.current_page_ancestor > a {
 	background-color: rgba(186, 31, 63, 1);
-
 }
 
 
@@ -1353,14 +1306,3 @@ body.home #content-info {
 figure.alignnone { margin-left: 0; margin-right: 0; }
 
 
-
-/* =============================================================================
-   Media Queries
-   ========================================================================== */
-
-@media (max-width: 979px) {
-  /* Fix top padding when using the responsive grid with the fixed topbar */
-  body.top-navbar {
-    padding-top: 0;
-  }
-}

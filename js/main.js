@@ -1,81 +1,80 @@
 jQuery(document).ready(function($){
 
+
+// this site will be ajaxified, so we can't use regular selectors for event handlers
+// and we need to have a refreshPage() function that takes care of any DOM manipulation
+
 // ---------------------------------------
-// -------- Header Navigation
+// HOW TO HANDLE EVENT HANDLERS
+// ---------------------------------------
+
+/* 
+
+instead of $('img.gallery').on('click', ...);
+use $(document).on('click', 'img.gallery', ...)
+
+That way, when new elements are added to the page via AJAX, everything will still work.
+
+*/
+
+// ---------------------------------------
+// FUNCTIONS THAT NEED TO FIRE ON PAGE LOAD
 // ---------------------------------------
 
 /*
 
-// Helper function for case insensitive text matching
+Since we can't rely on $(document).ready() because we're using AJAX,
+we use a custom queue object to load up all the stuff that needs to happen when the page loads.
 
-$.extend($.expr[':'], {
-  'containsi': function(elem, i, match, array)
-  {
-    return (elem.textContent || elem.innerText || '').toLowerCase()
-    .indexOf((match[3] || "").toLowerCase()) >= 0;
-  }
-});
+Here's how: 
 
-// Add classes programatically in case client changes wording
+For this example function: 
+function foo(){
+	$('bar').hide();
+}
 
-// $('#nav-main li:containsi("cater")').attr('id','nav-catering');
-// $('#nav-main li:containsi("wedd")').attr('id','nav-weddings');
-// $('#nav-main li:containsi("event")').attr('id','nav-events');
+Add this line to queue:
+queue.enqueue(foo);
+
+(queue refers to window.queue, defined right after this comment)
+----------
+
+when it's time to run the queue,
+
+queue.run();
 
 */
 
+window.queue = new Queue();
 
-// Keep it in the center of the page when it's extended
 
-window.bannerWidth = $('#banner').width();
+
+// ---------------------------------------
+// -------- Home Page Navigation
+// ---------------------------------------
+
+// Keep it in the center of the page
 
 $(window).on('load resize', function() {
 	
 	var winWidth = $(window).width();
-	
+
+	/* queue the banner width as a global variable, runs faster */
+	if (typeof window.bannerWidth == 'undefined') window.bannerWidth = $('#banner').width();
+
 	$('body.home #banner').css('left', (($(window).width() - window.bannerWidth)/2) + "px");
 
 });
 
-/*
-
-// Open + close buttons
-
-$('<a href="#"></a>').appendTo('#banner .container').attr('id','main-nav-control');
-
-$('#main-nav-control').on('click', function() {
-	$banner = $('#banner');
-	
-	if($banner.hasClass('active')) {
-		// close		
-		$banner.removeClass('active');
-		$banner.stop().animate( { left: '-863px' }, 1000, function() {  } );
-		
-		} else {
-		// open		
-		$banner.stop().animate( { left: (($(window).width() - window.bannerWidth)/2) + "px" }, 1000, function() { $banner.addClass('active'); } );
-	}
-
-
-});
-
-
-
-// Open on home page load
-
-$('body.home #banner').delay(1000).animate( { left: (($(window).width() - window.bannerWidth)/2) + "px" }, 1000, function() { $banner.addClass('active'); } );
-
-*/
-
 // Rollover animation
 
-$('body.home #nav-main a').on('mouseenter', function() {
+$(document).on('mouseenter', 'body.home #nav-main a', function() {
 	var $target = $(this).parent("li");
 	var targetid = $target.attr("id");
 	
 	$('<span></span>').hide().appendTo('#nav-main a').addClass('image').addClass(targetid).fadeIn(500);
 
-}).on('mouseleave', function() {
+}).on('mouseleave', 'body.home #nav-main a', function() {
 	
 	// fade out other images and remove them
 	$('#nav-main .image').stop().fadeOut(500, function() { $(this).remove(); });
@@ -87,151 +86,154 @@ $('body.home #nav-main a').on('mouseenter', function() {
 // -------- Inside Navigation
 // ---------------------------------------
 
-if (jQuery.fn.vAlign) {
-	$('#nav-interior li a span').vAlign();
+function alignNav() {
+	if (jQuery.fn.vAlign) {
+		$('#nav-interior li a span').vAlign();
+	}
 }
-
+queue.enqueue(alignNav);
 
 // ---------------------------------------
 // -------- Background images
 // ---------------------------------------
 
-if ($('#page-header').length) {
-	if ($.fn.backstretch != 'undefined') {
-		$.backstretch( $('#page-header').data('url'), 
-						{ speed: 500, 
-						target: '#page-header',
-						positionType: 'relative' } );
-		$('#page-header').addClass('active');
-} else {
-		// fallback without backstretch plugin
-		$('#page-header').css('background-image', 'url(' + $('#page-header').data('url') + ')');
-		$('#page-header').addClass('active');	
+function backgroundImages() {
+	if ($('#page-header').length) {
+		if ($.fn.backstretch != 'undefined') {
+			$.backstretch( $('#page-header').data('url'), 
+							{ speed: 500, 
+							target: '#page-header',
+							positionType: 'relative' } );
+			$('#page-header').addClass('active');
+	} else {
+			// fallback without backstretch plugin
+			$('#page-header').css('background-image', 'url(' + $('#page-header').data('url') + ')');
+			$('#page-header').addClass('active');	
+		}
 	}
 }
-
-
+queue.enqueue(backgroundImages);
 
 // ---------------------------------------
 // -------- Photo Gallery
 // ---------------------------------------
 
-if ($('body.gallery').length) {
+function photoGallery() {
+	if ($('body.gallery').length && !$('#image-large').length) {
 
-	$('#main').prepend('<div id="image-large"><span id="prev"></span><span id="next"></span><div id="active-caption"></div></div>');
-	$('#gallery ul a').prepend('<span class="mask"></span>');
-	$('#gallery ul').width($('#gallery li:first').outerWidth(true) * $('#gallery li').length);
-	
-	// activate inflickity for the bottom bar
-	
-	window.myFlickity = new Inflickity( $('div#gallery')[0], {
-	  // options
-	  // you can overwrite these defaults as you like
-	  clones: 2,
-	  friction: 0.03,
-	  maxContactPoints: 3,
-	  offsetAngle: 0,
-	  onClick: undefined,
-	  animationDuration: 400,
-	  // basically jQuery swing
-	  easing: function( progress, n, firstNum, diff ) {
-		return ( ( -Math.cos( progress * Math.PI ) / 2 ) + 0.5 ) * diff + firstNum;
-	  }
-	});
-	
-	// Adjust height of image enlargement to fit window	
-	$(window).on('resize load', function() {
-		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-1); 
-	});
-	
-	// make enlargements work on click 
-	
-	$('#gallery a').on('click',function(e) {
-		e.preventDefault();	
-		galleryImage($(this));
-	});
-	
-	// load the first image
-	
-	galleryImage($('#gallery a:first'));
-	
-	// forward and next buttons
-	
-	$('#image-large #next').on('click', function() {
-		var $active = window.activeImage.closest('li');
+		$('#main').prepend('<div id="image-large"><span id="prev"></span><span id="next"></span><div id="active-caption"></div></div>');
+		$('#gallery ul a').prepend('<span class="mask"></span>');
+		$('#gallery ul').width($('#gallery li:first').outerWidth(true) * $('#gallery li').length);
 		
-		if ($active.is(':last-child')) {
-			galleryImage($active.prevAll().last().find("a"));
-		} else {
-			galleryImage($active.next().find("a"));
-		}
-	
-	
-	});
-	
-	$('#image-large #prev').on('click', function() {
-	
-		var $active = window.activeImage.closest('li');
+		// activate inflickity for the bottom banner
+		window.myFlickity = new Inflickity( $('div#gallery')[0], {
+		  // options
+		  // you can overwrite these defaults as you like
+		  clones: 2,
+		  friction: 0.03,
+		  maxContactPoints: 3,
+		  offsetAngle: 0,
+		  onClick: undefined,
+		  animationDuration: 400,
+		  // basically jQuery swing
+		  easing: function( progress, n, firstNum, diff ) {
+			return ( ( -Math.cos( progress * Math.PI ) / 2 ) + 0.5 ) * diff + firstNum;
+		  }
+		});
+			
+		// load the first image
 		
-		if ($active.is(':first-child')) {
-			galleryImage($active.nextAll().last().find("a"));
-		} else {
-			galleryImage($active.prev().find("a"));
-		}
-	
-	
-	});
-	
-	
-	
-	
-	
-	
-	
-	function galleryImage($elem) {
-		
-		var img = $elem.attr('href');
-		var $li = $elem.closest('li');
-		
-		window.activeImage = $elem;
-		
-		// modify image
-		
-		if ($.fn.backstretch != 'undefined') {
-			$.backstretch( img, 
-							{ speed: 500, 
-							target: '#image-large',
-							positionType: 'relative' } );
-			$('#gallery .active').removeClass('active');
-			var idx = $elem.closest('li').index() + 1;
-			$('#gallery li:nth-child('+idx+')').addClass('active');
-				
-		} else {
-			// fallback without backstretch plugin
-			$('#page-header').css('background-image', 'url(' + img + ')');
-			$('#gallery li a[href="'+img+'"]').closest('li').addClass('active');
-			$elem.closest('li').addClass('active');
-		}
-		
-		// change caption
-		
-		$('#active-caption').html($li.find('.caption').html());
-		
-		
+		galleryImage($('#gallery a:first'));
+
+	}
+}
+
+queue.enqueue(photoGallery);
+
+// Adjust height of image enlargement to fit window	
+$(window).on('resize load', function() {
+	if ($('#image-large').length) {
+		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-1);
+	}
+});
+
+// make enlargements work on click 
+
+$(document).on('click','#gallery a',function(e) {
+	e.preventDefault();	
+	galleryImage($(this));
+});
 
 
-		// scroll this element to the front
-		
-		var position = $elem.closest('li').position().left;
-		var midline = $(window).width() / 2;
-		position = midline - position - ($('#gallery li:first').outerWidth(true)/2);
-		
-		myFlickity.scrollTo(position, 500);
+// forward and next buttons
+$(document).on('click', '#image-large #next', function() {
+	var $active = window.activeImage.closest('li');
 	
+	if ($active.is(':last-child')) {
+		galleryImage($active.prevAll().last().find("a"));
+	} else {
+		galleryImage($active.next().find("a"));
+	}
+});
+
+$(document).on('click', '#image-large #prev', function() {
+
+	var $active = window.activeImage.closest('li');
+	
+	if ($active.is(':first-child')) {
+		galleryImage($active.nextAll().last().find("a"));
+	} else {
+		galleryImage($active.prev().find("a"));
+	}
+
+});
+	
+
+
+function galleryImage($elem) {
+	
+	var img = $elem.attr('href');
+	var $li = $elem.closest('li');
+	
+	window.activeImage = $elem;
+	
+	// modify image
+	
+	if ($.fn.backstretch != 'undefined') {
+		$.backstretch( img, 
+						{ speed: 500, 
+						target: '#image-large',
+						positionType: 'relative' } );
+		$('#gallery .active').removeClass('active');
+		var idx = $elem.closest('li').index() + 1;
+		$('#gallery li:nth-child('+idx+')').addClass('active');
+			
+	} else {
+		// fallback without backstretch plugin
+		$('#page-header').css('background-image', 'url(' + img + ')');
+		$('#gallery li a[href="'+img+'"]').closest('li').addClass('active');
+		$elem.closest('li').addClass('active');
 	}
 	
+	// change caption
 	
+	$('#active-caption').html($li.find('.caption').html());
+	
+	
+
+
+	// scroll this element to the front
+	
+	var position = $elem.closest('li').position().left;
+	var midline = $(window).width() / 2;
+	position = midline - position - ($('#gallery li:first').outerWidth(true)/2);
+	
+	myFlickity.scrollTo(position, 500);
+
 }
+
+
+
 
 
 // ---------------------------------------
@@ -281,19 +283,43 @@ if ($('body.gallery').length) {
 
 // Activate masonry/isotope
 
-$('body.lookbook #content').isotope({
-	itemSelector: '.type-lookbook',
-	masonry: {
-		columnWidth: 159,
-		cornerStampSelector: '#main',
-		cornerStampOffset: 4
-		}
-});
+function lookbook() {
+	$('body.lookbook #content').isotope({
+		itemSelector: '.type-lookbook',
+		masonry: {
+			columnWidth: 159,
+			cornerStampSelector: '#main',
+			cornerStampOffset: 4
+			}
+	});
 
+	$('.fancybox').fancybox({
+		openEffect	: 'elastic',
+    	closeEffect	: 'elastic',
+    	padding: 0,
+    	beforeShow: function() {
+    		this.title = $(this.element).next('.caption').html();
+    		},
+    	helpers: {
+    		title: { type: 'inside' }
+    		}
+    	    	/* 
+    	nextMethod : 'resizeIn',
+        nextSpeed : 250,
+        
+        prevMethod : 'resizeOut',
+        prevSpeed : 250
+		*/
+
+    	}
+	);
+}
+
+queue.enqueue(lookbook);
 
 // Make lookbook LIs filter results when clicked
 
-$('body.lookbook #main li').on('click', function() {
+$(document).on('click', 'body.lookbook #main li', function() {
 	
 	$(this).toggleClass("active");
 
@@ -358,28 +384,8 @@ $('body.lookbook #main li').on('click', function() {
 }(jQuery, jQuery.fancybox));
 
 
-$('.fancybox').fancybox({
-		openEffect	: 'elastic',
-    	closeEffect	: 'elastic',
-    	padding: 0,
-    	beforeShow: function() {
-    		this.title = $(this.element).next('.caption').html();
-    		},
-    	helpers: {
-    		title: { type: 'inside' }
-    		}
-    	    	/* 
-    	nextMethod : 'resizeIn',
-        nextSpeed : 250,
-        
-        prevMethod : 'resizeOut',
-        prevSpeed : 250
-		*/
-
-    	}
 
 
-);
 
 
 // ---------------------------------------
@@ -389,27 +395,38 @@ $('.fancybox').fancybox({
 // We use fancy footwork here to split the contact form
 // into multiple columns by section break
 
-$('.gform_body li.gsection:eq(1)').each(function() {
+function contactForm() {
 
-	var $col = $(this).nextAll().andSelf();
-	var $ul = $(this).closest("ul").addClass("col");
-	$ul.after("<ul></ul>").next("ul").addClass($ul.attr("class")).addClass("last").append($col);
+	$('.gform_body li.gsection:eq(1)').each(function() {
 
-});
+		var $col = $(this).nextAll().andSelf();
+		var $ul = $(this).closest("ul").addClass("col");
+		$ul.after("<ul></ul>").next("ul").addClass($ul.attr("class")).addClass("last").append($col);
 
-
-$('.gf_list_2col ul').each(function() {
-	
-	var $ul = $(this);
-	var $lis = $ul.find('li');
-
-	var numitems = $lis.length;
-	var $col = $lis.slice(Math.floor(numitems/2));
-	$ul.addClass("col").after("<ul></ul>").next("ul").addClass($(this).attr("class")).addClass("last").append($col);
-
-});
+	});
 
 
+	$('.gf_list_2col ul').each(function() {
+		
+		var $ul = $(this);
+		var $lis = $ul.find('li');
+
+		var numitems = $lis.length;
+		var $col = $lis.slice(Math.floor(numitems/2));
+		$ul.addClass("col").after("<ul></ul>").next("ul").addClass($(this).attr("class")).addClass("last").append($col);
+
+	});
+
+}
+
+queue.enqueue(contactForm);
+
+
+// --------------------------------------
+// ------ Run the queue -- this should be last
+// --------------------------------------
+
+queue.run();
 
 });
 
