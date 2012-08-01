@@ -8,7 +8,7 @@ if (have_posts()) {
 	return;
 }
 
-<?php get_header(); ?>
+get_header(); ?>
   <?php roots_content_before(); ?>
     <div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
     <?php roots_main_before(); ?>
