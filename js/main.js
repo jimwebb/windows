@@ -1,27 +1,26 @@
 jQuery(document).ready(function($){
 
+/*
+
+// NOTES
+// ---------------------------------------
 
 // this site will be ajaxified, so we can't use regular selectors for event handlers
 // and we need to have a refreshPage() function that takes care of any DOM manipulation
 
-// ---------------------------------------
+
 // HOW TO HANDLE EVENT HANDLERS
 // ---------------------------------------
-
-/* 
 
 instead of $('img.gallery').on('click', ...);
 use $(document).on('click', 'img.gallery', ...)
 
 That way, when new elements are added to the page via AJAX, everything will still work.
 
-*/
 
-// ---------------------------------------
+
 // FUNCTIONS THAT NEED TO FIRE ON PAGE LOAD
 // ---------------------------------------
-
-/*
 
 Since we can't rely on $(document).ready() because we're using AJAX,
 we use a custom queue object to load up all the stuff that needs to happen when the page loads.
@@ -44,6 +43,10 @@ when it's time to run the queue,
 queue.run();
 
 */
+
+
+
+// Set up queue. Make it part of the window object so it's global.
 
 window.queue = new Queue();
 
@@ -86,12 +89,16 @@ $(document).on('mouseenter', 'body.home #nav-main a', function() {
 // -------- Inside Navigation
 // ---------------------------------------
 
+// vertically align titles within the nav bar 
+
 function alignNav() {
 	if (jQuery.fn.vAlign) {
 		$('#nav-interior li a span').vAlign();
 	}
 }
 queue.enqueue(alignNav);
+
+
 
 // ---------------------------------------
 // -------- Background images
@@ -113,6 +120,103 @@ function backgroundImages() {
 	}
 }
 queue.enqueue(backgroundImages);
+
+
+
+// ---------------------------------------
+// -------- AJAXify site
+// ---------------------------------------
+
+
+$(document).on('click', 'nav a', function(e) {
+
+
+// ready to start working on ajax? Comment or remove this line:
+return;
+
+
+	e.preventDefault();
+
+	var url = $(this).attr("href");
+	var $clicked = $(e.target);
+
+	// what got clicked?
+
+	if ($clicked.closest('#banner').length) {
+
+		// this is a top nav item
+		var target = "#wrap";
+
+	} else if ($clicked.closest('#nav-subsection').length) {
+
+		// this is a sub nav item
+		var target = "#main";
+
+	} else {
+
+		// fallback
+		var target = "#wrap";
+	}
+
+
+	$.pjax({
+		url: url,	
+		container: target,
+		timeout: 5000,
+		fragment: target
+	});
+
+	// TODO: Update CSS class (e.g., current_page_item) in the nav bar once clicked
+
+});
+
+
+$('#wrap').on('pjax:start',function(e) { 
+
+	// fade out the page
+	$target = $(e.target);
+
+	$target.animate( {opacity: 0} , 300, function () {
+		// TODO: Add loading animation here
+		})
+});
+
+
+$('#wrap').on('pjax:end',function(e) { 
+
+	// TODO: Remove loading animation if one was added
+
+	$target = $(e.target);
+	
+	// fade in the new page
+	$target.stop().css('opacity', 0).animate( {opacity: 1} , 300);
+
+	// run the "document's loaded" queue
+	queue.run();
+});
+
+
+
+// ------ Update classes on <body> on any PJAX load 
+
+$(document).on('pjax:success', function(event, data) {
+
+	var bodytag = /<body.*?class=[\"\'](.*?)[\"\'].*?>/i;
+	var body = bodytag.exec(data);
+
+	if (body != null) {
+		$("body").attr("class", body[1]);
+	} 
+	
+});
+
+
+
+
+
+
+
+
 
 // ---------------------------------------
 // -------- Photo Gallery
