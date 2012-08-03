@@ -6,7 +6,7 @@ jQuery(document).ready(function($){
 // ---------------------------------------
 
 // this site will be ajaxified, so we can't use regular selectors for event handlers
-// and we need to have a refreshPage() function that takes care of any DOM manipulation
+// and we need to have a refreshPage()-like function that takes care of any DOM manipulation
 
 
 // HOW TO HANDLE EVENT HANDLERS
@@ -23,19 +23,19 @@ That way, when new elements are added to the page via AJAX, everything will stil
 // ---------------------------------------
 
 Since we can't rely on $(document).ready() because we're using AJAX,
-we use a custom queue object to load up all the stuff that needs to happen when the page loads.
+we use a custom queue object to load up all the stuff that needs to happen each time a new page loads.
 
-Here's how: 
+Here's how -- 
 
 For this example function: 
-function foo(){
+function myFunction(){
 	$('bar').hide();
 }
 
-Add this line to queue:
-queue.enqueue(foo);
+Add this line to queue it on each page load:
+queue.enqueue(myFunction);
 
-(queue refers to window.queue, defined right after this comment)
+(queue refers to window.queue, an object instantiated right after this comment)
 ----------
 
 when it's time to run the queue,
@@ -346,7 +346,6 @@ function galleryImage($elem) {
 
 
 // Isotope modification to allow cornerstamping
-// but this cornerstamp can be offset (e.g., not all the way to the right)
 
   $.Isotope.prototype._masonryResizeChanged = function() {
     return true;
