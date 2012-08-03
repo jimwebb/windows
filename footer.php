@@ -4,7 +4,16 @@
   <?php roots_footer_before(); ?>
   <footer id="content-info" class="<?php echo WRAP_CLASSES; ?>" role="contentinfo">
     <?php roots_footer_inside(); ?>
-    <?php dynamic_sidebar('sidebar-footer'); ?>
+    <div class="footer-wrap">
+	    <div class="footer-content">
+	    <?php dynamic_sidebar('sidebar-footer'); ?>
+	    </div>
+	    <ul id="social">
+	    	<li class="fb"><a href="" target="_blank">Facebook</a></li>
+	    	<li class="tw"><a href="" target="_blank">Twitter</a></li>
+	    	<li class="pin"><a href="" target="_blank">Pinterest</a></li>
+	    </ul>
+    </div>
   </footer>
   <?php roots_footer_after(); ?>
 
