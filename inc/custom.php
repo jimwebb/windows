@@ -184,6 +184,9 @@ if (!is_admin()) {
 		wp_register_script('backstretch', get_template_directory_uri() . '/js/vendor/jquery.backstretch.min.js', array('jquery'), null, true);
 		wp_enqueue_script('backstretch');
 		
+		wp_register_script('pjax', get_template_directory_uri() . '/js/vendor/jquery.pjax.js', array('jquery'), null, true);
+		wp_enqueue_script('pjax');
+		
 		wp_register_script('isotope', get_template_directory_uri() . '/js/vendor/jquery.isotope.min.js', array('jquery'), null, true);
 		wp_enqueue_script('isotope');
 

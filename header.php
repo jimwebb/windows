@@ -25,6 +25,8 @@
   <!--[if lt IE 7]><div class="alert">Your browser is outdated! <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</div><![endif]-->
 
   <?php roots_header_before(); ?>
+  
+  <div id="wrap" class="<?php echo WRAP_CLASSES; ?>" role="document">
 
   <?php if (is_home() || is_front_page()) { ?>
   
@@ -72,7 +74,6 @@
   <?php roots_header_after(); ?>
 
   <?php roots_wrap_before(); ?>
-  <div id="wrap" class="<?php echo WRAP_CLASSES; ?>" role="document">
   
  
 	

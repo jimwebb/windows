@@ -54,6 +54,14 @@ a:hover {
 	text-decoration: underline;
 }
 
+* {
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
 
 html, body { 
 	height: 100%;
@@ -67,11 +75,12 @@ html, body {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0px auto -75px 0;
+	margin: 0px auto -35px 0;
 	padding: 0; 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	position: relative;
 }
 
 
@@ -139,6 +148,7 @@ body.home #banner a.brand,
 	position: absolute;
 	z-index: 10;
 	margin: 15px 8px;
+	border-left: none;
 }
 
 
@@ -321,6 +331,7 @@ li#nav-events span.image.nav-events {
 
 #nav-interior li a span {
 	display: block;
+	padding-top: 2px;
 }
 
 #nav-interior li {
@@ -345,7 +356,6 @@ li#nav-events span.image.nav-events {
 }
 
 #nav-interior > ul > li.current_page_ancestor > a { 
-	width: auto;
 	color: white;
 	background-color: #ccc;
 }
@@ -353,6 +363,14 @@ li#nav-events span.image.nav-events {
 #nav-interior ul.children {
 	/* ugly hack because it's inline-block -- consider floats instead */
 	margin-left: -4px;
+}
+
+#nav-interior li a {
+	border-left: 2px solid #ccc;
+}
+
+#nav-interior ul.children a, #nav-interior li.nav-corporate a {
+	border-left: none;
 }
 
 #nav-interior li.current_page_ancestor ul,
@@ -366,8 +384,8 @@ li#nav-events span.image.nav-events {
 
 #nav-interior li a {
 	display:inline-block;
-	height:50px;
-	width:90px;
+	height:30px;
+	width:95px;
 	padding-left: 10px;
 	padding-right: 10px;
 	-moz-box-sizing: border-box;
@@ -375,6 +393,8 @@ li#nav-events span.image.nav-events {
 	box-sizing: border-box;
 	font-weight: bold;
 	color: #363636;
+	margin: 10px 0;
+	text-align: center;
 }
 
 #nav-interior li li a {
@@ -383,6 +403,9 @@ li#nav-events span.image.nav-events {
 	font-weight: normal;
 	color: black;
 	width:70px;
+	height: 50px;
+	margin: 0;
+	line-height: 35px;
 }
 
 #nav-interior li li a {
@@ -422,6 +445,8 @@ li#nav-events span.image.nav-events {
 
 #nav-interior li.nav-corporate.current_page_ancestor a {
 	border-color: rgba(95, 176, 56, 1) !important;
+	height: 50px;
+	margin: 0;
 }
 
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > a {
@@ -431,10 +456,14 @@ li#nav-events span.image.nav-events {
 
 #nav-interior li.nav-weddings.current_page_ancestor a {
 	border-color: rgba(54, 130, 154, 1) !important;
+	height: 50px;
+	margin: 0;
 }
 
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > a {
 	background-color: rgba(54, 130, 154, 1);
+	height: 50px;
+	margin: 0;
 }
 
 
@@ -1261,12 +1290,21 @@ ol.commentlist img.avatar { float: left; margin-right: 10px; }
    ========================================================================== */
 
 #content-info {
-	text-align: center;
 	font-size: 11px;
 	line-height: 35px;
 	vertical-align: middle;
-	background-color: #dcdcdc;
 	color:  #6d6e70;
+	position: relative;
+	z-index: 10;
+}
+
+.footer-wrap {
+	width: 921px;
+	margin: 0 auto;
+}
+
+.footer-content {
+	float: left;
 }
 
 body.home #content-info {
@@ -1287,11 +1325,34 @@ body.home #content-info {
 }
 
 body.home #footer-push, body.home #content-info {
-	height: 55px;
+	height: 35px;
 }
 
 body.home #content-info {
-	line-height: 55px;
+	line-height: 35px;
+}
+
+#social {
+	list-style: none;
+	margin: 0;
+	padding: 5px 0;
+	float: left;
+	margin-left: 10px;
+}
+
+#social li {
+	float: left;
+	width: 21px;
+	height: 21px;
+	margin-left: 5px;
+}
+
+#social li a {
+	display: block;
+	width: 21px;
+	height: 21px;
+	text-indent: -9999px;
+	background: #6d6e70;
 }
 
 /* =============================================================================
