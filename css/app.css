@@ -54,6 +54,14 @@ a:hover {
 	text-decoration: underline;
 }
 
+* {
+	margin: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
 
 html, body { 
 	height: 100%;
@@ -67,11 +75,12 @@ html, body {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0px auto -75px 0;
+	margin: 0px auto -35px 0;
 	padding: 0; 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
+	position: relative;
 }
 
 
@@ -1287,11 +1296,11 @@ body.home #content-info {
 }
 
 body.home #footer-push, body.home #content-info {
-	height: 55px;
+	height: 35px;
 }
 
 body.home #content-info {
-	line-height: 55px;
+	line-height: 35px;
 }
 
 /* =============================================================================

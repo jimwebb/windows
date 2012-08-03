@@ -45,6 +45,17 @@ queue.run();
 
 */
 
+
+
+/*---TESTING---*/
+$('a').pjax('#main');
+$(document)
+  .on('pjax:start', function() { console.log('starting pjax...') })
+  .on('pjax:end',   function() { console.log('page fetched…') });
+/*---END TESTING---*/
+
+
+
 window.queue = new Queue();
 
 
@@ -153,7 +164,7 @@ queue.enqueue(photoGallery);
 // Adjust height of image enlargement to fit window	
 $(window).on('resize load', function() {
 	if ($('#image-large').length) {
-		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-1);
+		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-51);
 	}
 });
 
