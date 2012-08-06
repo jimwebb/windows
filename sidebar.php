@@ -7,7 +7,7 @@
 // $grandparent = get_post(top_parent());
 
 ?>
-<h1><?php echo get_the_title(top_parent()); ?></h1>
+<h1><?php echo get_the_title($post->post_parent); ?></h1>
 
 <?php
 
