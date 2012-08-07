@@ -90,6 +90,12 @@ p {
 	color: #111;
 }
 
+ul, ol {
+	font-size: 14px;
+	line-height: 1.4em;
+	color: #686868;
+}
+
 h1 {
 	font-size: 25px;
 	font-weight: 100;
