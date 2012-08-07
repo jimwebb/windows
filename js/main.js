@@ -81,12 +81,31 @@ $(document).ready( function() {
 
 	resize();
     
-	$('#nav-main > ul > li span').cycle({
+	$('#nav-main > ul > li span.corp').cycle({
 		fx: 'fade',
 		random: 1,
 		slideResize: 0,
 		containerResize: 0,
-		width: '100%'
+		width: '100%',
+		delay: 500
+	});
+	
+	$('#nav-main > ul > li span.wed').cycle({
+		fx: 'fade',
+		random: 1,
+		slideResize: 0,
+		containerResize: 0,
+		width: '100%',
+		delay: 2400
+	});
+	
+	$('#nav-main > ul > li span.spec').cycle({
+		fx: 'fade',
+		random: 1,
+		slideResize: 0,
+		containerResize: 0,
+		width: '100%',
+		delay: 1200
 	});
 	
 	$(document).on('mouseenter', 'body.home #nav-main a', function() {
@@ -171,7 +190,6 @@ $(document).on('click', 'nav a', function(e) {
 		
 		// if top parent link is clicked remove all other active states and apply an active state to first secondary nav item
 		if($(this).parent().closest('ul').length == 1) {
-			alignNav();
 			$(this).parent().parent().find('ul').children().removeClass('current_page_ancestor');
 			$(this).parent().find('ul').children(':first-child').addClass('current_page_ancestor');
 		}
@@ -270,10 +288,6 @@ function photoGallery() {
 		$('#gallery ul a').prepend('<span class="mask"></span>');
 		$('#gallery ul').width($('#gallery li:first').outerWidth(true) * $('#gallery li').length);
 		
-		if ($('#image-large').length) {
-			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-51);
-		}
-		
 		// activate inflickity for the bottom banner
 		window.myFlickity = new Inflickity( $('div#gallery')[0], {
 		  // options
@@ -293,6 +307,10 @@ function photoGallery() {
 		// load the first image
 		
 		galleryImage($('#gallery a:first'));
+		
+		if ($('#image-large').length) {
+			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-51);
+		}
 
 	}
 }
