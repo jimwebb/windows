@@ -429,7 +429,7 @@ body.home #banner a.brand,
 	background-color: rgba(186, 31, 63, 1);
 }
 
-#nav-interior li.nav-about.current_page_ancestor a {
+#nav-interior li.menu-our-company.current_page_ancestor a {
 	height: 50px;
 	margin: 0;
 }
