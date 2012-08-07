@@ -469,9 +469,16 @@ li#nav-events span.image.nav-events {
 
 #nav-interior li.nav-events.current_page_ancestor a {
 	border-color: rgba(186, 31, 63, 1) !important;
+	height: 50px;
+	margin: 0;
 }
 #nav-interior > ul > li.nav-events.current_page_ancestor > a {
 	background-color: rgba(186, 31, 63, 1);
+}
+
+#nav-interior li.nav-about.current_page_ancestor a {
+	height: 50px;
+	margin: 0;
 }
 
 
