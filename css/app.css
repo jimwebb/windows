@@ -1120,7 +1120,7 @@ body.weddings #nav-section li a:hover {
 body.events #nav-section li.current_page_ancestor a,
 body.events #nav-section li.current_page_item a,
 body.events #nav-section li a:hover {
-	background-color: #a13e78;
+	background-color: #ba1f3f;
 }
 
 
@@ -1168,7 +1168,7 @@ body.weddings #main strong {
 body.events #sidebar h1,
 body.events #sidebar li.current_page_item a,
 body.events #main strong {
-	color: #a13e78;
+	color: #ba1f3f;
 }
 
 
