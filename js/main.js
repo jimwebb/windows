@@ -65,31 +65,45 @@ window.queue = new Queue();
 // -------- Home Page Navigation
 // ---------------------------------------
 
-// Keep it in the center of the page
-
-$(window).on('load resize', function() {
-	
-	var winWidth = $(window).width();
-
-	/* queue the banner width as a global variable, runs faster */
-	if (typeof window.bannerWidth == 'undefined') window.bannerWidth = $('#banner').width();
-
-	$('body.home #banner').css('left', (($(window).width() - window.bannerWidth)/2) + "px");
-
+$(window).resize( function() {
+	resize();
 });
 
-// Rollover animation
+function resize() {
+	var winWidth = $(window).width();
+	var headerWidth = Math.floor( winWidth - (($(window).width() / 10) * 2) );
+	var boxSize = Math.floor( (headerWidth/4)-5 );
+	$('header').css('width', headerWidth);
+	$('#nav-main > ul > li').css({'width': boxSize, 'height': boxSize});
+}
 
-$(document).on('mouseenter', 'body.home #nav-main a', function() {
-	var $target = $(this).parent("li");
-	var targetid = $target.attr("id");
-	
-	$('<span></span>').hide().appendTo('#nav-main a').addClass('image').addClass(targetid).fadeIn(500);
+$(document).ready( function() {
 
-}).on('mouseleave', 'body.home #nav-main a', function() {
+	resize();
+    
+	$('#nav-main > ul > li span').cycle({
+		fx: 'fade',
+		random: 1,
+		slideResize: 0,
+		containerResize: 0,
+		width: '100%'
+	});
 	
-	// fade out other images and remove them
-	$('#nav-main .image').stop().fadeOut(500, function() { $(this).remove(); });
+	$(document).on('mouseenter', 'body.home #nav-main a', function() {
+		
+		var $target = $(this).parent('li');
+		var imgSrc = $target.attr('class');
+		
+		$('#nav-main > ul > li > a').each( function(index) {
+			$('<img src="/img/'+imgSrc+index+'.jpg">').hide().addClass('image').appendTo(this).fadeIn(400);
+		});
+	
+	}).on('mouseleave', 'body.home #nav-main a', function() {
+		
+		// fade out other images and remove them
+		$('#nav-main .image').stop().fadeOut(400, function() { $(this).remove(); });
+	
+	});
 
 });
 

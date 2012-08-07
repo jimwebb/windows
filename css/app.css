@@ -125,24 +125,101 @@ h3 {
    There's JS being injected into this menu, so check yer source if troubleshooting
    ========================================================================== */
 
-body.home #banner {
-	display: block;
+header {
+	margin: 0 auto;
 }
 
-body.home #banner {
-	position: absolute;
-	top: 200px;
-	z-index:100;
-	/*left: 50%;*/
-/* left: -863px; */
-}
-
-body.home #banner .container {
+.home #banner {
+	height: auto;
+	z-index: 15;
 	position: relative;
-	width: 863px;
-	margin: 0;
-
 }
+
+#nav-main {
+	margin-top: 175px;
+	position: absolute;
+}
+
+#nav-main ul {
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+}
+
+#nav-main > ul > li {
+	display: block;
+	background: #222;
+	float: left;
+	margin-right: 1px;
+	position: relative;
+}
+
+#nav-main li.logo {
+	background: transparent;
+}
+
+#nav-main > ul > li > a {
+	position: relative;
+	display: block;
+	width: 100%;
+	padding-top: 100%;
+	text-align: center;
+	line-height: 36px;
+	text-decoration: none;
+	color: #222;
+	font-weight: 300;
+	text-transform: uppercase;
+	font-size: 18px;
+	transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
+	-webkit-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
+	-moz-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
+}
+
+#nav-main > ul > li > a:hover {
+	background: #222;
+	color: #fff;
+}
+
+#nav-main li.corp a:hover {
+	background-color: rgba(95, 176, 56, 1);
+}
+
+#nav-main li.wed a:hover {
+	background-color: rgba(54, 130, 154, 1);
+}
+
+#nav-main li.spec a:hover {
+	background-color: rgba(186, 31, 63, 1);
+}
+
+#nav-main span {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#nav-main span img {
+	display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+/*-----Rollover Effects-----*/
+
+body.home #nav-main li a .image {
+	display: block;
+	width: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+}
+
+
+
 body.home #banner a.brand,
 #nav-interior .menu-home a {
 	width: 215px;
@@ -155,136 +232,6 @@ body.home #banner a.brand,
 	z-index: 10;
 	margin: 15px 8px;
 	border-left: none;
-}
-
-
-body.home #nav-main {
-	position: absolute;
-	top: 0;
-	right: 0;
-}
-
-#nav-main ul {
-	margin: 0;
-	padding: 0;
-}
-
-body.home #nav-main li {
-	width: 215px;
-	height: 215px;
-	display: block;
-	float: left;
-	vertical-align: top;
-	margin: 0 0 0 1px;
-	padding: 0;
-	background-repeat: no-repeat;
-	background-color: white;
-}
-
-body.home #nav-main li {
-	background-image: url(/img/navigation.jpg);
-	background-color: transparent;
-}
-
-body.home #nav-main li a {
-	width: 215px;
-	display: block;
-	position: relative;
-	text-transform: uppercase;
-	text-decoration: none;
-	z-index: 100;
-	padding-top: 220px;
-	text-align: center;
-	font-size: 16px;
-	color: #363636;
-}
-
-
-body.home #nav-main li a span.image {
-	display: block;
-	width: 215px;
-	height: 215px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-image: url(/img/navigation.jpg);
-	background-repeat: no-repeat;
-}
-
-#nav-main li a {
-	padding-bottom: 2px;
-	font-weight: lighter;
-	transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
-	-webkit-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
-	-moz-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
-}
-
-body.home #nav-main li a:hover {
-	color: white;
-	font-weight: bold;
-}
-
-#nav-main li#nav-corporate {
-}
-
-body.home #nav-main li#nav-corporate a:hover {
-	background-color: rgba(95, 176, 56, 1);
-	color: white;
-}
-
-#nav-main li#nav-weddings,
-li#nav-weddings span.image.nav-weddings {
-	background-position: -216px -215px;
-}
-
-body.home #nav-main li#nav-weddings a:hover {
-	background-color: rgba(54, 130, 154, 1);
-	color: white;
-
-}
-
-#nav-main li#nav-events,
-li#nav-events span.image.nav-events {
-	background-position: -432px -430px;
-}
-
-body.home #nav-main li#nav-events a:hover{
-	background-color: rgba(186, 31, 63, 1);
-	color: white;
-
-}
-
-
-/* ---------- Rollover effects ------------ */
-
-li#nav-weddings span.image.nav-corporate {
-	background-position: -216px 0;
-}
-li#nav-events span.image.nav-corporate {
-	background-position: -432px 0;
-}
-
-
-li#nav-corporate span.image.nav-weddings {
-	background-position: 0 -215px;
-}
-li#nav-events span.image.nav-weddings {
-	background-position: -432px -215px;
-}
-
-
-
-li#nav-corporate span.image.nav-events {
-	background-position: 0 -430px;
-}
-li#nav-weddings span.image.nav-events {
-	background-position: -216px -430px;
-}
-
-li#nav-corporate span.image.nav-corporate,
-li#nav-weddings span.image.nav-weddings,
-li#nav-events span.image.nav-events {
-	z-index:-1;
 }
 
 

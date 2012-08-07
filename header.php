@@ -30,21 +30,61 @@
 
   <?php if (is_home() || is_front_page()) { ?>
   
-	<header id="banner" role="banner">
-	  <?php roots_header_inside(); ?>
-	  <div class="<?php echo WRAP_CLASSES; ?>">
-		<a class="brand" href="<?php echo home_url(); ?>/">
-		  <?php bloginfo('name'); ?>
+	<!--
+<header id="banner" role="banner">
+	  <?php //roots_header_inside(); ?>
+	  <div class="<?php //echo WRAP_CLASSES; ?>">
+		<a class="brand" href="<?php //echo home_url(); ?>/">
+		  <?php //bloginfo('name'); ?>
 		</a>
 		<nav id="nav-main" role="navigation">
-		  <?php wp_nav_menu(array('theme_location' => 'primary_navigation', 'walker' => new Windows_Nav_Walker(), 'menu_class' => 'nav')); ?>
-		</nav>
-	
-		<nav id="nav-utility" role="navigation">
-		  <?php wp_nav_menu(array('theme_location' => 'utility_navigation', 'walker' => new Roots_Navbar_Nav_Walker(), 'menu_class' => 'nav')); ?>
+		  <?php //wp_nav_menu(array('theme_location' => 'primary_navigation', 'walker' => new Windows_Nav_Walker(), 'menu_class' => 'nav')); ?>
 		</nav>
 
 	  </div>
+	</header>
+-->
+
+<?php
+
+$menu_name = 'primary_navigation';
+
+    if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) {
+	$menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
+
+	$menu_items = wp_get_nav_menu_items($menu->term_id);
+
+	$menu_list = '';
+
+	foreach ( (array) $menu_items as $key => $menu_item ) {
+	    $title = $menu_item->title;
+	    $slug = $menu_item->attr_title;
+	    $url = $menu_item->url;
+	    $menu_list .= '<li class="' . $slug . '"><a href="' . $url . '">' . $title . '';
+	    $menu_list .= '<span class="'.$slug.'">';
+	    $menu_list .= '<img src="img/'.$slug.'0.jpg" />';
+	    $menu_list .= '<img src="img/'.$slug.'3.jpg" />';
+	    $menu_list .= '<img src="img/'.$slug.'4.jpg" />';
+	    $menu_list .= '<img src="img/'.$slug.'5.jpg" />';
+	    $menu_list .= '</span></a></li>';
+	}
+    }
+?>
+	
+	
+	<header id="banner">
+		<nav id="nav-main">
+			<ul>
+				<li class="logo">
+					  <?php bloginfo('name'); ?>
+					<nav id="nav-utility" role="navigation">
+					  <?php wp_nav_menu(array('theme_location' => 'utility_navigation', 'walker' => new Roots_Navbar_Nav_Walker(), 'menu_class' => 'nav')); ?>
+					</nav>
+				</li>
+				<?php echo $menu_list; ?>
+			</ul>
+		</nav>
+		
 	</header>
 	
 	<?php } else { ?>

@@ -201,6 +201,9 @@ if (!is_admin()) {
 
 		wp_register_script('pjax', get_template_directory_uri() . '/js/vendor/jquery.pjax.js', array('jquery'), null, true);
 		wp_enqueue_script('pjax');
+		
+		wp_register_script('cycle', get_template_directory_uri() . '/js/vendor/jquery.cycle.all.js', array('jquery'), null, true);
+		wp_enqueue_script('cycle');
 
 		wp_register_script('requestanimationframe', get_template_directory_uri() . '/js/vendor/requestanimationframe.js', array('jquery'), null, true);
 		wp_enqueue_script('requestanimationframe');
