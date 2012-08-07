@@ -76,7 +76,7 @@ $menu_name = 'primary_navigation';
 		<nav id="nav-main">
 			<ul>
 				<li class="logo">
-					  <?php bloginfo('name'); ?>
+					  <div class="logo"><a class="brand" href="<?php echo home_url(); ?>/"><?php bloginfo('name'); ?></a></div>
 					<nav id="nav-utility" role="navigation">
 					  <?php wp_nav_menu(array('theme_location' => 'utility_navigation', 'walker' => new Roots_Navbar_Nav_Walker(), 'menu_class' => 'nav')); ?>
 					</nav>
