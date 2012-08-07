@@ -352,6 +352,7 @@ body.home #banner a.brand,
 	color: #363636;
 	margin: 10px 0;
 	text-align: center;
+	line-height: 1.2em;
 }
 
 #nav-interior li li a {
@@ -482,11 +483,22 @@ body.gallery #main {
 	background-color:black;
 	width: 158px;
 	height: 158px;
-	background-color: #36829a;
 	opacity: 0.7;
 	transition: opacity 0.5s;
 	-moz-transition: opacity 0.5s;
 	-webkit-transition: opacity 0.5s;
+}
+
+.corporate #gallery .mask {
+	background-color: #5fb038;
+}
+
+.weddings #gallery .mask {
+	background-color: #36829a;
+}
+
+.events #gallery .mask {
+	background-color: #ba1f3f;
 }
 
 #gallery li:hover .mask,
