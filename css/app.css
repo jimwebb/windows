@@ -284,7 +284,11 @@ body.home #banner a.brand,
 
 #nav-interior li a span {
 	display: block;
-	padding-top: 2px;
+	padding-top: 1px;
+}
+
+#nav-interior li li a span {
+	padding-top: 0;
 }
 
 #nav-interior li {

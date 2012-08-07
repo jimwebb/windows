@@ -116,7 +116,7 @@ $(document).ready( function() {
 
 function alignNav() {
 	if (jQuery.fn.vAlign) {
-		$('#nav-interior li a span').vAlign();
+		$('#nav-interior > ul > li > a span').vAlign();
 	}
 }
 queue.enqueue(alignNav);
@@ -150,12 +150,14 @@ queue.enqueue(backgroundImages);
 // -------- AJAXify site
 // ---------------------------------------
 
+//stop the page from jumping!
+$.pjax.defaults.scrollTo = false;
 
 $(document).on('click', 'nav a', function(e) {
 
 
 // ready to start working on ajax? Comment or remove this line:
-return;
+//return;
 
 
 	e.preventDefault();
@@ -166,19 +168,35 @@ return;
 	// what got clicked?
 
 	if ($clicked.closest('#banner').length) {
+		
+		// if top parent link is clicked remove all other active states and apply an active state to first secondary nav item
+		if($(this).parent().closest('ul').length == 1) {
+			alignNav();
+			$(this).parent().parent().find('ul').children().removeClass('current_page_ancestor');
+			$(this).parent().find('ul').children(':first-child').addClass('current_page_ancestor');
+		}
+		
+		$(this).parent().parent().children().removeClass('current_page_ancestor');
+		$(this).parent().addClass('current_page_ancestor');
 
 		// this is a top nav item
-		var target = "#wrap";
-
+		var target = "#content-wrapper";
+	
+	// if tertiary nav item is clicked
 	} else if ($clicked.closest('#nav-subsection').length) {
+	
+		// remove other active states of tertiary nav and apply active class to clicked nav item
+		$(this).parent().parent().children().removeClass('current_page_item');
+	
+		$(this).parent().addClass('current_page_item');
 
 		// this is a sub nav item
 		var target = "#main";
 
 	} else {
 
-		// fallback
-		var target = "#wrap";
+		// fallback for anything else
+		var target = "#content-wrapper";
 	}
 
 
@@ -194,7 +212,7 @@ return;
 });
 
 
-$('#wrap').on('pjax:start',function(e) { 
+$('#content-wrapper').on('pjax:start',function(e) { 
 
 	// fade out the page
 	$target = $(e.target);
@@ -205,7 +223,7 @@ $('#wrap').on('pjax:start',function(e) {
 });
 
 
-$('#wrap').on('pjax:end',function(e) { 
+$('#content-wrapper').on('pjax:end',function(e) { 
 
 	// TODO: Remove loading animation if one was added
 
@@ -251,6 +269,10 @@ function photoGallery() {
 		$('#main').prepend('<div id="image-large"><span id="prev"></span><span id="next"></span><div id="active-caption"></div></div>');
 		$('#gallery ul a').prepend('<span class="mask"></span>');
 		$('#gallery ul').width($('#gallery li:first').outerWidth(true) * $('#gallery li').length);
+		
+		if ($('#image-large').length) {
+			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-51);
+		}
 		
 		// activate inflickity for the bottom banner
 		window.myFlickity = new Inflickity( $('div#gallery')[0], {

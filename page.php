@@ -10,7 +10,8 @@
 		$bgImage = $bgImage[0];
  	
 	} ?>
-	 
+	
+	<div id="content-wrapper"> 
 	<div id="page-header" <?php if ($bgImage) echo 'data-url="' . $bgImage . '" class="background"' ; ?>>
 
     <!-- <section id="nav-section">
@@ -49,5 +50,6 @@
       </aside><!-- /#sidebar -->
     <?php roots_sidebar_after(); ?>
     </div><!-- /#content -->
+    </div>
   <?php roots_content_after(); ?>
 <?php get_footer(); ?>
