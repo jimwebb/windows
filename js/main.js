@@ -81,12 +81,31 @@ $(document).ready( function() {
 
 	resize();
     
-	$('#nav-main > ul > li span').cycle({
+	$('#nav-main > ul > li span.corp').cycle({
 		fx: 'fade',
 		random: 1,
 		slideResize: 0,
 		containerResize: 0,
-		width: '100%'
+		width: '100%',
+		delay: 500
+	});
+	
+	$('#nav-main > ul > li span.wed').cycle({
+		fx: 'fade',
+		random: 1,
+		slideResize: 0,
+		containerResize: 0,
+		width: '100%',
+		delay: 2400
+	});
+	
+	$('#nav-main > ul > li span.spec').cycle({
+		fx: 'fade',
+		random: 1,
+		slideResize: 0,
+		containerResize: 0,
+		width: '100%',
+		delay: 1200
 	});
 	
 	$(document).on('mouseenter', 'body.home #nav-main a', function() {
@@ -116,7 +135,7 @@ $(document).ready( function() {
 
 function alignNav() {
 	if (jQuery.fn.vAlign) {
-		$('#nav-interior li a span').vAlign();
+		$('#nav-interior > ul > li > a span').vAlign();
 	}
 }
 queue.enqueue(alignNav);
@@ -150,12 +169,14 @@ queue.enqueue(backgroundImages);
 // -------- AJAXify site
 // ---------------------------------------
 
+//stop the page from jumping!
+$.pjax.defaults.scrollTo = false;
 
 $(document).on('click', 'nav a', function(e) {
 
 
 // ready to start working on ajax? Comment or remove this line:
-return;
+//return;
 
 
 	e.preventDefault();
@@ -166,19 +187,34 @@ return;
 	// what got clicked?
 
 	if ($clicked.closest('#banner').length) {
+		
+		// if top parent link is clicked remove all other active states and apply an active state to first secondary nav item
+		if($(this).parent().closest('ul').length == 1) {
+			$(this).parent().parent().find('ul').children().removeClass('current_page_ancestor');
+			$(this).parent().find('ul').children(':first-child').addClass('current_page_ancestor');
+		}
+		
+		$(this).parent().parent().children().removeClass('current_page_ancestor');
+		$(this).parent().addClass('current_page_ancestor');
 
 		// this is a top nav item
-		var target = "#wrap";
-
+		var target = "#content-wrapper";
+	
+	// if tertiary nav item is clicked
 	} else if ($clicked.closest('#nav-subsection').length) {
+	
+		// remove other active states of tertiary nav and apply active class to clicked nav item
+		$(this).parent().parent().children().removeClass('current_page_item');
+	
+		$(this).parent().addClass('current_page_item');
 
 		// this is a sub nav item
 		var target = "#main";
 
 	} else {
 
-		// fallback
-		var target = "#wrap";
+		// fallback for anything else
+		var target = "#content-wrapper";
 	}
 
 
@@ -194,7 +230,7 @@ return;
 });
 
 
-$('#wrap').on('pjax:start',function(e) { 
+$('#content-wrapper').on('pjax:start',function(e) { 
 
 	// fade out the page
 	$target = $(e.target);
@@ -205,7 +241,7 @@ $('#wrap').on('pjax:start',function(e) {
 });
 
 
-$('#wrap').on('pjax:end',function(e) { 
+$('#content-wrapper').on('pjax:end',function(e) { 
 
 	// TODO: Remove loading animation if one was added
 
@@ -271,6 +307,10 @@ function photoGallery() {
 		// load the first image
 		
 		galleryImage($('#gallery a:first'));
+		
+		if ($('#image-large').length) {
+			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-51);
+		}
 
 	}
 }

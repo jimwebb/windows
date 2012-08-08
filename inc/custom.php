@@ -50,7 +50,8 @@ function translateWindowsItem($string) {
 	
 	if (strstr($string, "corp")) $theid = "corporate";
 	if (strstr($string, "wedd")) $theid = "weddings";
-	if (strstr($string, "spec")) $theid = "events";	
+	if (strstr($string, "spec")) $theid = "events";
+	if (strstr($string, "comp")) $theid = "company";	
 	
 	if ($theid) return $theid;
 	

@@ -9,9 +9,9 @@
 	    <?php dynamic_sidebar('sidebar-footer'); ?>
 	    </div>
 	    <ul id="social">
-	    	<li class="fb"><a href="" target="_blank">Facebook</a></li>
-	    	<li class="tw"><a href="" target="_blank">Twitter</a></li>
-	    	<li class="pin"><a href="" target="_blank">Pinterest</a></li>
+	    	<li class="fb"><a href="http://www.facebook.com/WindowsCateringCompany" target="_blank">Facebook</a></li>
+	    	<li class="tw"><a href="http://twitter.com/WindowsCatering" target="_blank">Twitter</a></li>
+	    	<li class="pin"><a href="http://pinterest.com/windowsCatering" target="_blank">Pinterest</a></li>
 	    </ul>
     </div>
   </footer>

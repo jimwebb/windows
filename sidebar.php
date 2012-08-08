@@ -7,13 +7,14 @@
 // $grandparent = get_post(top_parent());
 
 ?>
-<h1><?php echo get_the_title($post->post_parent); ?></h1>
 
 <?php
 
 	global $post;
 	
 	if ($post->post_parent != top_parent()) { ?>
+	
+		<h1><?php echo get_the_title($post->post_parent); ?></h1>
 	
 		<nav id="nav-subsection">
 			<ul>
@@ -32,7 +33,8 @@
 
 // if this is a contact page, show the contact sidebar
 
-if (stristr($post->post_title, "contact")) {
-	dynamic_sidebar('sidebar-contact');
+if (stristr($post->post_title, "contact")) { ?>
+	<h1><?php echo get_the_title($post->post_ID); ?></h1>
+	<?php dynamic_sidebar('sidebar-contact');
 }
-
+?>

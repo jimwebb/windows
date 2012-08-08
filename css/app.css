@@ -86,13 +86,13 @@ html, body {
 
 p {
 	font-size: 14px;
-	line-height: 1.4em;
+	line-height: 1.6em;
 	color: #111;
 }
 
 ul, ol {
 	font-size: 14px;
-	line-height: 1.4em;
+	line-height: 1.6em;
 	color: #686868;
 }
 
@@ -284,7 +284,11 @@ body.home #banner a.brand,
 
 #nav-interior li a span {
 	display: block;
-	padding-top: 2px;
+	padding-top: 1px;
+}
+
+#nav-interior li li a span {
+	padding-top: 0;
 }
 
 #nav-interior li {
@@ -348,6 +352,7 @@ body.home #banner a.brand,
 	color: #363636;
 	margin: 10px 0;
 	text-align: center;
+	line-height: 1.2em;
 }
 
 #nav-interior li li a {
@@ -429,7 +434,7 @@ body.home #banner a.brand,
 	background-color: rgba(186, 31, 63, 1);
 }
 
-#nav-interior li.nav-about.current_page_ancestor a {
+#nav-interior li.menu-our-company.current_page_ancestor a {
 	height: 50px;
 	margin: 0;
 }
@@ -478,11 +483,22 @@ body.gallery #main {
 	background-color:black;
 	width: 158px;
 	height: 158px;
-	background-color: #36829a;
 	opacity: 0.7;
 	transition: opacity 0.5s;
 	-moz-transition: opacity 0.5s;
 	-webkit-transition: opacity 0.5s;
+}
+
+.corporate #gallery .mask {
+	background-color: #5fb038;
+}
+
+.weddings #gallery .mask {
+	background-color: #36829a;
+}
+
+.events #gallery .mask {
+	background-color: #ba1f3f;
 }
 
 #gallery li:hover .mask,
@@ -1093,7 +1109,7 @@ body.events #nav-section li a:hover {
 	display: block;
 	color: #686868;
 	text-transform: uppercase;
-	font-size: 12px;
+	font-size: 13px;
 	margin-bottom: 9px;
 }
 #sidebar li.current_page_item a {
@@ -1312,7 +1328,31 @@ body.home #content-info {
 	width: 21px;
 	height: 21px;
 	text-indent: -9999px;
-	background: #6d6e70;
+	background: url('../img/social.png') 0 0 no-repeat;
+}
+
+#social li.fb a {
+	background-position: 0 0;
+}
+
+#social li.tw a {
+	background-position: -21px 0;
+}
+
+#social li.pin a {
+	background-position: -42px 0;
+}
+
+#social li.fb a:hover {
+	background-position: 0 -21px;
+}
+
+#social li.tw a:hover {
+	background-position: -21px -21px;
+}
+
+#social li.pin a:hover {
+	background-position: -42px -21px;
 }
 
 /* =============================================================================
