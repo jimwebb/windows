@@ -28,7 +28,7 @@
   
   <div id="wrap" class="<?php echo WRAP_CLASSES; ?>" role="document">
 
-  <?php if (is_home() || is_front_page()) { ?>
+  <?php if (is_front_page()) { ?>
   
 	<!--
 <header id="banner" role="banner">
