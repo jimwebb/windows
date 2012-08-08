@@ -62,10 +62,13 @@ $menu_name = 'primary_navigation';
 	    $url = $menu_item->url;
 	    $menu_list .= '<li class="' . $slug . '"><a href="' . $url . '">' . $title . '';
 	    $menu_list .= '<span class="'.$slug.'">';
-	    $menu_list .= '<img src="img/'.$slug.'0.jpg" />';
 	    $menu_list .= '<img src="img/'.$slug.'3.jpg" />';
 	    $menu_list .= '<img src="img/'.$slug.'4.jpg" />';
 	    $menu_list .= '<img src="img/'.$slug.'5.jpg" />';
+	    $menu_list .= '<img src="img/'.$slug.'6.jpg" />';
+	    $menu_list .= '<img src="img/'.$slug.'7.jpg" />';
+	    $menu_list .= '<img src="img/'.$slug.'8.jpg" />';
+	    $menu_list .= '<img src="img/'.$slug.'9.jpg" />';
 	    $menu_list .= '</span></a></li>';
 	}
     }
