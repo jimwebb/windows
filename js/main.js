@@ -77,7 +77,6 @@ function resize() {
 	$('#nav-main > ul > li').css({'width': boxSize, 'height': boxSize});
 }
 
-$(document).ready( function() {
 
 	resize();
     
@@ -124,7 +123,6 @@ $(document).ready( function() {
 	
 	});
 
-});
 
 
 // ---------------------------------------

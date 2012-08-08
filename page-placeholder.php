@@ -17,6 +17,7 @@ if (have_posts()) {
 
 get_header(); ?>
   <?php roots_content_before(); ?>
+    <div id="content-wrapper"> 
     <div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
     <?php roots_main_before(); ?>
       <div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
@@ -33,5 +34,6 @@ get_header(); ?>
       </aside><!-- /#sidebar -->
     <?php roots_sidebar_after(); ?>
     </div><!-- /#content -->
+</div>
   <?php roots_content_after(); ?>
 <?php get_footer(); ?>

@@ -1,6 +1,7 @@
 <?php get_header(); ?>
   <?php roots_content_before(); ?>
-    <div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
+   <div id="content-wrapper"> 
+   <div id="content" class="<?php echo CONTAINER_CLASSES; ?>">
     <?php roots_main_before(); ?>
       <div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
         <div class="page-header">
@@ -40,5 +41,6 @@
       </aside><!-- /#sidebar -->
     <?php roots_sidebar_after(); ?>
     </div><!-- /#content -->
+  </div><!-- /#content-wrapper -->
   <?php roots_content_after(); ?>
 <?php get_footer(); ?>
