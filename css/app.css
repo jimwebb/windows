@@ -1328,7 +1328,31 @@ body.home #content-info {
 	width: 21px;
 	height: 21px;
 	text-indent: -9999px;
-	background: #6d6e70;
+	background: url('../img/social.png') 0 0 no-repeat;
+}
+
+#social li.fb a {
+	background-position: 0 0;
+}
+
+#social li.tw a {
+	background-position: -21px 0;
+}
+
+#social li.pin a {
+	background-position: -42px 0;
+}
+
+#social li.fb a:hover {
+	background-position: 0 -21px;
+}
+
+#social li.tw a:hover {
+	background-position: -21px -21px;
+}
+
+#social li.pin a:hover {
+	background-position: -42px -21px;
 }
 
 /* =============================================================================
