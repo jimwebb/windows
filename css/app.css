@@ -270,6 +270,17 @@ body.home #banner a.brand,
    Inside Navigation
    ========================================================================== 
 */
+/*
+body.home #banner {
+	opacity: 1;
+}
+#banner {
+	opacity: 0;
+	-webkit-transition: opacity 0.25s linear;
+	-moz-transition: opacity 0.25s linear;
+	transition: opacity 0.25s linear
+}
+*/
 
 #banner {
 	width:100%

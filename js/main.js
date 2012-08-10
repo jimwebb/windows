@@ -70,58 +70,69 @@ $(window).resize( function() {
 });
 
 function resize() {
-	var winWidth = $(window).width();
-	var headerWidth = Math.floor( winWidth - (($(window).width() / 10) * 2) );
-	var boxSize = Math.floor( (headerWidth/4)-5 );
-	$('header').css('width', headerWidth);
-	$('#nav-main > ul > li').css({'width': boxSize, 'height': boxSize});
+	if ($('body.home').length) {
+		var winWidth = $(window).width();
+		var headerWidth = Math.floor( winWidth - (($(window).width() / 10) * 2) );
+		var boxSize = Math.floor( (headerWidth/4)-5 );
+		$('header').css('width', headerWidth);
+		$('#nav-main > ul > li').css({'width': boxSize, 'height': boxSize});
+	}
 }
 
-
+function homePage() {
+	
 	resize();
     
-	$('#nav-main > ul > li span.corp').cycle({
-		fx: 'fade',
-		random: 1,
-		slideResize: 0,
-		containerResize: 0,
-		width: '100%',
-		delay: 500
-	});
-	
-	$('#nav-main > ul > li span.wed').cycle({
-		fx: 'fade',
-		random: 1,
-		slideResize: 0,
-		containerResize: 0,
-		width: '100%',
-		delay: 2400
-	});
-	
-	$('#nav-main > ul > li span.spec').cycle({
-		fx: 'fade',
-		random: 1,
-		slideResize: 0,
-		containerResize: 0,
-		width: '100%',
-		delay: 1200
-	});
-	
-	$(document).on('mouseenter', 'body.home #nav-main a', function() {
-		
-		var $target = $(this).parent('li');
-		var imgSrc = $target.attr('class');
-		
-		$('#nav-main > ul > li > a').each( function(index) {
-			$('<img src="/img/'+imgSrc+index+'.jpg">').hide().addClass('image').appendTo(this).fadeIn(400);
+    if ($('body.home').length) {
+
+		$('#nav-main > ul > li span.corp').cycle({
+			fx: 'fade',
+			random: 1,
+			slideResize: 0,
+			containerResize: 0,
+			width: '100%',
+			delay: 500
 		});
-	
-	}).on('mouseleave', 'body.home #nav-main a', function() {
 		
-		// fade out other images and remove them
-		$('#nav-main .image').stop().fadeOut(400, function() { $(this).remove(); });
+		$('#nav-main > ul > li span.wed').cycle({
+			fx: 'fade',
+			random: 1,
+			slideResize: 0,
+			containerResize: 0,
+			width: '100%',
+			delay: 2400
+		});
+		
+		$('#nav-main > ul > li span.spec').cycle({
+			fx: 'fade',
+			random: 1,
+			slideResize: 0,
+			containerResize: 0,
+			width: '100%',
+			delay: 1200
+		});
+
+	}
+}
+
+queue.enqueue(homePage);
+
+
+$(document).on('mouseenter', 'body.home #nav-main a', function() {
 	
+	var $target = $(this).parent('li');
+	var imgSrc = $target.attr('class');
+	
+	$('#nav-main > ul > li > a').each( function(index) {
+		$('<img src="/img/'+imgSrc+index+'.jpg">').hide().addClass('image').appendTo(this).fadeIn(400);
 	});
+
+}).on('mouseleave', 'body.home #nav-main a', function() {
+	
+	// fade out other images and remove them
+	$('#nav-main .image').stop().fadeOut(400, function() { $(this).remove(); });
+
+});
 
 
 
@@ -174,7 +185,7 @@ $(document).on('click', 'nav a', function(e) {
 
 
 // ready to start working on ajax? Comment or remove this line:
-//return;
+// return;
 
 
 	e.preventDefault();
@@ -183,8 +194,16 @@ $(document).on('click', 'nav a', function(e) {
 	var $clicked = $(e.target);
 
 	// what got clicked?
+	
+	if ($clicked.closest('#nav-main').length || $clicked.closest('.nav-home').length || $clicked.closest('.menu-home').length) {
+	
+		// either a link to the home page, or on the home page, was clicked
+		var target = "#wrap";
 
-	if ($clicked.closest('#banner').length) {
+	} else if ($clicked.closest('#nav-interior').length) {
+
+		// a top nav item got clicked
+		var target = "#content-wrapper";
 		
 		// if top parent link is clicked remove all other active states and apply an active state to first secondary nav item
 		if($(this).parent().closest('ul').length == 1) {
@@ -195,19 +214,18 @@ $(document).on('click', 'nav a', function(e) {
 		$(this).parent().parent().children().removeClass('current_page_ancestor');
 		$(this).parent().addClass('current_page_ancestor');
 
-		// this is a top nav item
-		var target = "#content-wrapper";
 	
 	// if tertiary nav item is clicked
 	} else if ($clicked.closest('#nav-subsection').length) {
+		
+		// a sub nav item got clicked
+		var target = "#main";
 	
 		// remove other active states of tertiary nav and apply active class to clicked nav item
 		$(this).parent().parent().children().removeClass('current_page_item');
 	
 		$(this).parent().addClass('current_page_item');
 
-		// this is a sub nav item
-		var target = "#main";
 
 	} else {
 
@@ -223,12 +241,11 @@ $(document).on('click', 'nav a', function(e) {
 		fragment: target
 	});
 
-	// TODO: Update CSS class (e.g., current_page_item) in the nav bar once clicked
 
 });
 
 
-$('#content-wrapper').on('pjax:start',function(e) { 
+$(document).on('pjax:start',function(e) { 
 
 	// fade out the page
 	$target = $(e.target);
@@ -239,7 +256,9 @@ $('#content-wrapper').on('pjax:start',function(e) {
 });
 
 
-$('#content-wrapper').on('pjax:end',function(e) { 
+$(document).on('pjax:end',function(e) { 
+	
+	console.log("pjax end");
 
 	// TODO: Remove loading animation if one was added
 

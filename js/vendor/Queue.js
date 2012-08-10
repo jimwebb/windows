@@ -94,6 +94,8 @@ function Queue(){
     // typeof queue[i] == 'function' && queue[i]();
 
       // wrap in jQuery -- custom
+    
+    // console.log("running " + queue[i]);
 
     typeof queue[i] == 'function' && function($){ queue[i]() }(jQuery);
      
