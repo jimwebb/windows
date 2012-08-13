@@ -494,22 +494,22 @@ body.gallery #main {
 	background-color:black;
 	width: 158px;
 	height: 158px;
-	opacity: 0.7;
+	opacity: 0.6;
 	transition: opacity 0.5s;
 	-moz-transition: opacity 0.5s;
 	-webkit-transition: opacity 0.5s;
 }
 
 .corporate #gallery .mask {
-	background-color: #5fb038;
+	background-color: #000;
 }
 
 .weddings #gallery .mask {
-	background-color: #36829a;
+	background-color: #fff;
 }
 
 .events #gallery .mask {
-	background-color: #ba1f3f;
+	background-color: transparent;
 }
 
 #gallery li:hover .mask,
