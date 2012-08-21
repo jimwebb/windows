@@ -73,7 +73,7 @@ function resize() {
 	if ($('body.home').length) {
 		var winWidth = $(window).width();
 		var headerWidth = Math.floor( winWidth - (($(window).width() / 10) * 2) );
-		var boxSize = Math.floor( (headerWidth/4)-5 );
+		var boxSize = Math.floor( (headerWidth/3)-5 );
 		$('header').css('width', headerWidth);
 		$('#nav-main > ul > li').css({'width': boxSize, 'height': boxSize});
 	}
@@ -142,12 +142,16 @@ $(document).on('mouseenter', 'body.home #nav-main a', function() {
 
 // vertically align titles within the nav bar 
 
+//removing this, might be better to just hard code for those nav items that fall on two lines (we already target them with other styles). This will avoid the awkward alignment on initial load before the function calculates and executes.
+
+/*
 function alignNav() {
 	if (jQuery.fn.vAlign) {
 		$('#nav-interior > ul > li > a span').vAlign();
 	}
 }
 queue.enqueue(alignNav);
+*/
 
 
 
@@ -211,7 +215,7 @@ $(document).on('click', 'nav a', function(e) {
 			$(this).parent().find('ul').children(':first-child').addClass('current_page_ancestor');
 		}
 		
-		$(this).parent().parent().children().removeClass('current_page_ancestor');
+		$(this).parent().parent().find('li').removeClass('current_page_ancestor current_page_item'); //make sure we remove!
 		$(this).parent().addClass('current_page_ancestor');
 
 	
@@ -231,6 +235,8 @@ $(document).on('click', 'nav a', function(e) {
 
 		// fallback for anything else
 		var target = "#content-wrapper";
+		$(this).parent().parent().children().removeClass('current_page_ancestor');
+		$(this).parent().addClass('current_page_ancestor');
 	}
 
 
@@ -301,7 +307,7 @@ $(document).on('pjax:success', function(event, data) {
 function photoGallery() {
 	if ($('body.gallery').length && !$('#image-large').length) {
 
-		$('#main').prepend('<div id="image-large"><span id="prev"></span><span id="next"></span><div id="active-caption"></div></div>');
+		$('#main').prepend('<div id="image-large"><a href="#" class="show-caption">open</a><span id="prev"></span><span id="next"></span><div id="active-caption"></div></div>');
 		$('#gallery ul a').prepend('<span class="mask"></span>');
 		$('#gallery ul').width($('#gallery li:first').outerWidth(true) * $('#gallery li').length);
 		
@@ -326,8 +332,18 @@ function photoGallery() {
 		galleryImage($('#gallery a:first'));
 		
 		if ($('#image-large').length) {
-			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-51);
+			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-71);
 		}
+		
+		$('.show-caption').toggle(function() {
+			$(this).parent().find('#active-caption').animate({
+				left: '0%'
+			}, 300);
+		}, function() {
+			$(this).parent().find('#active-caption').animate({
+				left: '-100%'
+			}, 300);
+		});
 
 	}
 }
@@ -337,7 +353,7 @@ queue.enqueue(photoGallery);
 // Adjust height of image enlargement to fit window	
 $(window).on('resize load', function() {
 	if ($('#image-large').length) {
-		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-51);
+		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-71);
 	}
 });
 

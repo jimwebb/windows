@@ -75,12 +75,16 @@ html, body {
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0px auto -35px 0;
+	margin: 0px auto -55px 0;
 	padding: 0; 
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	position: relative;
+}
+
+.gallery #wrap {
+	margin: 0px auto -35px 0;
 }
 
 
@@ -285,7 +289,7 @@ body.home #banner {
 #banner {
 	width:100%
 	background-color: white;
-	height: 50px;
+	height: 70px;
 }
 
 #banner .container {
@@ -305,7 +309,7 @@ body.home #banner {
 #nav-interior li {
 	display:inline-block;
 	vertical-align:middle;
-	height:50px;
+	height:70px;
 	text-transform: uppercase;
 	font-size: 12px;
 	font-weight: bold;
@@ -350,6 +354,10 @@ body.home #banner {
 	vertical-align: top;
 }
 
+#nav-interior li.nav-events > a, #nav-interior li.nav-corporate > a, #nav-interior li.menu-our-company > a {
+	line-height: 14px;
+}
+
 #nav-interior li a {
 	display:inline-block;
 	height:30px;
@@ -361,9 +369,9 @@ body.home #banner {
 	box-sizing: border-box;
 	font-weight: bold;
 	color: #363636;
-	margin: 10px 0;
+	margin: 20px 0;
 	text-align: center;
-	line-height: 1.2em;
+	line-height: 28px;
 }
 
 #nav-interior li li a {
@@ -374,12 +382,16 @@ body.home #banner {
 	width:70px;
 	height: 50px;
 	margin: 0;
-	line-height: 35px;
+	line-height: 50px;
 }
 
 #nav-interior li li a {
 	padding-top: 10px;
 	padding-bottom: 10px;
+}
+
+#nav-interior > ul > li.current_page_ancestor {
+	margin-top: -1px;
 }
 
 #nav-interior li.current_page_item a,
@@ -391,9 +403,9 @@ body.home #banner {
 #nav-interior .menu-home a  {
 	width:180px;
 	margin-right:20px;
-	height:50px;
+	height:70px;
 	background-size: 180px auto;
-	background-position: 0 5px;
+	background-position: 0 12px;
 	position: static;
 	margin: 0;
 }
@@ -414,40 +426,46 @@ body.home #banner {
 
 #nav-interior li.nav-corporate.current_page_ancestor a {
 	border-color: rgba(95, 176, 56, 1) !important;
-	height: 50px;
+	height: 70px;
 	margin: 0;
 }
 
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > a {
 	background-color: rgba(95, 176, 56, 1);
+	padding: 20px 10px;
 }
 
 
 #nav-interior li.nav-weddings.current_page_ancestor a {
 	border-color: rgba(54, 130, 154, 1) !important;
-	height: 50px;
+	height: 70px;
 	margin: 0;
 }
 
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > a {
 	background-color: rgba(54, 130, 154, 1);
-	height: 50px;
+	height: 70px;
 	margin: 0;
+	line-height: 68px;
 }
 
 
 #nav-interior li.nav-events.current_page_ancestor a {
 	border-color: rgba(186, 31, 63, 1) !important;
-	height: 50px;
+	height: 70px;
 	margin: 0;
 }
 #nav-interior > ul > li.nav-events.current_page_ancestor > a {
 	background-color: rgba(186, 31, 63, 1);
+	padding: 20px 10px;
 }
 
 #nav-interior li.menu-our-company.current_page_ancestor a {
-	height: 50px;
+	height: 70px;
 	margin: 0;
+}
+#nav-interior > ul > li.menu-our-company.current_page_ancestor > a {
+	padding: 20px 10px;
 }
 
 
@@ -547,10 +565,24 @@ body.gallery #main {
 	position: absolute;
 	bottom: 0;
 	background-color: rgba(0,0,0,0.7);
-	width: 100%;
 	z-index: 1000;
 	color: #fff;
 	padding: 10px 25px;
+	margin-left: 42px;
+	left: -100%;
+}
+
+.show-caption {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 42px;
+	height: 42px;
+	background: rgba(0,0,0,0.7) url('../img/icn.caption.png') 0 0 no-repeat;
+	z-index: 1001;
+	color: #fff;
+	text-indent: -9999px;
+	display: block;
 }
 
 /*
@@ -1283,6 +1315,11 @@ ol.commentlist img.avatar { float: left; margin-right: 10px; }
 	color:  #6d6e70;
 	position: relative;
 	z-index: 10;
+	padding-bottom: 20px;
+}
+
+.gallery #content-info {
+	padding-bottom: 0;
 }
 
 .footer-wrap {
