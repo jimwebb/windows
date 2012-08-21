@@ -76,7 +76,7 @@ function resize() {
 		var boxSize = Math.floor( (headerWidth/3)-5 );
 		$('header').css('width', headerWidth);
 		$('#nav-main > ul > li').css({'width': boxSize, 'height': boxSize});
-	}
+	}	
 }
 
 function homePage() {

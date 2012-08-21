@@ -37,4 +37,21 @@ if (stristr($post->post_title, "contact")) { ?>
 	<h1><?php echo get_the_title($post->post_ID); ?></h1>
 	<?php dynamic_sidebar('sidebar-contact');
 }
-?>
+
+if (stristr($post->post_title, "what's new")) { ?>
+	<h1><?php echo get_the_title($post->post_ID); ?></h1>
+	
+	<nav id="nav-subsection">
+			<ul>
+				<?php 
+				global $post; 
+				wp_list_categories ( array(
+								'depth' => 1,
+								'hide_empty' => 0,
+								'title_li' => ''
+								));
+				?>
+			</ul>
+		</nav>	
+		
+<?php } ?>
