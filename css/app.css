@@ -238,9 +238,13 @@ body.home #banner a.brand,
 	border-left: none;
 }
 
+body.home #banner a.brand {
+	margin: 55px 10px 0 10px;
+}
+
 
 #nav-utility {
-	width: 215px;
+	width: 100%;
 	background-color: white;
 	height: 215px;
 	position: absolute;
@@ -248,7 +252,9 @@ body.home #banner a.brand,
 }
 
 #nav-utility ul {
-	margin-top: 80px;
+	margin-top: 40px;
+	float: right;
+	margin-right: 20px;
 }
 
 #nav-utility a {
@@ -260,7 +266,7 @@ body.home #banner a.brand,
 }
 
 #nav-utility li {
-	margin-bottom: 10px;
+	float: left;
 }
 
 #nav-utility a:hover {
