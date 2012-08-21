@@ -328,6 +328,7 @@ body.home #banner {
 	font-weight: bold;
 	margin:0;
 	padding:0;
+	overflow: hidden;
 }
 
 #nav-interior li li {
@@ -337,7 +338,12 @@ body.home #banner {
 }
 
 #nav-interior li ul {
-	display: none;
+	/* display: none; */
+	width: 0px;
+	display:inline-block;
+	background-color: white;
+	color: black;
+	vertical-align: top;
 }
 
 #nav-interior > ul > li.current_page_ancestor > a,
@@ -366,6 +372,10 @@ body.home #banner {
 	background-color: white;
 	color: black;
 	vertical-align: top;
+}
+
+#nav-interior li.current_page_ancestor ul {
+	width: inherit;
 }
 
 #nav-interior li.nav-events > a, #nav-interior li.nav-corporate > a, #nav-interior li.menu-our-company > a {

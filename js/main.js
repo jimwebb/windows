@@ -187,7 +187,6 @@ $.pjax.defaults.scrollTo = false;
 
 $(document).on('click', 'nav a', function(e) {
 
-
 // ready to start working on ajax? Comment or remove this line:
 // return;
 
@@ -210,13 +209,30 @@ $(document).on('click', 'nav a', function(e) {
 		var target = "#content-wrapper";
 		
 		// if top parent link is clicked remove all other active states and apply an active state to first secondary nav item
-		if($(this).parent().closest('ul').length == 1) {
+		if($(this).parent().closest('ul').length == 1 && !$(this).parent().is('.nav-corporate, .nav-weddings, .nav-events, .nav-company')) {
 			$(this).parent().parent().find('ul').children().removeClass('current_page_ancestor');
 			$(this).parent().find('ul').children(':first-child').addClass('current_page_ancestor');
+			$(this).parent().parent().find('li').removeClass('current_page_ancestor current_page_item');
+			$(this).parent().addClass('current_page_ancestor');
+			
+		} else if ($(this).parent().is('.nav-corporate, .nav-weddings, .nav-events, .nav-company')) {
+			
+			var subList = $(this).parent().find('.children');
+			var childrenWidth = $(this).parent().find('.children li').length * 74;
+			
+			if ( subList.width() > 0 ) {
+				subList.animate({width: '0px'}, 400);
+				
+			} else {
+				$('ul.children').each(function() {
+					$(this).animate({width: '0px'}, 400);
+					$(this).parent().removeClass('current_page_ancestor current_page_item');
+				});
+				subList.animate({width: childrenWidth+'px'}, 400);
+				$(this).parent().addClass('current_page_ancestor');
+			}
+			
 		}
-		
-		$(this).parent().parent().find('li').removeClass('current_page_ancestor current_page_item'); //make sure we remove!
-		$(this).parent().addClass('current_page_ancestor');
 
 	
 	// if tertiary nav item is clicked
@@ -238,14 +254,19 @@ $(document).on('click', 'nav a', function(e) {
 		$(this).parent().parent().children().removeClass('current_page_ancestor');
 		$(this).parent().addClass('current_page_ancestor');
 	}
+	
+	
+	if(!$(this).parent().is('.nav-corporate, .nav-weddings, .nav-events, .nav-company')) {
 
 
-	$.pjax({
-		url: url,	
-		container: target,
-		timeout: 5000,
-		fragment: target
-	});
+		$.pjax({
+			url: url,	
+			container: target,
+			timeout: 5000,
+			fragment: target
+		});
+	
+	}
 
 
 });
