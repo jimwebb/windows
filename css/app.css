@@ -429,6 +429,10 @@ body.home #banner {
 	margin: 0;
 }
 
+#nav-interior .menu-home a:hover {
+	background-color: transparent;
+}
+
 
 #nav-interior ul {
 	margin: 0;
@@ -436,20 +440,22 @@ body.home #banner {
 }
 
 #nav-interior li a {
-	transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
-	-webkit-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
-	-moz-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
+	transition: opacity 0.25s linear;
+	-webkit-transition: opacity 0.25s linear;
+	-moz-transition: opacity 0.25s linear;
 }
 
 /* --- Section Colors --- */
 
-#nav-interior li.nav-corporate.current_page_ancestor a {
+#nav-interior li.nav-corporate.current_page_ancestor a,
+#nav-interior li.nav-corporate > a:hover {
 	border-color: rgba(95, 176, 56, 1) !important;
 	height: 70px;
 	margin: 0;
 }
 
-#nav-interior > ul > li.nav-corporate.current_page_ancestor > a {
+#nav-interior > ul > li.nav-corporate.current_page_ancestor > a,
+#nav-interior li.nav-corporate > a:hover {
 	background-color: rgba(95, 176, 56, 1);
 	padding: 20px 10px;
 }
@@ -483,11 +489,13 @@ body.home #banner {
 	padding: 20px 10px;
 }
 
-#nav-interior li.menu-our-company.current_page_ancestor a {
+#nav-interior li.menu-our-company.current_page_ancestor a,
+#nav-interior li.menu-our-company > a:hover {
 	height: 70px;
 	margin: 0;
 }
-#nav-interior > ul > li.menu-our-company.current_page_ancestor > a {
+#nav-interior > ul > li.menu-our-company.current_page_ancestor > a,
+#nav-interior li.menu-our-company > a:hover {
 	padding: 20px 10px;
 }
 
