@@ -527,7 +527,7 @@ $(document).on('click', 'body.lookbook #main li', function() {
 	
 	$('#main li.active').each(function() {
 		if (filter != "") filter += ',';
-		filter += ".tag-" + $(this).text().toLowerCase();
+		filter += ".tag-" + $(this).text().toLowerCase().replace(/ /g, '-');
 	});
 
 	if (filter == "") filter = "*";
