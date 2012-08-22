@@ -1279,6 +1279,7 @@ body.events #main strong {
 	vertical-align: top;
 	width: 70%;
 	margin-bottom: 10px;
+	line-height: 13px;
 }
 
 .gfield_radio input {
