@@ -38,8 +38,8 @@ if (stristr($post->post_title, "contact")) { ?>
 	<?php dynamic_sidebar('sidebar-contact');
 }
 
-if (stristr($post->post_title, "what's new")) { ?>
-	<h1><?php echo get_the_title($post->post_ID); ?></h1>
+if (is_home()) { ?>
+	<!-- <h1><?php //echo get_the_title($post->post_parent); ?></h1> -->
 	
 	<nav id="nav-subsection">
 			<ul>
