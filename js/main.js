@@ -353,7 +353,7 @@ function photoGallery() {
 		galleryImage($('#gallery a:first'));
 		
 		if ($('#image-large').length) {
-			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-71);
+			$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-86);
 		}
 		
 		$('.show-caption').toggle(function() {
@@ -374,7 +374,7 @@ queue.enqueue(photoGallery);
 // Adjust height of image enlargement to fit window	
 $(window).on('resize load', function() {
 	if ($('#image-large').length) {
-		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-71);
+		$('#image-large').height($('#gallery').offset().top - $('#wrap').offset().top-86);
 	}
 });
 

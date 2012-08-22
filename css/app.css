@@ -547,14 +547,21 @@ body.gallery #main {
 #gallery {
 	position: fixed;
 	width: 100%;
-	bottom: 194px;
+	bottom: 159px;
 	left: 0;
 }
 #gallery li {
 	margin-right: 1px;
 	float: left;
 	position: relative;
-	width: 158px;
+	width: 120px;
+	height: 120px;
+	overflow: hidden;
+}
+
+#gallery li img {
+	width: 100%;
+	height: auto;
 }
 
 #gallery .mask {
