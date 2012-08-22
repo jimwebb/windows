@@ -226,12 +226,12 @@ body.home #nav-main li a .image {
 
 body.home #banner a.brand,
 #nav-interior .menu-home a {
-	width: 215px;
+	width: 230px;
 	height: 60px;
 	display: inline-block;
 	text-indent: -9999px;
 	background: url(/img/sprites.png) no-repeat ;
-	background-size: 215px auto;
+	background-size: 230px auto;
 	position: absolute;
 	z-index: 10;
 	margin: 15px 8px;
@@ -302,33 +302,41 @@ body.home #banner {
 #banner {
 	width:100%
 	background-color: white;
-	height: 70px;
+	height: 85px;
 }
 
 #banner .container {
-	width:960px;
+	width:980px;
 	margin: 0 auto;
 }
 
 #nav-interior li a span {
 	display: block;
-	padding-top: 1px;
+	padding-top: 2px;
+	height: 28px;
+	padding-left: 12px;
 }
 
 #nav-interior li li a span {
 	padding-top: 0;
+	padding-left: 0;
 }
 
 #nav-interior li {
 	display:inline-block;
 	vertical-align:middle;
-	height:70px;
+	height:85px;
 	text-transform: uppercase;
 	font-size: 12px;
 	font-weight: bold;
 	margin:0;
 	padding:0;
 	overflow: hidden;
+}
+
+#nav-interior > ul > li > a {
+	height: 85px;
+	padding: 28px 10px 28px 0;
 }
 
 #nav-interior li li {
@@ -357,8 +365,9 @@ body.home #banner {
 	margin-left: -4px;
 }
 
-#nav-interior li a {
+#nav-interior > ul > li > a span {
 	border-left: 2px solid #ccc;
+	border-right: 2px solid transparent;
 }
 
 #nav-interior ul.children a, #nav-interior li.nav-events a {
@@ -393,9 +402,11 @@ body.home #banner {
 	box-sizing: border-box;
 	font-weight: bold;
 	color: #363636;
-	margin: 20px 0;
 	text-align: center;
 	line-height: 28px;
+	transition: all 0.4s linear;
+	-webkit-transition: all 0.4s linear;
+	-moz-transition: all 0.4s linear;
 }
 
 #nav-interior li a:hover {
@@ -408,9 +419,9 @@ body.home #banner {
 	font-weight: normal;
 	color: black;
 	width:70px;
-	height: 50px;
+	height: 85px;
 	margin: 0;
-	line-height: 50px;
+	line-height: 70px;
 }
 
 #nav-interior li li a {
@@ -430,13 +441,17 @@ body.home #banner {
 }
 
 #nav-interior .menu-home a  {
-	width:180px;
+	width:200px;
 	margin-right:20px;
-	height:70px;
-	background-size: 180px auto;
+	height:86px;
+	background-size: 230px auto;
 	background-position: 0 12px;
 	position: static;
 	margin: 0;
+}
+
+#nav-interior .menu-home a span {
+	border-left: none;
 }
 
 #nav-interior .menu-home a:hover {
@@ -449,64 +464,59 @@ body.home #banner {
 	padding: 0;
 }
 
-#nav-interior li a {
-	transition: opacity 0.25s linear;
-	-webkit-transition: opacity 0.25s linear;
-	-moz-transition: opacity 0.25s linear;
+#nav-interior li.nav-corporate a,
+#nav-interior li.nav-weddings a,
+#nav-interior li.nav-events a,
+#nav-interior li.nav-company a {
+	transition: color 0.2s linear, background 0.2s linear;
+	-webkit-transition: color 0.2s linear, background 0.2s linear;
+	-moz-transition: color 0.2s linear, background 0.2s linear;
+}
+
+
+/*--shitty hack for corp catering being too long--*/
+#nav-interior > ul > li.nav-corporate > a {
+	width: 100px;
 }
 
 /* --- Section Colors --- */
 
 #nav-interior li.nav-corporate.current_page_ancestor a,
-#nav-interior li.nav-corporate > a:hover {
+#nav-interior li.nav-corporate > a:hover,
+#nav-interior li.nav-corporate.current_page_ancestor a span {
 	border-color: rgba(95, 176, 56, 1) !important;
-	height: 70px;
-	margin: 0;
 }
 
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > a,
 #nav-interior li.nav-corporate > a:hover {
 	background-color: rgba(95, 176, 56, 1);
-	padding: 20px 10px;
 }
 
 
 #nav-interior li.nav-weddings.current_page_ancestor a,
-#nav-interior li.nav-weddings > a:hover {
+#nav-interior li.nav-weddings > a:hover,
+#nav-interior li.nav-weddings.current_page_ancestor a span {
 	border-color: rgba(54, 130, 154, 1) !important;
-	height: 70px;
-	margin: 0;
 }
 
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > a,
 #nav-interior li.nav-weddings > a:hover {
 	background-color: rgba(54, 130, 154, 1);
-	height: 70px;
-	margin: 0;
-	line-height: 68px;
 }
 
 
 #nav-interior li.nav-events.current_page_ancestor a,
-#nav-interior li.nav-events > a:hover {
+#nav-interior li.nav-events > a:hover,
+#nav-interior li.nav-events.current_page_ancestor a span {
 	border-color: rgba(186, 31, 63, 1) !important;
-	height: 70px;
-	margin: 0;
 }
 #nav-interior > ul > li.nav-events.current_page_ancestor > a,
 #nav-interior li.nav-events > a:hover {
 	background-color: rgba(186, 31, 63, 1);
-	padding: 20px 10px;
 }
 
-#nav-interior li.menu-our-company.current_page_ancestor a,
-#nav-interior li.menu-our-company > a:hover {
-	height: 70px;
-	margin: 0;
-}
-#nav-interior > ul > li.menu-our-company.current_page_ancestor > a,
-#nav-interior li.menu-our-company > a:hover {
-	padding: 20px 10px;
+#nav-interior > ul > li > a:hover span {
+	border-color: transparent;
 }
 
 
