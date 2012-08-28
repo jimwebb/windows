@@ -97,12 +97,14 @@ $menu_name = 'primary_navigation';
 	  <div class="<?php echo WRAP_CLASSES; ?>">
 		<nav id="nav-interior" role="navigation">
 		 <ul>
-		<?php wp_list_pages ( array(
+		<?php			
+			wp_list_pages ( array(
 						'depth' => 2,
 						'title_li' => '',
 						'walker' => new Walker_Page_Classes(),
 						'link_before' => '<span>',
-						'link_after' => '</span>'
+						'link_after' => '</span>',
+						'exclude' => $exclude_featured
 						));
 		?>
 		</ul>

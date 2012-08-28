@@ -12,7 +12,7 @@
 
 	global $post;
 	
-	if ($post->post_parent != top_parent()) { ?>
+	if ($post->post_parent != top_parent() || stristr($post->post_title, "specials")) { ?>
 	
 		<h1><?php echo get_the_title($post->post_parent); ?></h1>
 	
@@ -20,16 +20,55 @@
 			<ul>
 				<?php 
 				global $post; 
+				$template = 'page-featured.php';
+				$Pages = $wpdb->get_col("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = '$template'");
+				foreach($Pages as $featured) {
+					$exclude_featured .= $featured . ',';
+				}
 				wp_list_pages ( array(
 								'child_of' => $post->post_parent,
 								'depth' => 1,
-								'title_li' => ''
+								'title_li' => '',
+								'exclude' => $exclude_featured
 								));
 				?>
 			</ul>
+			
+			<?php //extra files ?>
+			<?php
+				
+				$files = get_field('related-files', $post->post_parent);
+			
+				if ($files) { ?>
+				
+				<ul class="tertiary">
+				
+				<?php
+					
+					wp_list_pages ( array(
+						'child_of' => $post->post_parent,
+						'title_li' => '',
+						'meta_key' => '_wp_page_template',
+					    'meta_value' => 'page-featured.php'
+					));
+				
+				?>
+				
+				<?php foreach ($files as $file) {
+				
+				$title = $file['title'];
+				$src = $file['url'];
+				
+				echo '<li><a href="'.$src.'" target="_blank" class="no-pjax">'.$title.'</a></li>';
+				
+				} ?>
+				
+				</ul>
+				
+				<?php } ?>
 		</nav>			
 
-<?php } 
+<?php }
 
 // if this is a contact page, show the contact sidebar
 

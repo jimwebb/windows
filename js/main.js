@@ -134,6 +134,13 @@ $(document).on('mouseenter', 'body.home #nav-main a', function() {
 
 });
 
+var width = 0;
+$('.home .footer-wrap').children().each(function() {
+    width += $(this).outerWidth( true );
+});
+
+$('.home .footer-wrap').width(width);
+
 
 
 // ---------------------------------------
@@ -190,8 +197,11 @@ $(document).on('click', 'nav a', function(e) {
 // ready to start working on ajax? Comment or remove this line:
 // return;
 
-
+	if(!$(this).hasClass('no-pjax')) {
+	
 	e.preventDefault();
+	
+	}
 
 	var url = $(this).attr("href");
 	var $clicked = $(e.target);
@@ -236,17 +246,21 @@ $(document).on('click', 'nav a', function(e) {
 
 	
 	// if tertiary nav item is clicked
-	} else if ($clicked.closest('#nav-subsection').length) {
+	} else if ($clicked.closest('#nav-subsection').length && !$(this).hasClass('no-pjax')) {
 		
 		// a sub nav item got clicked
 		var target = "#main";
 	
 		// remove other active states of tertiary nav and apply active class to clicked nav item
-		$(this).parent().parent().children().removeClass('current_page_item');
+		$(this).parent().parent().parent().children().find('li').removeClass('current_page_item');
 	
 		$(this).parent().addClass('current_page_item');
 
 
+	} else if ($(this).hasClass('no-pjax')) {
+	
+		return true;
+	
 	} else {
 
 		// fallback for anything else

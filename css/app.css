@@ -113,7 +113,7 @@ h2 {
 	color: #959595;
 	font-size: 20px;
 	border-bottom: 1px solid #e9e9e9;
-	padding-bottom: 10px;
+	padding-bottom: 5px;
 	margin-top: 30px;
 }
 
@@ -231,7 +231,7 @@ body.home #banner a.brand,
 	display: inline-block;
 	text-indent: -9999px;
 	background: url(/img/sprites.png) no-repeat ;
-	background-size: 230px auto;
+	background-size: 260px auto;
 	position: absolute;
 	z-index: 10;
 	margin: 15px 8px;
@@ -252,7 +252,7 @@ body.home #banner a.brand {
 }
 
 #nav-utility ul {
-	margin-top: 75px;
+	margin-top: 85px;
 	float: right;
 	margin-right: 20px;
 }
@@ -574,18 +574,6 @@ body.gallery #main {
 	transition: opacity 0.5s;
 	-moz-transition: opacity 0.5s;
 	-webkit-transition: opacity 0.5s;
-}
-
-.corporate #gallery .mask {
-	background-color: #000;
-}
-
-.weddings #gallery .mask {
-	background-color: #fff;
-}
-
-.events #gallery .mask {
-	background-color: transparent;
 }
 
 #gallery li:hover .mask,
@@ -1106,6 +1094,11 @@ body.home #main {
 	-moz-transition: all 0.25s linear;
 }
 
+#main strong {
+	margin-top: 15px;
+	display: inline-table;
+}
+
 
 /* =============================================================================
    Section Navigation
@@ -1216,26 +1209,36 @@ body.events #nav-section li a:hover {
 	font-size: 13px;
 	margin-bottom: 9px;
 }
-#sidebar li.current_page_item a {
+#sidebar li.current_page_item a, #sidebar li a:hover {
 	font-weight: bold;
+	text-decoration: none;
 }
 
 body.corporate #sidebar h1,
 body.corporate #sidebar li.current_page_item a,
-body.corporate #main strong {
+body.corporate #sidebar li a:hover,
+body.corporate #main h2 {
 	color: #5fb038;
 }
 
 body.weddings #sidebar h1,
 body.weddings #sidebar li.current_page_item a,
-body.weddings #main strong {
+body.weddings #sidebar li a:hover,
+body.weddings #main h2 {
 		color: #36829a;
 }
 
 body.events #sidebar h1,
 body.events #sidebar li.current_page_item a,
-body.events #main strong {
+body.events #sidebar li a:hover,
+body.events #main h2 {
 	color: #ba1f3f;
+}
+
+#nav-subsection ul.tertiary {
+	border-top: 1px solid #e9e9e9;
+	margin-top: 10px;
+	padding-top: 10px;
 }
 
 
