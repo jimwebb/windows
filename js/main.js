@@ -134,7 +134,7 @@ $(document).on('mouseenter', 'body.home #nav-main a', function() {
 
 });
 
-var width = 0;
+var width = 40;
 $('.home .footer-wrap').children().each(function() {
     width += $(this).outerWidth( true );
 });
