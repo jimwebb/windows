@@ -1094,11 +1094,6 @@ body.home #main {
 	-moz-transition: all 0.25s linear;
 }
 
-#main strong {
-	margin-top: 15px;
-	display: inline-table;
-}
-
 
 /* =============================================================================
    Section Navigation
