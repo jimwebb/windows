@@ -33,7 +33,7 @@ get_header(); ?>
 	
 		
 		<?php /* Start lookbook loop */ 
-		query_posts("post_type=lookbook&posts_per_page=-1");
+		query_posts("post_type=lookbook&posts_per_page=-1&orderby=rand");
 		?>
 		<?php while (have_posts()) : the_post(); ?>
 		  <?php roots_post_before(); ?>

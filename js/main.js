@@ -504,7 +504,7 @@ function galleryImage($elem) {
       var colOffset = Math.max( 0, this.masonry.cols - cornerCols - 1);
       
       for ( i = colOffset; i < colOffset + cornerCols; i++ ) {
-      console.log ("col " + i);
+      // console.log ("col " + i);
         this.masonry.colYs[i] = cornerStampHeight;
       }
       
@@ -524,7 +524,11 @@ function lookbook() {
 			columnWidth: 159,
 			cornerStampSelector: '#main',
 			cornerStampOffset: 4
-			}
+			},
+		onLayout: function() {
+			$(".isotope-item .fancybox").attr("rel","lookbook");
+			$(".isotope-item.isotope-hidden .fancybox").attr("rel","");
+		}
 	});
 
 	$('.fancybox').fancybox({
