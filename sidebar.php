@@ -12,25 +12,71 @@
 
 	global $post;
 	
-	if ($post->post_parent != top_parent() || stristr($post->post_title, "specials")) { ?>
+	$depth = count(get_ancestors($post->ID, 'post'));
+	$parent = $post->post_parent;
+	$grandparent = get_post($parent);
 	
-		<h1><?php echo get_the_title($post->post_parent); ?></h1>
+	$location = ($depth == 3) ? $grandparent->post_parent : $parent;
+	
+	if ($location != top_parent() || stristr($post->post_title, "specials")) { ?>
+	
+		<h1><?php echo get_the_title($location); ?></h1>
 	
 		<nav id="nav-subsection">
 			<ul>
 				<?php 
 				global $post; 
-				$template = 'page-featured.php';
-				$Pages = $wpdb->get_col("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = '$template'");
-				foreach($Pages as $featured) {
-					$exclude_featured .= $featured . ',';
-				}
-				wp_list_pages ( array(
-								'child_of' => $post->post_parent,
-								'depth' => 1,
-								'title_li' => '',
-								'exclude' => $exclude_featured
-								));
+	$template = 'page-featured.php';
+	$Pages = $wpdb->get_col("SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_wp_page_template' AND meta_value = '$template'");
+	foreach($Pages as $featured) {
+		$exclude_featured .= $featured . ',';
+	}
+	
+	$args = array(
+    'child_of' => $location,
+    'parent' => $location,
+    'exclude' => $excluded_featured
+    );
+	
+	$pages = get_pages( $args );
+	
+	foreach ( $pages as $page ) {
+	
+	
+	if ( $post->ID == $page->ID ) {
+		echo '<li class="current_page_item">';
+	} else {
+		echo '<li>';
+	}
+	
+	$url = get_permalink( $page->ID );
+	
+	$children = get_pages('child_of='.$page->ID);
+	
+	//check for child pages
+	if ( $children ) {
+		echo '<a href="" class="no-pjax has_drop">'.$page->post_title.'</a>';
+
+		//spit out dropdown menu
+		echo '<ul class="dropdown">';
+		foreach ($children as $child) {
+			$childurl = get_permalink( $child->ID );
+			if ( $post->ID == $child->ID ) {
+				echo '<li class="current_page_item">';
+			} else {
+				echo '<li>';
+			}
+			echo '<a href="'.$childurl.'">'.$child->post_title.'</a></li>';
+		}
+		echo '</ul>';
+		
+	} else {
+		echo '<a href="'.$url.'">'.$page->post_title.'</a>';
+	}
+	
+	echo '</li>';
+		
+	}
 				?>
 			</ul>
 			

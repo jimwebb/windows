@@ -1236,6 +1236,11 @@ body.events #main h2 {
 	padding-top: 10px;
 }
 
+#nav-subsection li ul {
+	display: none;
+	margin-left: 20px;
+}
+
 
 
 

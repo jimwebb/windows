@@ -144,21 +144,20 @@ $('.home .footer-wrap').width(width);
 
 
 // ---------------------------------------
-// -------- Inside Navigation
+// -------- Dropdown Navigation
 // ---------------------------------------
 
-// vertically align titles within the nav bar 
+//open the dropdown nav if we are on it's page;
 
-//removing this, might be better to just hard code for those nav items that fall on two lines (we already target them with other styles). This will avoid the awkward alignment on initial load before the function calculates and executes.
 
-/*
-function alignNav() {
-	if (jQuery.fn.vAlign) {
-		$('#nav-interior > ul > li > a span').vAlign();
+function dropNav() {
+	if($('.current_page_item').parent().hasClass('dropdown') ) {
+		
+		$('.current_page_item').parent().show(200);
+		
 	}
 }
-queue.enqueue(alignNav);
-*/
+queue.enqueue(dropNav);
 
 
 
@@ -252,15 +251,24 @@ $(document).on('click', 'nav a', function(e) {
 		var target = "#main";
 	
 		// remove other active states of tertiary nav and apply active class to clicked nav item
-		$(this).parent().parent().parent().children().find('li').removeClass('current_page_item');
+		$(this).parent().parent().parent().parent().find('li').removeClass('current_page_item');
 	
 		$(this).parent().addClass('current_page_item');
+		
+		$(this).parent().parent().find('ul.dropdown').hide(200);
 
-
-	} else if ($(this).hasClass('no-pjax')) {
+	// if normal link
+	} else if ($(this).hasClass('no-pjax') && !$(this).hasClass('has_drop')) {
 	
 		return true;
 	
+	// if tertiary drop down
+	} else if ($(this).hasClass('has_drop')) {
+	
+		e.preventDefault();
+		
+	    $(this).parent().find('ul').slideToggle(200);
+		
 	} else {
 
 		// fallback for anything else
@@ -271,7 +279,8 @@ $(document).on('click', 'nav a', function(e) {
 	
 	
 	if(!$(this).parent().is('.nav-corporate, .nav-weddings, .nav-events, .nav-company')) {
-
+		
+		console.log('pjax was initiated');
 
 		$.pjax({
 			url: url,	
