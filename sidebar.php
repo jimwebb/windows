@@ -35,7 +35,7 @@
 	$args = array(
     'child_of' => $location,
     'parent' => $location,
-    'exclude' => $excluded_featured
+    'exclude' => $exclude_featured
     );
 	
 	$pages = get_pages( $args );

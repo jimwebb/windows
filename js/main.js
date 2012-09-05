@@ -207,7 +207,7 @@ $(document).on('click', 'nav a', function(e) {
 
 	// what got clicked?
 	
-	if ($clicked.closest('#nav-main').length || $clicked.closest('.nav-home').length || $clicked.closest('.menu-home').length) {
+	if ($clicked.closest('#nav-main').length || $clicked.closest('#nav-utility').length || $clicked.closest('.nav-home').length || $clicked.closest('.menu-home').length) {
 	
 		// either a link to the home page, or on the home page, was clicked
 		var target = "#wrap";
