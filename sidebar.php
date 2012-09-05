@@ -35,6 +35,7 @@
 	$args = array(
     'child_of' => $location,
     'parent' => $location,
+    'sort_column' => 'menu_order',
     'exclude' => $exclude_featured
     );
 	
@@ -94,6 +95,7 @@
 					wp_list_pages ( array(
 						'child_of' => $post->post_parent,
 						'title_li' => '',
+						'sort_column' => 'menu_order',
 						'meta_key' => '_wp_page_template',
 					    'meta_value' => 'page-featured.php'
 					));
