@@ -320,6 +320,7 @@ body.home #banner {
 #nav-interior li li a span {
 	padding-top: 0;
 	padding-left: 0;
+	font-size: 12px;
 }
 
 #nav-interior li {
@@ -327,9 +328,8 @@ body.home #banner {
 	vertical-align:middle;
 	height:85px;
 	text-transform: uppercase;
-	font-size: 12px;
+	font-size: 0;
 	font-weight: bold;
-	margin:0;
 	padding:0;
 	overflow: hidden;
 }
@@ -343,6 +343,7 @@ body.home #banner {
 	text-transform: none;
 	text-align: center;
 	vertical-align:middle;
+	margin:0 1px 0 0;
 }
 
 #nav-interior li ul {
@@ -370,6 +371,11 @@ body.home #banner {
 	border-right: 2px solid transparent;
 }
 
+#nav-interior > ul > li {
+	margin-left: -4px;
+	margin-right: 1px;
+}
+
 #nav-interior ul.children a, #nav-interior li.nav-events a {
 	border-left: none;
 }
@@ -381,10 +387,12 @@ body.home #banner {
 	background-color: white;
 	color: black;
 	vertical-align: top;
+	font-size: 0;
 }
 
 #nav-interior li.current_page_ancestor ul {
 	width: inherit;
+	margin-left: 1px;
 }
 
 #nav-interior li.nav-events > a, #nav-interior li.nav-corporate > a, #nav-interior li.menu-our-company > a {
@@ -401,6 +409,7 @@ body.home #banner {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	font-weight: bold;
+	font-size: 12px;
 	color: #363636;
 	text-align: center;
 	line-height: 28px;
@@ -431,6 +440,7 @@ body.home #banner {
 
 #nav-interior > ul > li.current_page_ancestor {
 	margin-top: -1px;
+	margin-right: 0;
 }
 
 #nav-interior li.current_page_item a,
