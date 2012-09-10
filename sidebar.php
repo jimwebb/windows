@@ -125,10 +125,11 @@ if (stristr($post->post_title, "contact")) { ?>
 	<?php dynamic_sidebar('sidebar-contact');
 }
 
-if (is_home()) { ?>
+if ( is_home() || is_single() || is_category() || is_archive() ) { ?>
 	<!-- <h1><?php //echo get_the_title($post->post_parent); ?></h1> -->
 	
 	<nav id="nav-subsection">
+			<h1>What's New</h1>
 			<ul>
 				<?php 
 				global $post; 
@@ -138,6 +139,11 @@ if (is_home()) { ?>
 								'title_li' => ''
 								));
 				?>
+			</ul>
+			<hr />
+			<h1>Archives</h1>
+			<ul>
+			<?php wp_get_archives('type=yearly'); ?>
 			</ul>
 		</nav>	
 		

@@ -5,7 +5,7 @@
     <?php roots_main_before(); ?>
       <div id="main" class="<?php echo MAIN_CLASSES; ?>" role="main">
         <div class="page-header">
-          <h1><?php _e('Latest Posts', 'roots');?></h1>
+          <h1><?php _e('All the latest from Windows', 'roots');?></h1>
         </div>
         <?php get_template_part('loop', 'index'); ?>
       </div><!-- /#main -->

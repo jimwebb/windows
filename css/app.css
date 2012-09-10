@@ -1209,6 +1209,7 @@ body.events #nav-section li a:hover {
 	line-height: 25px;
 	text-transform: uppercase;
 	font-weight: lighter;
+	margin-bottom: 20px;
 }
 
 #sidebar li a {
@@ -1218,7 +1219,7 @@ body.events #nav-section li a:hover {
 	font-size: 13px;
 	margin-bottom: 9px;
 }
-#sidebar li.current_page_item a, #sidebar li a:hover {
+#sidebar li.current_page_item a, #sidebar li.current-cat a, #sidebar li a:hover {
 	font-weight: bold;
 	text-decoration: none;
 }

@@ -191,7 +191,7 @@ queue.enqueue(backgroundImages);
 //stop the page from jumping!
 $.pjax.defaults.scrollTo = false;
 
-$(document).on('click', 'nav a', function(e) {
+$(document).on('click', 'nav a, .post a', function(e) {
 
 // ready to start working on ajax? Comment or remove this line:
 // return;
@@ -251,11 +251,15 @@ $(document).on('click', 'nav a', function(e) {
 		var target = "#main";
 	
 		// remove other active states of tertiary nav and apply active class to clicked nav item
-		$(this).parent().parent().parent().parent().find('li').removeClass('current_page_item');
+		$(this).parent().parent().parent().parent().find('li').removeClass('current_page_item current-cat');
 	
 		$(this).parent().addClass('current_page_item');
 		
 		$(this).parent().parent().find('ul.dropdown').hide(200);
+		
+	} else if ($clicked.closest('.post').length) {
+	
+		var target = "#main";	
 
 	// if normal link
 	} else if ($(this).hasClass('no-pjax') && !$(this).hasClass('has_drop')) {

@@ -20,7 +20,7 @@
         <?php if (is_archive() || is_search()) { ?>
           <?php the_excerpt(); ?>
         <?php } else { ?>
-          <?php the_content(); ?>
+          <?php the_excerpt(); ?>
         <?php } ?>
       </div>
       <footer>
