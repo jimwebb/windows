@@ -124,6 +124,11 @@ h3 {
 	margin-top: 30px;
 }
 
+img {
+	max-width: 100%;
+	height: auto;
+}
+
 /* =============================================================================
    Main Navigation - Home Page
    There's JS being injected into this menu, so check yer source if troubleshooting
