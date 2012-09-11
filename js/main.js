@@ -59,6 +59,7 @@ $(document)
 // Set up queue. Make it part of the window object so it's global.
 window.queue = new Queue();
 
+window.pjaxStates = {};
 
 
 // ---------------------------------------
@@ -258,10 +259,29 @@ queue.enqueue(setupNav);
 
 // setNav : determines which subnav is currently active, then expands to show it
 
-function setNav(animate) {
+function setNav(animate, $clicked) {
 
-	// set "animate" to default true
+	// set "animate" to default true and el to false
+
 	animate = typeof animate !== 'undefined' ? animate : true;
+	$clicked = typeof $clicked !== 'undefined' ? $clicked : false;
+
+
+	// reset classes properly
+
+	if ($clicked) {
+		$li = $clicked.closest('li');
+
+		// is this link already the active one?
+		if ($li.is('.current_page_ancestor, .current_page_parent, .current_page_item')) return;
+
+		// remove existing current_page_ancestors
+		$('#nav-interior li.current_page_ancestor, #nav-interior li.current_page_parent, #nav-interior li.current_page_item').removeClass('current_page_ancestor current_page_parent current_page_item');
+
+		// add current_page_ancestor and current_page_parent to this li and to the parent li
+		$li.addClass('current_page_item').parent().closest('#nav-interior li').addClass('current_page_ancestor current_page_parent');
+	}
+
 
 	// set the width of the current li to show what's inside
 
@@ -283,6 +303,8 @@ function setNav(animate) {
 		}
 
 	}
+
+
 
 	// Check if the second-level category changed
 
@@ -356,19 +378,6 @@ $(document).on('click', 'nav a, .post a', function(e) {
 			url = $clicked.attr("href")
 		}
 		
-		$li = $clicked.closest('li');
-
-		// is this link already the active one?
-		if ($li.is('.current_page_ancestor, .current_page_parent, .current_page_item')) return;
-
-		// remove existing current_page_ancestors
-		$('#nav-interior li.current_page_ancestor, #nav-interior li.current_page_parent, #nav-interior li.current_page_item').removeClass('current_page_ancestor current_page_parent current_page_item');
-
-		// add current_page_ancestor and current_page_parent to this li and to the parent li
-		$li.addClass('current_page_item').parent().closest('#nav-interior li').addClass('current_page_ancestor current_page_parent');
-
-		// animate the nav
-		setNav();
 
 		// load the content
 		$.pjax({
@@ -378,6 +387,9 @@ $(document).on('click', 'nav a, .post a', function(e) {
 			fragment: target
 		});
 	
+	
+		// animate the nav -- must happen after pjax starts
+		setNav(true, $clicked);
 	
 	// if tertiary nav item is clicked
 	} else if ($clicked.closest('#nav-subsection').length && !$(this).hasClass('no-pjax')) {
@@ -421,6 +433,17 @@ $(document).on('click', 'nav a, .post a', function(e) {
 });
 
 
+
+function storePjaxState() {
+		if (typeof $.pjax.state !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] == 'undefined') {
+			window.pjaxStates['id' + $.pjax.state.id] = { 
+				'bodyclass' : $('body').attr('class'),
+				'navitem' : $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]
+			}
+		}
+}
+queue.enqueue(storePjaxState);
+
 $(document).on('pjax:start',function(e) { 
 
 	// fade out the page
@@ -429,22 +452,37 @@ $(document).on('pjax:start',function(e) {
 	$target.animate( {opacity: 0} , 300, function () {
 		// TODO: Add loading animation here
 		})
+	
+	console.log("before starting, pjax state", $.pjax.state, $.pjax.state.bodyclass);
+
+	storePjaxState();
+
+	console.log("pjaxStates", window.pjaxStates);
+
 });
 
-
-$(document).on('pjax:end',function(e) { 
+$(document).on('pjax:end pjax:popstate',function(e, d) { 
 	
-	console.log("pjax end");
-
 	// TODO: Remove loading animation if one was added
 
 	$target = $(e.target);
+
+	$target.stop().css('opacity', 0);
+
+	// if body and nav states exist, use 'em
+
+	if (typeof window.pjaxStates['id' + $.pjax.state.id] !== "undefined") {
+		$('body').attr('class', window.pjaxStates['id' + $.pjax.state.id]['bodyclass']);
+		setNav(true, $(window.pjaxStates['id' + $.pjax.state.id]['navitem']) );
+	}
+
 	
 	// fade in the new page
-	$target.stop().css('opacity', 0).animate( {opacity: 1} , 300);
+	$target.animate( {opacity: 1} , 300);
 
 	// run the "document's loaded" queue
 	queue.run();
+
 });
 
 
@@ -460,6 +498,9 @@ $(document).on('pjax:success', function(event, data) {
 		$("body").attr("class", body[1]);
 	} 
 	
+	// save the body classes into the target element, for retrieval during popstate
+	$(event.target).children(":first").attr('data-bodyclass',body[1]);
+
 });
 
 
