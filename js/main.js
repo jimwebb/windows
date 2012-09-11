@@ -160,6 +160,137 @@ function dropNav() {
 queue.enqueue(dropNav);
 
 
+// ---------------------------------------
+// -------- Main Navigation
+// ---------------------------------------
+
+// Set up main navigation CSS
+
+/*
+old attempt with left positioning -- ok to delete
+
+function setupNav() {
+
+	if ($('#nav-interior').length) {
+		var width = 0;
+		var maxwidth = 0;
+
+		// set the left position of each menu item
+		// (they're absolutely positioned)
+
+		$('#nav-interior > ul > li').each(function() {
+			$this = $(this);
+
+			// set the left property to the culmulative width
+			$this.css('left', width + 'px');
+
+			// the width of each menu item is itself, minus any child ULs
+			// add it to the cumulative total for the next item in the loop
+			elwidth = $this.width();
+			width += elwidth - $this.find('ul').width();
+
+			// maxwidth is the maximum width, including offset, of each opened menu item
+			if ((elwidth + width) > maxwidth) maxwidth = elwidth + width;
+
+		});
+
+
+		// give each menu item right-padding so each will cover the ones underneath
+
+		$('#nav-interior > ul > li').each(function() {
+
+
+		});
+
+
+	}
+
+}
+*/
+
+
+function setupNav() {
+	
+	if ($('#nav-interior').not('.rendered').length) {
+		
+		$('#nav-interior').css('position', 'relative').css('left', '-9999px'); // FOUC
+
+
+		$('#nav-interior > ul > li').each(function() {
+			
+			var $this = $(this);
+			var $subnav = $this.find('ul:first');
+
+			if ($subnav.length) {
+				// introduce a container element so we can do the sliding effect properly
+				$this.wrapInner('<div class="nav-container"></div>');
+			
+				// set the subnav to its proper natural width
+				// because we're using overflow:hidden to hide it
+
+				var subnavWidth = $subnav.width();
+				$subnav.width(subnavWidth);
+
+				// set the menu width to itself, minus the subnav
+				var navWidth = $this.find('a:first').outerWidth(true);
+
+				$this.find('.nav-container').width( navWidth + subnavWidth + 10); // 10 extra for safety!
+				$this.width(navWidth);
+
+			}
+		
+		});
+	
+	$('#nav-interior').hide().addClass('rendered').css('position','static').css('left','0px').fadeIn(100);
+
+	setNav(false);
+
+	} else {
+
+	setNav (true);
+
+	}
+
+}
+
+queue.enqueue(setupNav);
+
+
+// setNav : determines which subnav is currently active, then expands to show it
+
+function setNav(animate) {
+
+	// set "animate" to default true
+	animate = typeof animate !== 'undefined' ? animate : true;
+
+	// set the width of the current li to show what's inside
+
+	var $currentitem = $('#nav-interior > ul > li.current_page_ancestor');
+	var $olditem =  $('#nav-interior > ul > li.active');
+
+	// Check if the top-level category changed 
+	if ($currentitem[0] != $olditem[0]) {
+
+		var width = $currentitem.width() + $currentitem.find('ul:first').width()
+		var oldwidth = $olditem.width() - $olditem.find('ul:first').width();
+
+		if (animate) {
+			$olditem.animate({width: oldwidth + 'px'}, 300).removeClass('active');
+			$currentitem.animate({width: width + 'px'}, 400).addClass('active');
+		} else {
+			$currentitem.width(width).addClass('active');
+			$olditem.width(oldwidth).removeClass('active');
+		}
+
+	}
+
+	// Check if the second-level category changed
+
+
+
+}
+
+
 
 // ---------------------------------------
 // -------- Background images
@@ -189,7 +320,8 @@ queue.enqueue(backgroundImages);
 // ---------------------------------------
 
 //stop the page from jumping!
-$.pjax.defaults.scrollTo = false;
+
+if ($.support.pjax) $.pjax.defaults.scrollTo = false;
 
 $(document).on('click', 'nav a, .post a', function(e) {
 
@@ -216,33 +348,36 @@ $(document).on('click', 'nav a, .post a', function(e) {
 
 		// a top nav item got clicked
 		var target = "#content-wrapper";
-		
-		// if top parent link is clicked remove all other active states and apply an active state to first secondary nav item
-		if($(this).parent().closest('ul').length == 1 && !$(this).parent().is('.nav-corporate, .nav-weddings, .nav-events, .nav-company')) {
-			$(this).parent().parent().find('ul').children().removeClass('current_page_ancestor');
-			$(this).parent().find('ul').children(':first-child').addClass('current_page_ancestor');
-			$(this).parent().parent().find('li').removeClass('current_page_ancestor current_page_item');
-			$(this).parent().addClass('current_page_ancestor');
-			
-		} else if ($(this).parent().is('.nav-corporate, .nav-weddings, .nav-events, .nav-company')) {
-			
-			var subList = $(this).parent().find('.children');
-			var childrenWidth = $(this).parent().find('.children li').length * 74;
-			
-			if ( subList.width() > 0 ) {
-				subList.animate({width: '0px'}, 400);
-				
-			} else {
-				$('ul.children').each(function() {
-					$(this).animate({width: '0px'}, 400);
-					$(this).parent().removeClass('current_page_ancestor current_page_item');
-				});
-				subList.animate({width: childrenWidth+'px'}, 400);
-				$(this).parent().addClass('current_page_ancestor');
-			}
-			
+	
+		// is this link a top-level link?
+		// if so, let's use the first menu item instead
+		if (!$clicked.is('#nav-interior li li a') && $clicked.closest('li').find('ul').length) {
+			$clicked = $clicked.closest('li').find('ul li:first a');
+			url = $clicked.attr("href")
 		}
+		
+		$li = $clicked.closest('li');
 
+		// is this link already the active one?
+		if ($li.is('.current_page_ancestor, .current_page_parent, .current_page_item')) return;
+
+		// remove existing current_page_ancestors
+		$('#nav-interior li.current_page_ancestor, #nav-interior li.current_page_parent, #nav-interior li.current_page_item').removeClass('current_page_ancestor current_page_parent current_page_item');
+
+		// add current_page_ancestor and current_page_parent to this li and to the parent li
+		$li.addClass('current_page_item').parent().closest('#nav-interior li').addClass('current_page_ancestor current_page_parent');
+
+		// animate the nav
+		setNav();
+
+		// load the content
+		$.pjax({
+			url: url,	
+			container: target,
+			timeout: 5000,
+			fragment: target
+		});
+	
 	
 	// if tertiary nav item is clicked
 	} else if ($clicked.closest('#nav-subsection').length && !$(this).hasClass('no-pjax')) {
@@ -281,19 +416,6 @@ $(document).on('click', 'nav a, .post a', function(e) {
 		$(this).parent().addClass('current_page_ancestor');
 	}
 	
-	
-	if(!$(this).parent().is('.nav-corporate, .nav-weddings, .nav-events, .nav-company')) {
-		
-		console.log('pjax was initiated');
-
-		$.pjax({
-			url: url,	
-			container: target,
-			timeout: 5000,
-			fragment: target
-		});
-	
-	}
 
 
 });

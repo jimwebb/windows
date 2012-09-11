@@ -312,8 +312,14 @@ body.home #banner {
 #banner .container {
 	width:980px;
 	margin: 0 auto;
+	overflow: hidden;
+	height: 85px;
 }
 
+html.js #nav-interior {
+	position: relative;
+	left: -9999px;
+}
 #nav-interior li a span {
 	display: block;
 	padding-top: 2px;
@@ -338,7 +344,8 @@ body.home #banner {
 	overflow: hidden;
 }
 
-#nav-interior > ul > li > a {
+#nav-interior > ul > li > a,
+#nav-interior > ul > li > div > a {
 	height: 85px;
 	padding: 28px 10px 28px 0;
 }
@@ -351,33 +358,41 @@ body.home #banner {
 }
 
 #nav-interior li ul {
-	/* display: none; */
-	width: 0px;
+	/* width: 0px; */ /* we'd like to use 0, but that won't work on safari */
 	display:inline-block;
+	display: none;
 	background-color: white;
 	color: black;
 	vertical-align: top;
 }
 
 #nav-interior > ul > li.current_page_ancestor > a,
-#nav-interior > ul > li > a:hover { 
+#nav-interior > ul > li > a:hover,
+#nav-interior > ul > li.current_page_ancestor > div > a,
+#nav-interior > ul > li > div > a:hover { 
 	color: white;
 	background-color: #ccc;
 }
 
 #nav-interior ul.children {
+	overflow: hidden;
+
 	/* ugly hack because it's inline-block -- consider floats instead */
 	margin-left: -4px;
 }
 
-#nav-interior > ul > li > a span {
+
+#nav-interior > ul > li > a span,
+#nav-interior > ul > li > div > a span {
 	border-left: 2px solid #ccc;
 	border-right: 2px solid transparent;
 }
 
 #nav-interior > ul > li {
+	/* first level of nav */
 	margin-left: -4px;
 	margin-right: 1px;
+
 }
 
 #nav-interior ul.children a, #nav-interior li.nav-events a {
@@ -399,7 +414,7 @@ body.home #banner {
 	margin-left: 1px;
 }
 
-#nav-interior li.nav-events > a, #nav-interior li.nav-corporate > a, #nav-interior li.menu-our-company > a {
+#nav-interior > ul > li > a, #nav-interior > ul > li > div > a {
 	line-height: 14px;
 }
 
@@ -459,7 +474,7 @@ body.home #banner {
 	margin-right:20px;
 	height:86px;
 	background-size: 230px auto;
-	background-position: 0 12px;
+	background-position: 4px 12px;
 	position: static;
 	margin: 0;
 }
@@ -489,7 +504,8 @@ body.home #banner {
 
 
 /*--shitty hack for corp catering being too long--*/
-#nav-interior > ul > li.nav-corporate > a {
+#nav-interior > ul > li.nav-corporate > a,
+#nav-interior > ul > li.nav-corporate > div > a  {
 	width: 100px;
 }
 
@@ -497,11 +513,13 @@ body.home #banner {
 
 #nav-interior li.nav-corporate.current_page_ancestor a,
 #nav-interior li.nav-corporate > a:hover,
+#nav-interior li.nav-corporate > div > a:hover,
 #nav-interior li.nav-corporate.current_page_ancestor a span {
 	border-color: rgba(95, 176, 56, 1) !important;
 }
 
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > a,
+#nav-interior > ul > li.nav-corporate.current_page_ancestor > div > a,
 #nav-interior li.nav-corporate > a:hover {
 	background-color: rgba(95, 176, 56, 1);
 }
@@ -509,11 +527,13 @@ body.home #banner {
 
 #nav-interior li.nav-weddings.current_page_ancestor a,
 #nav-interior li.nav-weddings > a:hover,
+#nav-interior li.nav-weddings > div > a:hover,
 #nav-interior li.nav-weddings.current_page_ancestor a span {
 	border-color: rgba(54, 130, 154, 1) !important;
 }
 
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > a,
+#nav-interior > ul > li.nav-weddings.current_page_ancestor > div > a,
 #nav-interior li.nav-weddings > a:hover {
 	background-color: rgba(54, 130, 154, 1);
 }
@@ -521,15 +541,18 @@ body.home #banner {
 
 #nav-interior li.nav-events.current_page_ancestor a,
 #nav-interior li.nav-events > a:hover,
+#nav-interior li.nav-events > div > a:hover,
 #nav-interior li.nav-events.current_page_ancestor a span {
 	border-color: rgba(186, 31, 63, 1) !important;
 }
 #nav-interior > ul > li.nav-events.current_page_ancestor > a,
+#nav-interior > ul > li.nav-events.current_page_ancestor > div > a,
 #nav-interior li.nav-events > a:hover {
 	background-color: rgba(186, 31, 63, 1);
 }
 
-#nav-interior > ul > li > a:hover span {
+#nav-interior > ul > li > a:hover span,
+#nav-interior > ul > li > div > a:hover span  {
 	border-color: transparent;
 }
 
