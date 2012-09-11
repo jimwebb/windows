@@ -341,9 +341,25 @@ queue.enqueue(backgroundImages);
 // -------- AJAXify site
 // ---------------------------------------
 
+
+// utility function to store elements of the page to make the forward and backward buttons work
+
+function storePjaxState() {
+		if (typeof $.pjax.state !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] == 'undefined') {
+			window.pjaxStates['id' + $.pjax.state.id] = { 
+				'bodyclass' : $('body').attr('class'),
+				'navitem' : $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]
+			}
+		}
+}
+
+queue.enqueue(storePjaxState);
+
+
 //stop the page from jumping!
 
 if ($.support.pjax) $.pjax.defaults.scrollTo = false;
+
 
 $(document).on('click', 'nav a, .post a', function(e) {
 
@@ -352,8 +368,11 @@ $(document).on('click', 'nav a, .post a', function(e) {
 
 	if(!$(this).hasClass('no-pjax')) {
 	
-	e.preventDefault();
+		e.preventDefault();
 	
+	} else {
+
+		return;
 	}
 
 	var url = $(this).attr("href");
@@ -377,19 +396,6 @@ $(document).on('click', 'nav a, .post a', function(e) {
 			$clicked = $clicked.closest('li').find('ul li:first a');
 			url = $clicked.attr("href")
 		}
-		
-
-		// load the content
-		$.pjax({
-			url: url,	
-			container: target,
-			timeout: 5000,
-			fragment: target
-		});
-	
-	
-		// animate the nav -- must happen after pjax starts
-		setNav(true, $clicked);
 	
 	// if tertiary nav item is clicked
 	} else if ($clicked.closest('#nav-subsection').length && !$(this).hasClass('no-pjax')) {
@@ -427,22 +433,21 @@ $(document).on('click', 'nav a, .post a', function(e) {
 		$(this).parent().parent().children().removeClass('current_page_ancestor');
 		$(this).parent().addClass('current_page_ancestor');
 	}
-	
 
+	// load the content
+	$.pjax({
+		url: url,	
+		container: target,
+		timeout: 5000,
+		fragment: target
+	});
 
+	// animate the nav 
+	setNav(true, $clicked);
 });
 
 
 
-function storePjaxState() {
-		if (typeof $.pjax.state !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] == 'undefined') {
-			window.pjaxStates['id' + $.pjax.state.id] = { 
-				'bodyclass' : $('body').attr('class'),
-				'navitem' : $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]
-			}
-		}
-}
-queue.enqueue(storePjaxState);
 
 $(document).on('pjax:start',function(e) { 
 
