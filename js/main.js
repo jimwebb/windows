@@ -218,7 +218,7 @@ function setupNav() {
 		// $('#nav-interior').css('position', 'relative').css('left', '-9999px'); // FOUC
 		
 
-		console.log ('time to render the nav!');
+		// console.log ('time to render the nav!');
 
 
 		$('#nav-interior > ul > li').each(function() {
@@ -239,7 +239,7 @@ function setupNav() {
 				// set the menu width to itself, minus the subnav
 				var navWidth = $this.find('a:first').outerWidth(true);
 
-				console.log("resetting nav", $this, navWidth, subnavWidth);
+				// console.log("resetting nav", $this, navWidth, subnavWidth);
 				$this.find('.nav-container').width( navWidth + subnavWidth + 10); // 10 extra for safety!
 				$this.width(navWidth);
 
@@ -280,7 +280,7 @@ function setNav(animate, $clicked) {
 	// reset classes properly
 
 	if ($clicked) {
-		console.log ("clicked is non-false: ", $clicked);
+		// console.log ("clicked is non-false: ", $clicked);
 
 		if (!$clicked.length || !$clicked.is('a')) {
 
@@ -296,18 +296,18 @@ function setNav(animate, $clicked) {
 
 				var testpath = stripTrailingSlash($this.attr('href'))
 				
-				console.log (" trying " + testpath + " against " + pathname + " and " + pathnamestripped);
+				// console.log (" trying " + testpath + " against " + pathname + " and " + pathnamestripped);
 
 				if (testpath == pathname || testpath == pathnamestripped) {
 					$clicked = $this;
-					console.log("found!", $clicked);
+					// console.log("found!", $clicked);
 					return false; // equivalent to break
 				}
 			})
 
 		}
 
-		if (!$clicked.length) {
+		if (!$clicked.length || !$clicked.is('#nav-interior a')) {
 			// we stiiiiiiilll don't have it? give up.
 			return false;
 		} 
@@ -338,7 +338,7 @@ function setNav(animate, $clicked) {
 
 		var width = $currentitem.find('.nav-container').width()
 		var oldwidth = $olditem.find('.nav-container').width();
-		console.log ('width', width, $currentitem, $currentitem.find('.nav-container'));
+		// console.log ('width', width, $currentitem, $currentitem.find('.nav-container'));
 
 		if (animate) {
 			$olditem.animate({width: oldwidth + 'px'}, 300).removeClass('active');
@@ -366,16 +366,28 @@ function setNav(animate, $clicked) {
 
 function backgroundImages() {
 	if ($('#page-header').length) {
+
+		// make sure we don't already have this image showing
+		var image = $('#page-header').data('url');
+
+		if (typeof window.backstretch !== "undefined" && window.backstretch == image) {
+			var speed = 0; } 
+			else {
+			var speed = 500;
+			}
+
 		if ($.fn.backstretch != 'undefined') {
-			$.backstretch( $('#page-header').data('url'), 
-							{ speed: 500, 
+			$.backstretch( image, 
+							{ speed: speed, 
 							target: '#page-header',
 							positionType: 'relative' } );
 			$('#page-header').addClass('active');
-	} else {
+			window.backstretch = image;
+		} else {
 			// fallback without backstretch plugin
-			$('#page-header').css('background-image', 'url(' + $('#page-header').data('url') + ')');
+			$('#page-header').css('background-image', 'url(' + image + ')');
 			$('#page-header').addClass('active');	
+			window.backstretch = image;
 		}
 	}
 }
