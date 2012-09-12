@@ -86,6 +86,12 @@ function homePage() {
     
     if ($('body.home').length) {
 
+    	// load images (they're set up as data-src so they don't load on inside pages)
+		$('.home-slideshow img').each(function() {
+			var $this = $(this);
+			$this.attr('src', $this.attr('data-src'));
+		});
+
 		$('#nav-main > ul > li span.corp').cycle({
 			fx: 'fade',
 			random: 1,
