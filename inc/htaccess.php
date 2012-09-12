@@ -62,7 +62,8 @@ if (stristr($_SERVER['SERVER_SOFTWARE'], 'apache') || stristr($_SERVER['SERVER_S
         'style_loader_src'
       );
 
-      add_filters($tags, 'roots_clean_urls');
+      // disabling clean URLs for windows site
+      // add_filters($tags, 'roots_clean_urls');
     }
   }
 
