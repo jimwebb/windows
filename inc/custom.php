@@ -593,21 +593,5 @@ function image_src_rel() {
 add_action( 'wp_head', 'image_src_rel' );
 
 
-// ------------------------------------------------------------------- 
-// ---------------------- BWP Minify
-// ------------------------------------------------------------------- 
-// if BWP minify is installed, fix the file paths
-
-
-// add_filter('bwp_minify_script_header','minify_scripts');
-// add_action('bwp_minify_before_header_scripts','minify_scripts');
-
-
-
-function minify_scripts($content) {
-	global $bwp_minify;
-	print_r($bwp_minify);
-	// exit();
-}
 
 
