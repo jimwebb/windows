@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<?php
+
+// since we're here, we've already done redirects. So send a header that allows Pjax to know what our URL is.
+
+header('X-PJAX-URL: '. $_SERVER['REQUEST_URI']);
+
+?><!DOCTYPE html>
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" <?php language_attributes(); ?>> <![endif]-->
 <!--[if IE 8]>    <html class="no-js lt-ie9" <?php language_attributes(); ?>> <![endif]-->
@@ -20,6 +26,16 @@
 
 </head>
 
+<?php 
+	add_filter('body_class','home_custom_classname');
+	function home_custom_classname($classes) {
+		if (!is_front_page() && !is_home()) {
+			$classes[] = 'not-home';
+		}
+		return $classes;
+	}
+?>
+
 <body <?php body_class(); ?>>
 
   <!--[if lt IE 7]><div class="alert">Your browser is outdated! <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</div><![endif]-->
@@ -28,7 +44,6 @@
   
   <div id="wrap" class="<?php echo WRAP_CLASSES; ?>" role="document">
 
-  <?php if (is_front_page()) { ?>
   
 	<!--
 <header id="banner" role="banner">
@@ -62,13 +77,13 @@ $menu_name = 'primary_navigation';
 	    $url = $menu_item->url;
 	    $menu_list .= '<li class="' . $slug . '"><a href="' . $url . '">' . $title . '';
 	    $menu_list .= '<span class="'.$slug.'">';
-	    $menu_list .= '<img src="img/'.$slug.'3.jpg" />';
-	    $menu_list .= '<img src="img/'.$slug.'4.jpg" />';
-	    $menu_list .= '<img src="img/'.$slug.'5.jpg" />';
-	    $menu_list .= '<img src="img/'.$slug.'6.jpg" />';
-	    $menu_list .= '<img src="img/'.$slug.'7.jpg" />';
-	    $menu_list .= '<img src="img/'.$slug.'8.jpg" />';
-	    $menu_list .= '<img src="img/'.$slug.'9.jpg" />';
+	    $menu_list .= '<img src="/img/'.$slug.'3.jpg" />';
+	    $menu_list .= '<img src="/img/'.$slug.'4.jpg" />';
+	    $menu_list .= '<img src="/img/'.$slug.'5.jpg" />';
+	    $menu_list .= '<img src="/img/'.$slug.'6.jpg" />';
+	    $menu_list .= '<img src="/img/'.$slug.'7.jpg" />';
+	    $menu_list .= '<img src="/img/'.$slug.'8.jpg" />';
+	    $menu_list .= '<img src="/img/'.$slug.'9.jpg" />';
 	    $menu_list .= '</span></a></li>';
 	}
     }
@@ -88,13 +103,9 @@ $menu_name = 'primary_navigation';
 			</ul>
 		</nav>
 		
-	</header>
-	
-	<?php } else { ?>
-	
-	<header id="banner" role="banner">
 	  <?php roots_header_inside(); ?>
-	  <div class="<?php echo WRAP_CLASSES; ?>">
+
+	  <div class="<?php echo WRAP_CLASSES; ?> nav-interior-container">
 		<nav id="nav-interior" role="navigation">
 		 <ul>
 		<?php			
@@ -113,8 +124,7 @@ $menu_name = 'primary_navigation';
 	  </div>
 	</header>
 	
-	<?php } ?>
-	
+
 	
   <?php roots_header_after(); ?>
 

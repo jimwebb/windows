@@ -211,10 +211,14 @@ function setupNav() {
 
 
 function setupNav() {
-	
-	if ($('#nav-interior').not('.rendered').length) {
+	if ($('body.home').length) return; 
+
+	if (!$('#nav-interior.rendered').length) {
 		
-		$('#nav-interior').css('position', 'relative').css('left', '-9999px'); // FOUC
+		// $('#nav-interior').css('position', 'relative').css('left', '-9999px'); // FOUC
+		
+
+		console.log ('time to render the nav!');
 
 
 		$('#nav-interior > ul > li').each(function() {
@@ -235,6 +239,7 @@ function setupNav() {
 				// set the menu width to itself, minus the subnav
 				var navWidth = $this.find('a:first').outerWidth(true);
 
+				console.log("resetting nav", $this, navWidth, subnavWidth);
 				$this.find('.nav-container').width( navWidth + subnavWidth + 10); // 10 extra for safety!
 				$this.width(navWidth);
 
@@ -261,6 +266,11 @@ queue.enqueue(setupNav);
 
 function setNav(animate, $clicked) {
 
+	if ($('body.home').length) return; 
+
+	// has the nav been set up? if not, set up the nav.
+	if (!$('#nav-interior.rendered').length) setupNav(); 
+
 	// set "animate" to default true and el to false
 
 	animate = typeof animate !== 'undefined' ? animate : true;
@@ -270,13 +280,48 @@ function setNav(animate, $clicked) {
 	// reset classes properly
 
 	if ($clicked) {
+		console.log ("clicked is non-false: ", $clicked);
+
+		if (!$clicked.length || !$clicked.is('a')) {
+
+			$clicked = []; // reset
+
+			// we don't know what was clicked. we have to find it ourselves.
+
+			var pathname = stripTrailingSlash(location.pathname);
+			var pathnamestripped = stripTrailingSlash(pathname.substring(0, pathname.lastIndexOf("/")));
+
+			$('#nav-interior a').each(function() {
+				$this = $(this);
+
+				var testpath = stripTrailingSlash($this.attr('href'))
+				
+				console.log (" trying " + testpath + " against " + pathname + " and " + pathnamestripped);
+
+				if (testpath == pathname || testpath == pathnamestripped) {
+					$clicked = $this;
+					console.log("found!", $clicked);
+					return false; // equivalent to break
+				}
+			})
+
+		}
+
+		if (!$clicked.length) {
+			// we stiiiiiiilll don't have it? give up.
+			return false;
+		} 
+
 		$li = $clicked.closest('li');
 
+
 		// is this link already the active one?
-		if ($li.is('.current_page_ancestor, .current_page_parent, .current_page_item')) return;
+		// if ($li.is('.current_page_ancestor, .current_page_parent, .current_page_item')) return;
 
 		// remove existing current_page_ancestors
 		$('#nav-interior li.current_page_ancestor, #nav-interior li.current_page_parent, #nav-interior li.current_page_item').removeClass('current_page_ancestor current_page_parent current_page_item');
+
+			//console.log('the closestest li', $li);
 
 		// add current_page_ancestor and current_page_parent to this li and to the parent li
 		$li.addClass('current_page_item').parent().closest('#nav-interior li').addClass('current_page_ancestor current_page_parent');
@@ -291,8 +336,9 @@ function setNav(animate, $clicked) {
 	// Check if the top-level category changed 
 	if ($currentitem[0] != $olditem[0]) {
 
-		var width = $currentitem.width() + $currentitem.find('ul:first').width()
-		var oldwidth = $olditem.width() - $olditem.find('ul:first').width();
+		var width = $currentitem.find('.nav-container').width()
+		var oldwidth = $olditem.find('.nav-container').width();
+		console.log ('width', width, $currentitem, $currentitem.find('.nav-container'));
 
 		if (animate) {
 			$olditem.animate({width: oldwidth + 'px'}, 300).removeClass('active');
@@ -434,16 +480,24 @@ $(document).on('click', 'nav a, .post a', function(e) {
 		$(this).parent().addClass('current_page_ancestor');
 	}
 
+
+	// we're always going to swap out the same container and target, because
+	// pjax can't handle different containers/targets for different pages.
+	// but we save which target is actually switching, so we can fade it in/out properly.
+
+	window.$pjaxtarget = $(target);
+	window.$clicked = $clicked;
+
 	// load the content
 	$.pjax({
 		url: url,	
-		container: target,
+		container: '#content-wrapper',
 		timeout: 5000,
-		fragment: target
+		fragment: '#content-wrapper'
 	});
 
 	// animate the nav 
-	setNav(true, $clicked);
+	// setNav(true, $clicked);
 });
 
 
@@ -452,17 +506,18 @@ $(document).on('click', 'nav a, .post a', function(e) {
 $(document).on('pjax:start',function(e) { 
 
 	// fade out the page
-	$target = $(e.target);
+	$target = window.$pjaxtarget;
+	if (typeof $target === 'undefined') $target = $(e.target);
 
 	$target.animate( {opacity: 0} , 300, function () {
 		// TODO: Add loading animation here
 		})
 	
-	console.log("before starting, pjax state", $.pjax.state, $.pjax.state.bodyclass);
+	// console.log("before starting, pjax state", $.pjax.state, $.pjax.state.bodyclass);
 
 	storePjaxState();
 
-	console.log("pjaxStates", window.pjaxStates);
+	// console.log("pjaxStates", window.pjaxStates);
 
 });
 
@@ -470,7 +525,11 @@ $(document).on('pjax:end pjax:popstate',function(e, d) {
 	
 	// TODO: Remove loading animation if one was added
 
-	$target = $(e.target);
+	$target = window.$pjaxtarget;
+	if (typeof $target === 'undefined') $target = $(e.target);
+
+	// reset the nav
+	setNav(true, window.$clicked);
 
 	$target.stop().css('opacity', 0);
 
@@ -484,6 +543,7 @@ $(document).on('pjax:end pjax:popstate',function(e, d) {
 	
 	// fade in the new page
 	$target.animate( {opacity: 1} , 300);
+
 
 	// run the "document's loaded" queue
 	queue.run();
@@ -848,5 +908,15 @@ queue.enqueue(contactForm);
 queue.run();
 
 });
+
+
+// utility function to strip trailing slashes
+
+function stripTrailingSlash(str) {
+    if(str.substr(-1) == '/') {
+        return str.substr(0, str.length - 1);
+    }
+    return str;
+}
 
 

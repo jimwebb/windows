@@ -144,6 +144,14 @@ header {
 	position: relative;
 }
 
+body.home .nav-interior-container {
+	display:  none;
+}
+
+body.not-home #nav-utility, body.not-home #nav-main, body.not-home #banner .logo {
+	display: none;
+}
+
 #nav-main {
 	margin-top: 175px;
 	position: absolute;
@@ -318,7 +326,7 @@ body.home #banner {
 
 html.js #nav-interior {
 	position: relative;
-	left: -9999px;
+	/* left: -9999px; */
 }
 #nav-interior li a span {
 	display: block;
