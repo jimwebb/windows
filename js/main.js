@@ -141,12 +141,13 @@ $(document).on('mouseenter', 'body.home #nav-main a', function() {
 
 });
 
+
 var width = 40;
-$('.home .footer-wrap').children().each(function() {
+$('.footer-wrap').children().each(function() {
     width += $(this).outerWidth( true );
 });
 
-$('.home .footer-wrap').width(width);
+$('.footer-wrap').width(width);
 
 
 
