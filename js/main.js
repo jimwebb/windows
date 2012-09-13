@@ -279,8 +279,8 @@ function setNav(animate, $clicked) {
 
 	// set "animate" to default true and el to false
 
-	animate = typeof animate !== 'undefined' ? animate : true;
-	$clicked = typeof $clicked !== 'undefined' ? $clicked : false;
+	var animate = typeof animate !== 'undefined' ? animate : true;
+	var $clicked = typeof $clicked !== 'undefined' ? $clicked : true;
 
 
 	// reset classes properly
@@ -297,7 +297,7 @@ function setNav(animate, $clicked) {
 			var pathname = stripTrailingSlash(location.pathname);
 			var pathnamestripped = stripTrailingSlash(pathname.substring(0, pathname.lastIndexOf("/")));
 
-			$('#nav-interior a').each(function() {
+			$('#nav-interior li li a').each(function() {
 				$this = $(this);
 
 				var testpath = stripTrailingSlash($this.attr('href'))
@@ -343,7 +343,9 @@ function setNav(animate, $clicked) {
 	if ($currentitem[0] != $olditem[0]) {
 
 		var width = $currentitem.find('.nav-container').width()
-		var oldwidth = $olditem.find('.nav-container').width();
+
+		var oldwidth = $olditem.find('.nav-container > a').outerWidth(true);
+		
 		// console.log ('width', width, $currentitem, $currentitem.find('.nav-container'));
 
 		if (animate) {
@@ -410,6 +412,9 @@ queue.enqueue(backgroundImages);
 
 function storePjaxState() {
 		if (typeof $.pjax.state !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] == 'undefined') {
+
+			// console.log("storing pjaxstate", $.pjax.state.id, $('body').attr('class'), $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]);
+
 			window.pjaxStates['id' + $.pjax.state.id] = { 
 				'bodyclass' : $('body').attr('class'),
 				'navitem' : $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]
@@ -442,6 +447,10 @@ $(document).on('click', 'nav a, .post a', function(e) {
 	var url = $(this).attr("href");
 	var $clicked = $(e.target);
 
+	if (!$clicked.is('a')) $clicked = $clicked.closest('a');
+
+	// console.log ($clicked);
+
 	// what got clicked?
 	
 	if ($clicked.closest('#nav-main').length || $clicked.closest('#nav-utility').length || $clicked.closest('.nav-home').length || $clicked.closest('.menu-home').length) {
@@ -468,12 +477,15 @@ $(document).on('click', 'nav a, .post a', function(e) {
 		var target = "#main";
 	
 		// remove other active states of tertiary nav and apply active class to clicked nav item
+		// no longer necessary -- pjax swaps out the content
+		/* 
 		$(this).parent().parent().parent().parent().find('li').removeClass('current_page_item current-cat');
 	
 		$(this).parent().addClass('current_page_item');
 		
 		$(this).parent().parent().find('ul.dropdown').hide(200);
-		
+		*/
+
 	} else if ($clicked.closest('.post').length) {
 	
 		var target = "#main";	
@@ -494,8 +506,11 @@ $(document).on('click', 'nav a, .post a', function(e) {
 
 		// fallback for anything else
 		var target = "#content-wrapper";
+
+		/*
 		$(this).parent().parent().children().removeClass('current_page_ancestor');
 		$(this).parent().addClass('current_page_ancestor');
+		*/
 	}
 
 
@@ -506,6 +521,7 @@ $(document).on('click', 'nav a, .post a', function(e) {
 	window.$pjaxtarget = $(target);
 	window.$clicked = $clicked;
 
+
 	// load the content
 	$.pjax({
 		url: url,	
@@ -514,8 +530,9 @@ $(document).on('click', 'nav a, .post a', function(e) {
 		fragment: '#content-wrapper'
 	});
 
+
 	// animate the nav 
-	// setNav(true, $clicked);
+	// 
 });
 
 
@@ -532,8 +549,10 @@ $(document).on('pjax:start',function(e) {
 		})
 	
 	// console.log("before starting, pjax state", $.pjax.state, $.pjax.state.bodyclass);
-
 	storePjaxState();
+
+	setNav(true, window.$clicked);
+	// console.log ('reset nav on click', $clicked);
 
 	// console.log("pjaxStates", window.pjaxStates);
 
@@ -546,14 +565,18 @@ $(document).on('pjax:end pjax:popstate',function(e, d) {
 	$target = window.$pjaxtarget;
 	if (typeof $target === 'undefined') $target = $(e.target);
 
-	// reset the nav
-	setNav(true, window.$clicked);
+	window.$clicked = null;
+
+	// reset the nav if this is a forward/back
+	if (e.type == 'pjax:popstate') setNav(true, false);
 
 	$target.stop().css('opacity', 0);
 
 	// if body and nav states exist, use 'em
 
-	if (typeof window.pjaxStates['id' + $.pjax.state.id] !== "undefined") {
+	// console.log('looking for state id ' + $.pjax.state.id);
+
+	if (typeof $.pjax.state.id !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] !== 'undefined') {
 		$('body').attr('class', window.pjaxStates['id' + $.pjax.state.id]['bodyclass']);
 		setNav(true, $(window.pjaxStates['id' + $.pjax.state.id]['navitem']) );
 	}

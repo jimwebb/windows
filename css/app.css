@@ -367,8 +367,7 @@ html.js #nav-interior {
 
 #nav-interior li ul {
 	/* width: 0px; */ /* we'd like to use 0, but that won't work on safari */
-	display:inline-block;
-	display: none;
+	display: inline-block;
 	background-color: white;
 	color: black;
 	vertical-align: top;
