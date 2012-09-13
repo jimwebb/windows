@@ -15,7 +15,7 @@ define('CONTAINER_CLASSES',         'row');
 define('MAIN_CLASSES',              '');
 define('SIDEBAR_CLASSES',           '');
 define('FULLWIDTH_CLASSES',         '');
-define('GOOGLE_ANALYTICS_ID',       '');
+define('GOOGLE_ANALYTICS_ID',       'UA-2728765-87');
 
 // Set the post revisions to 5 unless previously set to avoid DB bloat
 if (!defined('WP_POST_REVISIONS')) { define('WP_POST_REVISIONS', 5); }
