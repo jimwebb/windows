@@ -148,7 +148,8 @@ body.home .nav-interior-container {
 	display:  none;
 }
 
-body.not-home #nav-utility, body.not-home #nav-main, body.not-home #banner .logo {
+body.not-home #nav-utility, body.not-home #nav-main, body.not-home #banner .logo,
+body.blog #nav-utility, body.blog #nav-main, body.blog #banner .logo {
 	display: none;
 }
 
