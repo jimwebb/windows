@@ -435,13 +435,10 @@ $(document).on('click', 'nav a, .post a', function(e) {
 // ready to start working on ajax? Comment or remove this line:
 // return;
 
-	if(!$(this).hasClass('no-pjax')) {
+	if(!$(this).hasClass('no-pjax') && !$(this).hasClass('has_drop')) {
 	
 		e.preventDefault();
 	
-	} else {
-
-		return;
 	}
 
 	var url = $(this).attr("href");
@@ -471,7 +468,7 @@ $(document).on('click', 'nav a, .post a', function(e) {
 		}
 	
 	// if tertiary nav item is clicked
-	} else if ($clicked.closest('#nav-subsection').length && !$(this).hasClass('no-pjax')) {
+	} else if ($clicked.closest('#nav-subsection').length && !$clicked.hasClass('no-pjax')) {
 		
 		// a sub nav item got clicked
 		var target = "#main";
@@ -491,12 +488,11 @@ $(document).on('click', 'nav a, .post a', function(e) {
 		var target = "#main";	
 
 	// if normal link
-	} else if ($(this).hasClass('no-pjax') && !$(this).hasClass('has_drop')) {
-	
+	} else if ($clicked.hasClass('no-pjax') && !$clicked.hasClass('has_drop')) {
 		return true;
 	
 	// if tertiary drop down
-	} else if ($(this).hasClass('has_drop')) {
+	} else if ($clicked.hasClass('has_drop')) {
 	
 		e.preventDefault();
 		
@@ -521,14 +517,16 @@ $(document).on('click', 'nav a, .post a', function(e) {
 	window.$pjaxtarget = $(target);
 	window.$clicked = $clicked;
 
-
-	// load the content
-	$.pjax({
-		url: url,	
-		container: '#content-wrapper',
-		timeout: 5000,
-		fragment: '#content-wrapper'
-	});
+	if (!$(this).hasClass('no-pjax')) {
+		// load the content
+		$.pjax({
+			url: url,	
+			container: '#content-wrapper',
+			timeout: 5000,
+			fragment: '#content-wrapper'
+		});
+	
+	}
 
 
 	// animate the nav 
