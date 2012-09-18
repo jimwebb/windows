@@ -167,7 +167,7 @@ function top_parent_with_thumbnail($id = null) {
 
 function custom_login_logo() {
 	echo '<style type="text/css">
-	.login h1 a { background-size: auto; background-image: url('.get_bloginfo('template_directory').'/img/logo-login.png) !important; height: 150px !important; }
+	.login h1 a { background-size: auto !important; background-image: url('.get_bloginfo('template_directory').'/img/logo-login.png) !important; height: 150px !important; }
 	</style>';
 }
 add_action('login_head', 'custom_login_logo');
