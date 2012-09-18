@@ -1,5 +1,7 @@
-/* @override http://windows.jimwebbdev.com/css/app.css */
-
+/* @override 
+	http://windows.jimwebbdev.com/css/app.css
+	http://windows.jimwebbdev.com/plugins/bwp-minify/min/?f=wp-content/themes/windows/css/main.css,wp-content/themes/windows/css/app.css
+*/
 
 /* =============================================================================
    Fonts
@@ -528,7 +530,7 @@ html.js #nav-interior {
 
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > a,
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > div > a,
-#nav-interior li.nav-corporate > a:hover {
+#nav-interior li.nav-corporate > div > a:hover {
 	background-color: rgba(95, 176, 56, 1);
 }
 
@@ -542,7 +544,7 @@ html.js #nav-interior {
 
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > a,
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > div > a,
-#nav-interior li.nav-weddings > a:hover {
+#nav-interior li.nav-weddings > div > a:hover {
 	background-color: rgba(54, 130, 154, 1);
 }
 
@@ -555,7 +557,7 @@ html.js #nav-interior {
 }
 #nav-interior > ul > li.nav-events.current_page_ancestor > a,
 #nav-interior > ul > li.nav-events.current_page_ancestor > div > a,
-#nav-interior li.nav-events > a:hover {
+#nav-interior li.nav-events > div > a:hover {
 	background-color: rgba(186, 31, 63, 1);
 }
 
