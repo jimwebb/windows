@@ -281,7 +281,7 @@ function setNav(animate, $clicked) {
 	// set "animate" to default true and el to false
 
 	var animate = typeof animate !== 'undefined' ? animate : true;
-	var $clicked = typeof $clicked !== 'undefined' ? $clicked : true;
+	var $clicked = typeof $clicked !== 'undefined' ? $clicked : [];
 
 
 	// reset classes properly
@@ -296,26 +296,30 @@ function setNav(animate, $clicked) {
 			// we don't know what was clicked. we have to find it ourselves.
 
 			var pathname = stripTrailingSlash(location.pathname);
-			var pathnamestripped = stripTrailingSlash(pathname.substring(0, pathname.lastIndexOf("/")));
 
-			$('#nav-interior li li a').each(function() {
-				$this = $(this);
+			var $navlinks = $('#nav-interior li li a');
 
-				var testpath = stripTrailingSlash($this.attr('href'))
-				
-				// console.log (" trying " + testpath + " against " + pathname + " and " + pathnamestripped);
+			// first try the path as is 
+			$clicked = testPathName (pathname, $navlinks);
 
-				if (testpath == pathname || testpath == pathnamestripped) {
-					$clicked = $this;
-					// console.log("found!", $clicked);
-					return false; // equivalent to break
-				}
-			})
+			// now removed one level
+			if (!$clicked || !$clicked.length) {
+				pathname = stripTrailingSlash(pathname.substring(0, pathname.lastIndexOf("/")))
+				$clicked = testPathName (pathname, $navlinks);
+			}
+
+			// now removed two levels
+			
+			if (!$clicked || !$clicked.length) {
+				pathname = stripTrailingSlash(pathname.substring(0, pathname.lastIndexOf("/")))
+				$clicked = testPathName (pathname, $navlinks);
+			}
 
 		}
 		
+		console.log($clicked);
 
-		if (!$clicked.length || !$clicked.is('#nav-interior a')) {
+		if (!$clicked || !$clicked.length || !$clicked.is('#nav-interior a')) {
 			
 			// if this is an archive or single post page, we're in the "what's new" section.
 
@@ -368,11 +372,28 @@ function setNav(animate, $clicked) {
 	}
 
 
-
-	// Check if the second-level category changed
-
+}
 
 
+// testPathName: utility function to compare a test pathname against a jQuery collection of links
+// returns the jquery object (a tag) that has the same href as the pathname
+
+function testPathName (pathname, $links) {
+
+			if (typeof pathname == 'undefined' || typeof $links == 'undefined') return;
+
+			var pathname = stripTrailingSlash(pathname);
+			var $found = false;
+
+			$links.each(function() {
+				$this = $(this);
+				var testpath = stripTrailingSlash($this.attr('href'));
+				// console.log ('comparing: ', testpath, pathname, testpath == pathname, $this);
+				if (testpath == pathname) $found = $this;
+			});
+
+			// if we made it this far, nothing was found.
+			return $found;
 }
 
 
