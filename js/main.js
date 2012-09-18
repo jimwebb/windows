@@ -957,7 +957,7 @@ queue.enqueue(contactForm);
 
 function disableAttachmentLinks() {
 	console.log('disabler');
-	$('body.single-post a[rel*="attachment"]').on('click', function(e) {
+	$('body.single-post a[rel*="attachment"], body.blog a[rel*="attachment"], body.archive a[rel*="attachment"]').on('click', function(e) {
 		e.preventDefault(); return false;
 		console.log('clicked');
 	})
@@ -967,7 +967,7 @@ function disableAttachmentLinks() {
 
 function fancyboxAttachmentLinks() {
 
-$('body.single-post a[rel*="attachment"]').fancybox({
+$('body.single-post a[rel*="attachment"], body.blog a[rel*="attachment"], body.archive a[rel*="attachment"]').fancybox({
 		openEffect	: 'elastic',
     	closeEffect	: 'elastic',
     	type: 'image',
