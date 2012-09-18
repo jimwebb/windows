@@ -313,10 +313,18 @@ function setNav(animate, $clicked) {
 			})
 
 		}
+		
 
 		if (!$clicked.length || !$clicked.is('#nav-interior a')) {
+			
+			// if this is an archive or single post page, we're in the "what's new" section.
+
+			if ($('body.archive').length || $('body.single').length) {
+				$clicked = $('#nav-interior li.menu-whats-new a');
+			} else {
 			// we stiiiiiiilll don't have it? give up.
 			return false;
+			}
 		} 
 
 		$li = $clicked.closest('li');
@@ -431,7 +439,7 @@ queue.enqueue(storePjaxState);
 if ($.support.pjax) $.pjax.defaults.scrollTo = false;
 
 
-$(document).on('click', 'nav a', function(e) {
+$(document).on('click', 'nav a, body.archive #main header a', function(e) {
 
 // ready to start working on ajax? Comment or remove this line:
 // return;
@@ -954,8 +962,25 @@ function disableAttachmentLinks() {
 		console.log('clicked');
 	})
 }
+// queue.enqueue(disableAttachmentLinks);
 
-queue.enqueue(disableAttachmentLinks);
+
+function fancyboxAttachmentLinks() {
+
+$('body.single-post a[rel*="attachment"]').fancybox({
+		openEffect	: 'elastic',
+    	closeEffect	: 'elastic',
+    	type: 'image',
+    	padding: 0,
+    	helpers: {
+    		title: { type: 'inside' }
+    		}
+    	});
+}
+
+queue.enqueue(fancyboxAttachmentLinks);
+
+
 
 // --------------------------------------
 // ------ Run the queue -- this should be last
