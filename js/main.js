@@ -916,7 +916,7 @@ $(document).on('click', 'body.lookbook #main li', function() {
 
 function contactForm() {
 
-	$('.gform_body li.gsection:eq(1)').each(function() {
+	$('.gform_body ul:not(".col") li.gsection:eq(1)').each(function() {
 
 		var $col = $(this).nextAll().andSelf();
 		var $ul = $(this).closest("ul").addClass("col");
@@ -925,7 +925,7 @@ function contactForm() {
 	});
 
 
-	$('.gf_list_2col ul').each(function() {
+	$('.gf_list_2col ul:not(".col")').each(function() {
 		
 		var $ul = $(this);
 		var $lis = $ul.find('li');
