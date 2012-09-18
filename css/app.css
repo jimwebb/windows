@@ -1421,8 +1421,16 @@ ul.col.last {
 	color: #686868;
 }
 
+.entry-content img {
+	margin: 20px 20px 20px 0;
+}
+
 .thumbnail {
-margin: 20px 0;
+	margin: 20px 0;
+}
+
+.thumbnail img {
+	margin: 0;
 }
 
 
