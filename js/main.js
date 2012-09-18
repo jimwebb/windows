@@ -431,7 +431,7 @@ queue.enqueue(storePjaxState);
 if ($.support.pjax) $.pjax.defaults.scrollTo = false;
 
 
-$(document).on('click', 'nav a, .post a', function(e) {
+$(document).on('click', 'nav a', function(e) {
 
 // ready to start working on ajax? Comment or remove this line:
 // return;
@@ -575,7 +575,7 @@ $(document).on('pjax:end pjax:popstate',function(e, d) {
 
 	// console.log('looking for state id ' + $.pjax.state.id);
 
-	if (typeof $.pjax.state.id !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] !== 'undefined') {
+	if (typeof $.pjax.state !== 'undefined' && typeof $.pjax.state.id !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] !== 'undefined') {
 		$('body').attr('class', window.pjaxStates['id' + $.pjax.state.id]['bodyclass']);
 		setNav(true, $(window.pjaxStates['id' + $.pjax.state.id]['navitem']) );
 	}
@@ -940,6 +940,22 @@ function contactForm() {
 
 queue.enqueue(contactForm);
 
+
+
+
+// ---------------------------------------
+// -------- Disable attachment links
+// ---------------------------------------
+
+function disableAttachmentLinks() {
+	console.log('disabler');
+	$('body.single-post a[rel*="attachment"]').on('click', function(e) {
+		e.preventDefault(); return false;
+		console.log('clicked');
+	})
+}
+
+queue.enqueue(disableAttachmentLinks);
 
 // --------------------------------------
 // ------ Run the queue -- this should be last
