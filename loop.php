@@ -18,9 +18,9 @@
       </header>
       <div class="entry-content">
         <?php if (is_archive() || is_search()) { ?>
-          <?php the_excerpt(); ?>
+          <?php the_content(); ?>
         <?php } else { ?>
-          <?php the_excerpt(); ?>
+          <?php the_content(); ?>
         <?php } ?>
       </div>
       <footer>
