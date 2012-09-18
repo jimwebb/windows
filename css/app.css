@@ -1415,6 +1415,12 @@ ul.col.last {
 
 .entry-title { margin-bottom: 0; }
 
+.caption {
+	font-size: 14px;
+	font-style: italic;
+	color: #686868;
+}
+
 
 
 /* =============================================================================
