@@ -84,7 +84,7 @@
 			<?php //extra files ?>
 			<?php
 				
-				$files = get_field('related-files', $post->post_parent);
+				$files = get_field('related-files', $location);
 			
 				if ($files) { ?>
 				
@@ -93,7 +93,7 @@
 				<?php
 					
 					wp_list_pages ( array(
-						'child_of' => $post->post_parent,
+						'child_of' => $location,
 						'title_li' => '',
 						'sort_column' => 'menu_order',
 						'meta_key' => '_wp_page_template',
