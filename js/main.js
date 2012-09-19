@@ -317,7 +317,6 @@ function setNav(animate, $clicked) {
 
 		}
 		
-		console.log($clicked);
 
 		if (!$clicked || !$clicked.length || !$clicked.is('#nav-interior a')) {
 			
