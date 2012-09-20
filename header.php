@@ -12,7 +12,7 @@ header('X-PJAX-URL: '. $_SERVER['REQUEST_URI']);
 <head>
   <meta charset="utf-8">
 
-  <title><?php if (is_front_page()) { echo 'Windows Catering Company | DC, MD, VA'; } else { wp_title('|', true, 'right'); bloginfo('name'); } ?></title>
+  <title><?php if (is_front_page()) { bloginfo('name'); } else { wp_title('|', true, 'right'); bloginfo('name'); } ?></title>
   
   <meta name="description" content="For 25 years Windows Catering Company has established a national reputation for exceptional food, creativity and presentation combined with outstanding service for galas, fundraisers, corporate meetings, weddings, mitzvahs, and special events.">
   
