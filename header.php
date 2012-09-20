@@ -12,7 +12,12 @@ header('X-PJAX-URL: '. $_SERVER['REQUEST_URI']);
 <head>
   <meta charset="utf-8">
 
-  <title><?php wp_title(''); ?></title>
+  <title><?php if (is_front_page()) { echo 'Windows Catering Company | DC, MD, VA'; } else { wp_title('|', true, 'right'); bloginfo('name'); } ?></title>
+  
+  <meta name="description" content="For 25 years Windows Catering Company has established a national reputation for exceptional food, creativity and presentation combined with outstanding service for galas, fundraisers, corporate meetings, weddings, mitzvahs, and special events.">
+  
+  <meta name="keywords" content="Catering Washington dc, catering VA, Catering MD, full-service catering, wedding planner, event planner, corporate catering, galas, fundraisers, bar mitzvahs, bat mitzvahs, breakfast, luncheons, business meetings, receptions, weddings, wedding cakes, social events, certified green catering, national pastry champion, sustainable catering, Washington DC, Maryland, Virginia">
+  
 
   <?php if (current_theme_supports('bootstrap-responsive')) { ?><meta name="viewport" content="width=device-width, initial-scale=1.0"><?php } ?>
 
