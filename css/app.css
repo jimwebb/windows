@@ -1,6 +1,7 @@
 /* @override 
 	http://windows.jimwebbdev.com/css/app.css
 	http://windows.jimwebbdev.com/plugins/bwp-minify/min/?f=wp-content/themes/windows/css/main.css,wp-content/themes/windows/css/app.css
+	http://windows.jimwebbdev.com/wp-content/themes/windows/css/app.css
 */
 
 /* =============================================================================
@@ -626,6 +627,11 @@ body.gallery #main {
 	-webkit-transition: opacity 0.5s;
 }
 
+#gallery a {
+	display: inline-block;
+	height: 120px;
+}
+
 #gallery li:hover .mask,
 #gallery li.active .mask {
 	opacity: 0;
@@ -955,6 +961,10 @@ body.lookbook div.caption {
 .fancybox-next span {
 	right: 0px;
 	background-position: -90px -262px;
+}
+
+html.touch .fancybox-next span {
+	opacity: 1;
 }
 
 .fancybox-nav:hover span {

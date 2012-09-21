@@ -459,7 +459,7 @@ queue.enqueue(storePjaxState);
 if ($.support.pjax) $.pjax.defaults.scrollTo = false;
 
 
-$(document).on('click', 'nav a, body.archive #main header a', function(e) {
+$(document).on('click touchstart', 'nav a, body.archive #main header a', function(e) {
 
 // ready to start working on ajax? Comment or remove this line:
 // return;
@@ -703,14 +703,15 @@ $(window).on('resize load', function() {
 
 // make enlargements work on click 
 
-$(document).on('click','#gallery a',function(e) {
+
+$(document).on('click touchstart','#gallery a, #gallery .mask',function(e) {
 	e.preventDefault();	
-	galleryImage($(this));
+	galleryImage($(this).closest('a'));
 });
 
 
 // forward and next buttons
-$(document).on('click', '#image-large #next', function() {
+$(document).on('click touchstart', '#image-large #next', function() {
 	var $active = window.activeImage.closest('li');
 	
 	if ($active.is(':last-child')) {
@@ -720,7 +721,7 @@ $(document).on('click', '#image-large #next', function() {
 	}
 });
 
-$(document).on('click', '#image-large #prev', function() {
+$(document).on('click touchstart', '#image-large #prev', function() {
 
 	var $active = window.activeImage.closest('li');
 	
@@ -866,7 +867,7 @@ queue.enqueue(lookbook);
 
 // Make lookbook LIs filter results when clicked
 
-$(document).on('click', 'body.lookbook #main li', function() {
+$(document).on('click touchstart', 'body.lookbook #main li', function() {
 	
 	$(this).toggleClass("active");
 
@@ -976,10 +977,10 @@ queue.enqueue(contactForm);
 // ---------------------------------------
 
 function disableAttachmentLinks() {
-	console.log('disabler');
-	$('body.single-post a[rel*="attachment"], body.blog a[rel*="attachment"], body.archive a[rel*="attachment"]').on('click', function(e) {
+	// console.log('disabler');
+	$('body.single-post a[rel*="attachment"], body.blog a[rel*="attachment"], body.archive a[rel*="attachment"]').on('click touchstart', function(e) {
 		e.preventDefault(); return false;
-		console.log('clicked');
+		// console.log('clicked');
 	})
 }
 // queue.enqueue(disableAttachmentLinks);
