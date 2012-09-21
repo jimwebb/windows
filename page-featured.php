@@ -3,9 +3,9 @@
 Template Name: Featured
 
 */
-?>
 
-<?php get_header(); ?>
+get_header(); ?>
+
  <?php   
   if (!is_front_page() && !is_home()) {
   
