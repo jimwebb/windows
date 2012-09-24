@@ -89,15 +89,24 @@ function Queue(){
    */
 
   this.run = function() {
+
+    var start;
+
     for (var i=offset; i < queue.length; i++) {
       
     // typeof queue[i] == 'function' && queue[i]();
 
       // wrap in jQuery -- custom
-    
-    // console.log("running " + queue[i]);
+
+    // start = new Date().getTime();
 
     typeof queue[i] == 'function' && function($){ queue[i]() }(jQuery);
+
+   //  var end = new Date().getTime();
+    // console.log((end - start) + "ms: "+ queue[i].name);
+    
+    // start = end; 
+
      
     };
   };

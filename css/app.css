@@ -755,10 +755,16 @@ body.lookbook #main li.active:before {
 	background-color: black;
 }
 
-body.lookbook div.type-lookbook {
+body.lookbook .type-lookbook {
 	width: 158px;
 	height: 158px;
 	margin: 0 1px 1px 0;
+}
+
+body.lookbook .type-lookbook img {
+	width: 158px;
+	height: 158px;
+	display: inline-block;
 }
 
 body.lookbook div.caption {
@@ -768,6 +774,10 @@ body.lookbook div.caption {
 
 /**** Isotope Filtering ****/
 
+html.touch .isotope-hidden {
+	display: none; /* removes fancy animation on touch devices */
+}
+
 .isotope-item {
   z-index: 2;
 }
@@ -776,7 +786,6 @@ body.lookbook div.caption {
   pointer-events: none;
   z-index: 1;
 }
-
 
 /**** Isotope CSS3 transitions ****/
 
@@ -1491,6 +1500,7 @@ body.home #content-info {
 #content-info a:hover {
 	text-decoration: underline;
 }
+
 #footer-push {
 	height: 55px;
 }

@@ -795,7 +795,7 @@ function galleryImage($elem) {
     }
   
     if ( this.options.masonry.cornerStampSelector ) {
-      var $cornerStamp = this.element.find( this.options.masonry.cornerStampSelector ),
+      var $cornerStamp = $( this.options.masonry.cornerStampSelector ),
           stampWidth = $cornerStamp.outerWidth(true) - ( this.element.width() % this.masonry.columnWidth ),
           cornerCols = Math.ceil( stampWidth / this.masonry.columnWidth ),
           cornerStampHeight = $cornerStamp.outerHeight(true);
@@ -952,6 +952,8 @@ $(document).on('touchclick', 'body.lookbook #main li', function() {
 // into multiple columns by section break
 
 function contactForm() {
+
+	if (!$('.gform_body').length) return; 
 
 	$('.gform_body ul:not(".col") li.gsection:eq(1)').each(function() {
 
