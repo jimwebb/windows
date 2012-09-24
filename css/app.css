@@ -777,6 +777,7 @@ body.lookbook div.caption {
   z-index: 1;
 }
 
+
 /**** Isotope CSS3 transitions ****/
 
 .isotope,
@@ -1490,8 +1491,11 @@ body.home #content-info {
 #content-info a:hover {
 	text-decoration: underline;
 }
+#footer-push {
+	height: 55px;
+}
 
-#footer-push, #content-info {
+#content-info {
 	height: 35px;
 }
 

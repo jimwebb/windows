@@ -44,19 +44,8 @@ queue.run();
 
 */
 
-
-
-
-
-/*---TESTING---
-$('a').pjax('#main');
-$(document)
-  .on('pjax:start', function() { console.log('starting pjax...') })
-  .on('pjax:end',   function() { console.log('page fetched…') });
-
---END TESTING---*/
-
 // Set up queue. Make it part of the window object so it's global.
+
 window.queue = new Queue();
 
 window.pjaxStates = {};
@@ -66,12 +55,12 @@ window.pjaxStates = {};
 // -------- Home Page Navigation
 // ---------------------------------------
 
-$(window).resize( function() {
+$(window).resize(function() {
 	resize();
 });
 
 function resize() {
-	if ($('body.home').length) {
+	if ($('body').hasClass('home')) {
 		var winWidth = $(window).width();
 		var headerWidth = Math.floor( winWidth - (($(window).width() / 10) * 2) );
 		var boxSize = Math.floor( (headerWidth/3)-5 );
@@ -81,10 +70,11 @@ function resize() {
 }
 
 function homePage() {
-	
-	resize();
+
     
-    if ($('body.home').length) {
+    if ($('body').hasClass('home')) {
+	
+		resize();
 
     	// load images (they're set up as data-src so they don't load on inside pages)
 		$('.home-slideshow img').each(function() {
@@ -141,8 +131,12 @@ $(document).on('mouseenter', 'body.home #nav-main a', function() {
 
 });
 
+// ---------------------------------------
+// -------- Footer width issue fixer
+// ---------------------------------------
 
 var width = 40;
+
 $('.footer-wrap').children().each(function() {
     width += $(this).outerWidth( true );
 });
@@ -155,17 +149,15 @@ $('.footer-wrap').width(width);
 // -------- Dropdown Navigation
 // ---------------------------------------
 
-//open the dropdown nav if we are on it's page;
-
+//open the dropdown nav if we are on its page;
 
 function dropNav() {
 	if($('.current_page_item').parent().hasClass('dropdown') ) {
-		
 		$('.current_page_item').parent().show(200);
-		
 	}
 }
 queue.enqueue(dropNav);
+
 
 
 // ---------------------------------------
@@ -218,15 +210,13 @@ function setupNav() {
 
 
 function setupNav() {
-	if ($('body.home').length) return; 
+	if ($('body').hasClass('home')) return; 
 
-	if (!$('#nav-interior.rendered').length) {
+	if (!$('#nav-interior').hasClass('rendered')) {
 		
 		// $('#nav-interior').css('position', 'relative').css('left', '-9999px'); // FOUC
-		
 
 		// console.log ('time to render the nav!');
-
 
 		$('#nav-interior > ul > li').each(function() {
 			
@@ -260,7 +250,7 @@ function setupNav() {
 
 	} else {
 
-	setNav (true);
+	setNav(true);
 
 	}
 
@@ -273,16 +263,15 @@ queue.enqueue(setupNav);
 
 function setNav(animate, $clicked) {
 
-	if ($('body.home').length) return; 
+	if ($('body').hasClass('home')) return; 
 
 	// has the nav been set up? if not, set up the nav.
-	if (!$('#nav-interior.rendered').length) setupNav(); 
+	if (!$('#nav-interior').hasClass('rendered')) setupNav(); 
 
 	// set "animate" to default true and el to false
 
 	var animate = typeof animate !== 'undefined' ? animate : true;
 	var $clicked = typeof $clicked !== 'undefined' ? $clicked : [];
-
 
 	// reset classes properly
 
@@ -440,15 +429,15 @@ queue.enqueue(backgroundImages);
 // utility function to store elements of the page to make the forward and backward buttons work
 
 function storePjaxState() {
-		if (typeof $.pjax.state !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] == 'undefined') {
+	if (typeof $.pjax.state !== 'undefined' && typeof window.pjaxStates['id' + $.pjax.state.id] == 'undefined') {
 
-			// console.log("storing pjaxstate", $.pjax.state.id, $('body').attr('class'), $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]);
+		// console.log("storing pjaxstate", $.pjax.state.id, $('body').attr('class'), $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]);
 
-			window.pjaxStates['id' + $.pjax.state.id] = { 
-				'bodyclass' : $('body').attr('class'),
-				'navitem' : $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]
-			}
+		window.pjaxStates['id' + $.pjax.state.id] = { 
+			'bodyclass' : $('body').attr('class'),
+			'navitem' : $('#nav-interior .current_page_item a')[0] || $('#nav-interior .current_page_parent a')[0]
 		}
+	}
 }
 
 queue.enqueue(storePjaxState);
@@ -459,18 +448,19 @@ queue.enqueue(storePjaxState);
 if ($.support.pjax) $.pjax.defaults.scrollTo = false;
 
 
-$(document).on('click touchstart', 'nav a, body.archive #main header a', function(e) {
+$(document).on('touchclick', 'nav a, body.archive #main header a', function(e) {
 
 // ready to start working on ajax? Comment or remove this line:
 // return;
+	$this = $(this);
 
-	if(!$(this).hasClass('no-pjax') && !$(this).hasClass('has_drop')) {
+	if(!$this.hasClass('no-pjax') && !$this.hasClass('has_drop')) {
 	
 		e.preventDefault();
 	
 	}
 
-	var url = $(this).attr("href");
+	var url = $this.attr("href");
 	var $clicked = $(e.target);
 
 	if (!$clicked.is('a')) $clicked = $clicked.closest('a');
@@ -525,7 +515,7 @@ $(document).on('click touchstart', 'nav a, body.archive #main header a', functio
 	
 		e.preventDefault();
 		
-	    $(this).parent().find('ul').slideToggle(200);
+	    $this.parent().find('ul').slideToggle(200);
 		
 	} else {
 
@@ -546,7 +536,7 @@ $(document).on('click touchstart', 'nav a, body.archive #main header a', functio
 	window.$pjaxtarget = $(target);
 	window.$clicked = $clicked;
 
-	if (!$(this).hasClass('no-pjax')) {
+	if (!$this.hasClass('no-pjax')) {
 		// load the content
 		$.pjax({
 			url: url,	
@@ -584,6 +574,7 @@ $(document).on('pjax:start',function(e) {
 	// console.log("pjaxStates", window.pjaxStates);
 
 });
+
 
 $(document).on('pjax:end pjax:popstate',function(e, d) { 
 	
@@ -649,7 +640,7 @@ $(document).on('pjax:success', function(event, data) {
 // ---------------------------------------
 
 function photoGallery() {
-	if ($('body.gallery').length && !$('#image-large').length) {
+	if ($('body').hasClass('gallery') && !$('#image-large').length) {
 
 		$('#main').prepend('<div id="image-large"><a href="#" class="show-caption">open</a><span id="prev"></span><span id="next"></span><div id="active-caption"></div></div>');
 		$('#gallery ul a').prepend('<span class="mask"></span>');
@@ -704,14 +695,14 @@ $(window).on('resize load', function() {
 // make enlargements work on click 
 
 
-$(document).on('click touchstart','#gallery a, #gallery .mask',function(e) {
+$(document).on('touchclick','#gallery a, #gallery .mask',function(e) {
 	e.preventDefault();	
 	galleryImage($(this).closest('a'));
 });
 
 
 // forward and next buttons
-$(document).on('click touchstart', '#image-large #next', function() {
+$(document).on('touchclick', '#image-large #next', function() {
 	var $active = window.activeImage.closest('li');
 	
 	if ($active.is(':last-child')) {
@@ -721,7 +712,7 @@ $(document).on('click touchstart', '#image-large #next', function() {
 	}
 });
 
-$(document).on('click touchstart', '#image-large #prev', function() {
+$(document).on('touchclick', '#image-large #prev', function() {
 
 	var $active = window.activeImage.closest('li');
 	
@@ -773,7 +764,7 @@ function galleryImage($elem) {
 	var midline = $(window).width() / 2;
 	position = midline - position - ($('#gallery li:first').outerWidth(true)/2);
 	
-	myFlickity.scrollTo(position, 500);
+	window.myFlickity.scrollTo(position, 500);
 
 }
 
@@ -789,13 +780,14 @@ function galleryImage($elem) {
 // Isotope modification to allow cornerstamping
 
   $.Isotope.prototype._masonryResizeChanged = function() {
-    return true;
   };
 
   $.Isotope.prototype._masonryReset = function() {
     // layout-specific props
+    
     this.masonry = {};
     this._getSegments();
+    
     var i = this.masonry.cols;
     this.masonry.colYs = [];
     while (i--) {
@@ -808,16 +800,21 @@ function galleryImage($elem) {
           cornerCols = Math.ceil( stampWidth / this.masonry.columnWidth ),
           cornerStampHeight = $cornerStamp.outerHeight(true);
 
+
 //      for ( i = Math.max( this.masonry.cols - cornerCols, cornerCols ); i < this.masonry.cols; i++ ) {
 
 //	  var colOffset = Math.min( this.masonry.cols - cornerCols, this.options.masonry.cornerStampOffset );
       var colOffset = Math.max( 0, this.masonry.cols - cornerCols - 1);
       
+
+
       for ( i = colOffset; i < colOffset + cornerCols; i++ ) {
       // console.log ("col " + i);
         this.masonry.colYs[i] = cornerStampHeight;
       }
       
+      // console.log ("determining stampwidth. outerwidth: " + $cornerStamp.outerWidth(true) + ", thisOuter: " + this.element.outerWidth(true) + ", win: " + $(window).innerWidth() + ", body: " + $('body').innerWidth() + ", this.columnWidth: " + this.masonry.columnWidth+ ", winheight: " + $(window).height()+ ", docheight: " + $(document).height());
+      // console.log ("stampWidth: " + stampWidth + ", colOffset: " + colOffset + ", cornercols: " + cornerCols + ", cornerstamp left: " + colOffset * this.masonry.columnWidth)
       // move the cornerstamp to the correct spot; assumes it's absolutely positioned
       $cornerStamp.css("left", colOffset * this.masonry.columnWidth + "px");
       
@@ -828,7 +825,10 @@ function galleryImage($elem) {
 // Activate masonry/isotope
 
 function lookbook() {
-	$('body.lookbook #content').isotope({
+
+	if (!$('body').hasClass('lookbook')) return; 
+
+	$('#content').isotope({
 		itemSelector: '.type-lookbook',
 		masonry: {
 			columnWidth: 159,
@@ -836,10 +836,17 @@ function lookbook() {
 			cornerStampOffset: 4
 			},
 		onLayout: function() {
-			$(".isotope-item .fancybox").attr("rel","lookbook");
-			$(".isotope-item.isotope-hidden .fancybox").attr("rel","");
+			$(".isotope-item:not('.isotope-hidden') .fancybox").attr("rel","lookbook");
+			$(".isotope-item.isotope-hidden .fancybox[rel='lookbook']").attr("rel","");
 		}
 	});
+
+	// prepare LIs for use later
+
+	$('#main li').each(function() {
+		$(this).data('tag', '.tag-' + $(this).text().toLowerCase().replace(/ /g, '-'));
+
+	})
 
 	$('.fancybox').fancybox({
 		openEffect	: 'elastic',
@@ -867,7 +874,7 @@ queue.enqueue(lookbook);
 
 // Make lookbook LIs filter results when clicked
 
-$(document).on('click touchstart', 'body.lookbook #main li', function() {
+$(document).on('touchclick', 'body.lookbook #main li', function() {
 	
 	$(this).toggleClass("active");
 
@@ -876,12 +883,13 @@ $(document).on('click touchstart', 'body.lookbook #main li', function() {
 	
 	$('#main li.active').each(function() {
 		if (filter != "") filter += ',';
-		filter += ".tag-" + $(this).text().toLowerCase().replace(/ /g, '-');
+		filter += $(this).data('tag');
+		// filter += ".tag-" + $(this).text().toLowerCase().replace(/ /g, '-');
 	});
 
 	if (filter == "") filter = "*";
 	
-	$('body.lookbook #content').isotope({ filter: filter });
+	$('#content').isotope({ filter: filter });
 
 });
 
@@ -978,7 +986,7 @@ queue.enqueue(contactForm);
 
 function disableAttachmentLinks() {
 	// console.log('disabler');
-	$('body.single-post a[rel*="attachment"], body.blog a[rel*="attachment"], body.archive a[rel*="attachment"]').on('click touchstart', function(e) {
+	$('body.single-post a[rel*="attachment"], body.blog a[rel*="attachment"], body.archive a[rel*="attachment"]').on('touchclick', function(e) {
 		e.preventDefault(); return false;
 		// console.log('clicked');
 	})

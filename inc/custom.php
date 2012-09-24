@@ -206,6 +206,9 @@ if (!is_admin()) {
 		wp_register_script('cycle', get_template_directory_uri() . '/js/vendor/jquery.cycle.all.js', array('jquery'), null, true);
 		wp_enqueue_script('cycle');
 
+		wp_register_script('touchclick', get_template_directory_uri() . '/js/vendor/jquery.touchclick.min.js', array('jquery'), null, true);
+		wp_enqueue_script('touchclick');
+
 		wp_register_script('requestanimationframe', get_template_directory_uri() . '/js/vendor/requestanimationframe.js', array('jquery'), null, true);
 		wp_enqueue_script('requestanimationframe');
 
