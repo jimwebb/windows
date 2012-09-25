@@ -49,11 +49,11 @@
    Base
    ========================================================================== */
 
-a:visited, a:hover {
+a:visited, html.no-touch a:hover {
 	color: inherit;
 }
 
-a:hover {
+html.no-touch a:hover {
 	text-decoration: underline;
 }
 
@@ -195,20 +195,20 @@ body.blog #nav-utility, body.blog #nav-main, body.blog #banner .logo {
 	-moz-transition: opacity 0.25s linear, background-color 0.25s linear, color 0.25s linear;
 }
 
-#nav-main > ul > li > a:hover {
+html.no-touch #nav-main > ul > li > a:hover {
 	background: #222;
 	color: #fff;
 }
 
-#nav-main li.corp a:hover {
+html.no-touch #nav-main li.corp a:hover {
 	background-color: rgba(95, 176, 56, 1);
 }
 
-#nav-main li.wed a:hover {
+html.no-touch #nav-main li.wed a:hover {
 	background-color: rgba(54, 130, 154, 1);
 }
 
-#nav-main li.spec a:hover {
+html.no-touch #nav-main li.spec a:hover {
 	background-color: rgba(186, 31, 63, 1);
 }
 
@@ -291,7 +291,7 @@ body.home #banner a.brand {
 	border-right: none;
 }
 
-#nav-utility a:hover {
+html.no-touch #nav-utility a:hover {
 	color: #6d6e70;
 }
 
@@ -377,7 +377,7 @@ html.js #nav-interior {
 }
 
 #nav-interior > ul > li.current_page_ancestor > a,
-#nav-interior > ul > li > a:hover,
+html.no-touch #nav-interior > ul > li > a:hover,
 #nav-interior > ul > li.current_page_ancestor > div > a,
 #nav-interior > ul > li > div > a:hover { 
 	color: white;
@@ -520,48 +520,50 @@ html.js #nav-interior {
 
 /* --- Section Colors --- */
 
+
+
 #nav-interior li.nav-corporate.current_page_ancestor a,
-#nav-interior li.nav-corporate > a:hover,
-#nav-interior li.nav-corporate > div > a:hover,
+html.no-touch #nav-interior li.nav-corporate > a:hover,
+html.no-touch #nav-interior li.nav-corporate > div > a:hover,
 #nav-interior li.nav-corporate.current_page_ancestor a span {
 	border-color: rgba(95, 176, 56, 1) !important;
 }
 
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > a,
 #nav-interior > ul > li.nav-corporate.current_page_ancestor > div > a,
-#nav-interior li.nav-corporate > div > a:hover {
+html.no-touch #nav-interior li.nav-corporate > div > a:hover {
 	background-color: rgba(95, 176, 56, 1);
 }
 
 
 #nav-interior li.nav-weddings.current_page_ancestor a,
-#nav-interior li.nav-weddings > a:hover,
-#nav-interior li.nav-weddings > div > a:hover,
+html.no-touch #nav-interior li.nav-weddings > a:hover,
+html.no-touch #nav-interior li.nav-weddings > div > a:hover,
 #nav-interior li.nav-weddings.current_page_ancestor a span {
 	border-color: rgba(54, 130, 154, 1) !important;
 }
 
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > a,
 #nav-interior > ul > li.nav-weddings.current_page_ancestor > div > a,
-#nav-interior li.nav-weddings > div > a:hover {
+html.no-touch #nav-interior li.nav-weddings > div > a:hover {
 	background-color: rgba(54, 130, 154, 1);
 }
 
 
 #nav-interior li.nav-events.current_page_ancestor a,
-#nav-interior li.nav-events > a:hover,
-#nav-interior li.nav-events > div > a:hover,
+html.no-touch #nav-interior li.nav-events > a:hover,
+html.no-touch #nav-interior li.nav-events > div > a:hover,
 #nav-interior li.nav-events.current_page_ancestor a span {
 	border-color: rgba(186, 31, 63, 1) !important;
 }
 #nav-interior > ul > li.nav-events.current_page_ancestor > a,
 #nav-interior > ul > li.nav-events.current_page_ancestor > div > a,
-#nav-interior li.nav-events > div > a:hover {
+html.no-touch #nav-interior li.nav-events > div > a:hover {
 	background-color: rgba(186, 31, 63, 1);
 }
 
 #nav-interior > ul > li > a:hover span,
-#nav-interior > ul > li > div > a:hover span  {
+html.no-touch #nav-interior > ul > li > div > a:hover span  {
 	border-color: transparent;
 }
 
@@ -569,6 +571,8 @@ html.js #nav-interior {
 	padding-top: 10px;
 	height: 20px;
 }
+
+
 
 
 
@@ -1224,7 +1228,7 @@ body.home #main {
 
 #nav-section li.current_page_ancestor a,
 #nav-section li.current_page_item a,
-#nav-section li a:hover {
+html.no-touch #nav-section li a:hover {
 	color: white;
 	text-decoration: none;
 }
@@ -1232,19 +1236,19 @@ body.home #main {
 
 body.corporate #nav-section li.current_page_ancestor a,
 body.corporate #nav-section li.current_page_item a,
-body.corporate #nav-section li a:hover {
+html.no-touch body.corporate #nav-section li a:hover {
 	background-color: #5fb038;
 }
 
 body.weddings #nav-section li.current_page_ancestor a,
 body.weddings #nav-section li.current_page_item a,
-body.weddings #nav-section li a:hover {
+html.no-touch body.weddings #nav-section li a:hover {
 	background-color: #36829a;
 }
 
 body.events #nav-section li.current_page_ancestor a,
 body.events #nav-section li.current_page_item a,
-body.events #nav-section li a:hover {
+html.no-touch body.events #nav-section li a:hover {
 	background-color: #ba1f3f;
 }
 
@@ -1275,28 +1279,28 @@ body.events #nav-section li a:hover {
 	font-size: 13px;
 	margin-bottom: 9px;
 }
-#sidebar li.current_page_item a, #sidebar li.current-cat a, #sidebar li a:hover {
+#sidebar li.current_page_item a, #sidebar li.current-cat a, html.no-touch #sidebar li a:hover {
 	font-weight: bold;
 	text-decoration: none;
 }
 
 body.corporate #sidebar h1,
 body.corporate #sidebar li.current_page_item a,
-body.corporate #sidebar li a:hover,
+html.no-touch body.corporate #sidebar li a:hover,
 body.corporate #main h2 {
 	color: #5fb038;
 }
 
 body.weddings #sidebar h1,
 body.weddings #sidebar li.current_page_item a,
-body.weddings #sidebar li a:hover,
+html.no-touch body.weddings #sidebar li a:hover,
 body.weddings #main h2 {
 		color: #36829a;
 }
 
 body.events #sidebar h1,
 body.events #sidebar li.current_page_item a,
-body.events #sidebar li a:hover,
+html.no-touch body.events #sidebar li a:hover,
 body.events #main h2 {
 	color: #ba1f3f;
 }
@@ -1426,7 +1430,7 @@ ul.col.last {
 .hentry header { }
 .hentry h2 { border-bottom: none; }
 .hentry h2 a { text-decoration: none; display: block; }
-.hentry h2 a:hover { font-weight: bold; }
+html.no-touch .hentry h2 a:hover { font-weight: bold; }
 .hentry time { display: block; margin-bottom: 15px; padding-bottom: 5px; color: #686868; border-bottom: 1px solid #e9e9e9;}
 .hentry p.byline { }
 .hentry footer { clear: both; }
@@ -1497,7 +1501,7 @@ body.home #content-info {
 	color: inherit;
 }
 
-#content-info a:hover {
+html.no-touch #content-info a:hover {
 	text-decoration: underline;
 }
 
@@ -1552,15 +1556,15 @@ body.home #content-info {
 	background-position: -42px 0;
 }
 
-#social li.fb a:hover {
+html.no-touch #social li.fb a:hover {
 	background-position: 0 -21px;
 }
 
-#social li.tw a:hover {
+html.no-touch #social li.tw a:hover {
 	background-position: -21px -21px;
 }
 
-#social li.pin a:hover {
+html.no-touch #social li.pin a:hover {
 	background-position: -42px -21px;
 }
 

@@ -115,7 +115,7 @@ function homePage() {
 queue.enqueue(homePage);
 
 
-$(document).on('mouseenter', 'body.home #nav-main a', function() {
+$(document).on('mouseenter', 'body.home.no-touch #nav-main a', function() {
 	
 	var $target = $(this).parent('li');
 	var imgSrc = $target.attr('class');
@@ -465,7 +465,7 @@ $(document).on('touchclick', 'nav a, body.archive #main header a', function(e) {
 
 	if (!$clicked.is('a')) $clicked = $clicked.closest('a');
 
-	// console.log ($clicked);
+	console.log ("click: ", $clicked);
 
 	// what got clicked?
 	
