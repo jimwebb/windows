@@ -474,7 +474,7 @@ html.no-touch #nav-interior > ul > li > a:hover,
 
 #nav-interior li.current_page_item a,
 #nav-interior li.current_page_ancestor li.current_page_ancestor a,
-#nav-interior li.current_page_ancestor a:hover {
+html.no-touch #nav-interior li.current_page_ancestor a:hover {
 	border-bottom: 10px solid #ccc;
 	padding-bottom: 0;
 }
@@ -492,7 +492,7 @@ html.no-touch #nav-interior > ul > li > a:hover,
 	border-left: none;
 }
 
-#nav-interior .menu-home a:hover {
+html.no-touch #nav-interior .menu-home a:hover {
 	background-color: transparent;
 }
 
@@ -562,7 +562,7 @@ html.no-touch #nav-interior li.nav-events > div > a:hover {
 	background-color: rgba(186, 31, 63, 1);
 }
 
-#nav-interior > ul > li > a:hover span,
+html.no-touch #nav-interior > ul > li > a:hover span,
 html.no-touch #nav-interior > ul > li > div > a:hover span  {
 	border-color: transparent;
 }
@@ -636,7 +636,7 @@ body.gallery #main {
 	height: 120px;
 }
 
-#gallery li:hover .mask,
+html.no-touch #gallery li:hover .mask,
 #gallery li.active .mask {
 	opacity: 0;
 }
@@ -710,6 +710,7 @@ body.lookbook #main {
 	margin: 0;
 	position:absolute;
 	top: 0;
+	z-index: 10;
 }
 
 body.lookbook #main p {
@@ -818,11 +819,17 @@ html.touch .isotope-hidden {
           transition-property:         transform, opacity;
 }
 
+.isotope-item.transitioning {
+	opacity: 0.5;
+}
+
 /**** disabling Isotope CSS3 transitions ****/
 
 .isotope.no-transition,
 .isotope.no-transition .isotope-item,
-.isotope .isotope-item.no-transition {
+.isotope .isotope-item.no-transition,
+html.touch .isotope,
+html.touch .isotope .isotope-item {
   -webkit-transition-duration: 0s;
      -moz-transition-duration: 0s;
       -ms-transition-duration: 0s;
@@ -981,7 +988,7 @@ html.touch .fancybox-next span {
 	opacity: 1;
 }
 
-.fancybox-nav:hover span {
+html.no-touch .fancybox-nav:hover span {
 	opacity: 1;
 }
 

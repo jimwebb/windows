@@ -115,7 +115,7 @@ function homePage() {
 queue.enqueue(homePage);
 
 
-$(document).on('mouseenter', 'body.home.no-touch #nav-main a', function() {
+$(document).on('mouseenter', 'html.no-touch body.home #nav-main a', function() {
 	
 	var $target = $(this).parent('li');
 	var imgSrc = $target.attr('class');
@@ -124,7 +124,7 @@ $(document).on('mouseenter', 'body.home.no-touch #nav-main a', function() {
 		$('<img src="/img/'+imgSrc+index+'.jpg">').hide().addClass('image').appendTo(this).fadeIn(400);
 	});
 
-}).on('mouseleave', 'body.home #nav-main a', function() {
+}).on('mouseleave', 'html.no-touch body.home #nav-main a', function() {
 	
 	// fade out other images and remove them
 	$('#nav-main .image').stop().fadeOut(400, function() { $(this).remove(); });
@@ -265,6 +265,7 @@ function setNav(animate, $clicked) {
 
 	if ($('body').hasClass('home')) return; 
 
+
 	// has the nav been set up? if not, set up the nav.
 	if (!$('#nav-interior').hasClass('rendered')) setupNav(); 
 
@@ -272,6 +273,8 @@ function setNav(animate, $clicked) {
 
 	var animate = typeof animate !== 'undefined' ? animate : true;
 	var $clicked = typeof $clicked !== 'undefined' ? $clicked : [];
+	
+	if ($clicked.length > 1) $clicked = $clicked[0]; // just in case some weird touch thing happens where two things register as clicked
 
 	// reset classes properly
 
@@ -784,7 +787,7 @@ function galleryImage($elem) {
 
   $.Isotope.prototype._masonryReset = function() {
     // layout-specific props
-    
+    // console.time('masonryReset');
     this.masonry = {};
     this._getSegments();
     
@@ -817,7 +820,7 @@ function galleryImage($elem) {
       // console.log ("stampWidth: " + stampWidth + ", colOffset: " + colOffset + ", cornercols: " + cornerCols + ", cornerstamp left: " + colOffset * this.masonry.columnWidth)
       // move the cornerstamp to the correct spot; assumes it's absolutely positioned
       $cornerStamp.css("left", colOffset * this.masonry.columnWidth + "px");
-      
+      // console.timeEnd('masonryReset');
     }
   };
 
@@ -835,9 +838,15 @@ function lookbook() {
 			cornerStampSelector: '#main',
 			cornerStampOffset: 4
 			},
+		hiddenStyle: ($('html').hasClass('touch')) ? { scale: 0.001 } : undefined, 
 		onLayout: function() {
+			// console.time('isotope - onLayout');
 			$(".isotope-item:not('.isotope-hidden') .fancybox").attr("rel","lookbook");
 			$(".isotope-item.isotope-hidden .fancybox[rel='lookbook']").attr("rel","");
+			$(".isotope-item.transitioning").removeClass("transitioning");
+			// console.timeEnd('isotope - onLayout');
+
+			// console.timeEnd('touchclick');
 		}
 	});
 
@@ -874,10 +883,16 @@ queue.enqueue(lookbook);
 
 // Make lookbook LIs filter results when clicked
 
-$(document).on('touchclick', 'body.lookbook #main li', function() {
+$(document).on('touchclick', 'body.lookbook #main li', function(e) {
 	
+	e.stopPropagation();
+
+	// console.time('touchclick');
+	// console.time('touchclickb');
+
 	$(this).toggleClass("active");
 
+	// console.time('getFilter');
 	// find all the active LIs and concatenate their names for the filter
 	var filter = "";
 	
@@ -888,8 +903,16 @@ $(document).on('touchclick', 'body.lookbook #main li', function() {
 	});
 
 	if (filter == "") filter = "*";
+
+	// console.timeEnd('getFilter');
 	
+	// console.time('isotope');
+
 	$('#content').isotope({ filter: filter });
+	
+	// console.timeEnd('isotope');
+
+	// console.timeEnd('touchclickb');
 
 });
 
